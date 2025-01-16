@@ -4,11 +4,11 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { HiLifebuoy } from "react-icons/hi2";
 // import toast from "react-hot-toast";
 import { RiUserSharedLine } from "react-icons/ri";
-// import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 const CurrentUserInfo = () => {
-    // const {user, logOutUser} = useAuth()
-    const user = true;
+    const {user, logOutUser} = useAuth()
+    
 
     const handleSignOut = () => {
         // logOutUser()
@@ -30,10 +30,10 @@ const CurrentUserInfo = () => {
                         <span>My Profile</span>
                      </span>
                  </Link>
-                 <Link to={'/'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
+                 <Link to={'/dashboard'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                      <IoSettingsOutline size={20}/>
                      <span className="mx-1">
-                     Update Profile
+                        Dashboard
                      </span>
                  </Link>
                  <Link to={'/'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">

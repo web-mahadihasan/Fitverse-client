@@ -42,7 +42,7 @@ const TestNav = () => {
             </div>
             <ul className="flex items-center gap-4">
                 <li> <NavLink to={"/"}>Home</NavLink> </li>
-                <li><NavLink to={"/all-trainer"}>All Trainer</NavLink></li>
+                <li><NavLink to={"/all-trainers"}>All Trainer</NavLink></li>
                 <li className="relative"><NavLink to={""}>
                     <button onClick={() => setDropdownMenu(!dropdownMenu)} className="py-2 rounded-lg text-base transition-colors duration-200 flex items-center gap-1 ">
                         Classes

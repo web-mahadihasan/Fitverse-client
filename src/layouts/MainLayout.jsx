@@ -12,11 +12,10 @@ const MainLayout = () => {
         <div className="">
             <Toaster />
 
-            {
-                pathname !== "auth/login" || pathname !== "auth/register" ? <div className="min-h-16">
+            <div className="min-h-16">
                 <TestNav/>
-            </div> : ""
-            }
+            </div> 
+            
            
             
             {/* Main content  */}
@@ -25,11 +24,10 @@ const MainLayout = () => {
             </main>
 
             {/* Footer  */}
-            {
-                pathname !== "auth/login" || pathname !== "auth/register" ?  <footer>
+             <footer>
                 <Footerdemo />
-            </footer> : ""
-            }
+            </footer> 
+            
            
         </div>
     );
