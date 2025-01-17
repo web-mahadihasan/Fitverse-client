@@ -8,6 +8,9 @@ import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { format } from "date-fns";
+import { axiosSecured } from "../../hooks/useAxiosSecured";
+import Swal from "sweetalert2";
 
 const animatedComponents = makeAnimated();
 
@@ -35,44 +38,19 @@ const schema = yup.object().shape({
 
 const TrainerApplication = () => {
   const [imageLink, setImageLink] = useState("");
+  const [uploading, setUploading] = useState(false);
   const {user} = useAuth()
   const {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors },
         } = useForm({ resolver: yupResolver(schema) });
         
         console.log(imageLink)
    
-    const customStyles = () => {
-            
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        return {
-          control: (provided) => ({
-            ...provided,
-            backgroundColor: isDarkMode ? "rgb(31 41 55)" : "rgb(255 255 255)",
-            color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
-          }),
-          menu: (provided) => ({
-            ...provided,
-            backgroundColor: isDarkMode ? "rgb(31 41 55)" : "rgb(255 255 255)",
-          }),
-          singleValue: (provided) => ({
-            ...provided,
-            color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            backgroundColor: state.isFocused
-              ? isDarkMode
-                ? "rgb(55 65 81)"
-                : "rgb(229 231 235)" 
-              : "transparent",
-            color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
-          }),
-        };
-      };
+
     const skillsOption = [
         { label: "Bootcamp", value: "Bootcamp" },
         { label: "Pilates", value: "Pilates" },
@@ -100,18 +78,31 @@ const TrainerApplication = () => {
       ];
     const onSubmit = async(data) => {
         console.log(data)
-        const time = new Date().toDateString()
-        console.log(time)
+        const date = format (new Date(), "PP")
         const applicationInfo = {
           ...data,
           image: imageLink,
-          time
+          date,
+          status: "pending"
         }
-        // try {
-          
-        // } catch (error) {
-          
-        // }
+        try {
+          const {data} = await axiosSecured.post("/apply-trainer", applicationInfo)
+          console.log(data)
+          if(data.insertedId){
+            Swal.fire({
+              title: "Successfull",
+              text: "Your applicaiton has been submit.",
+              icon: "success"
+            })
+            reset()
+          }
+        } catch (error) {
+          Swal.fire({
+            title: "Failed",
+            text: "Failed to submit application.",
+            icon: "error"
+          })
+        }
     }
     return (
         <div className="space-y-8 max-w-4xl mx-auto my-10 font-poppins px-4 xl:px-0">
@@ -133,7 +124,7 @@ const TrainerApplication = () => {
                 {/* Image upload  */}
                 <div className="md:grid grid-cols-2">
                     <div>
-                        <ProfileImage setImageLink={setImageLink} imageLink={imageLink}/>
+                        <ProfileImage setImageLink={setImageLink} imageLink={imageLink} setUploading={setUploading}/>
                     </div>
                     <div className="grid grid-cols-1 grid-rows-2">
                         {/* Age  */}
@@ -197,7 +188,7 @@ const TrainerApplication = () => {
                             components={animatedComponents} d
                             isMulti
                             options={availableDays}
-                            styles={customStyles()}
+                            // styles={customStyles()}
                             onChange={(selectedOptions) => {
                                 field.onChange(selectedOptions ? selectedOptions.map(option => option.value) : []); 
                             }}
@@ -218,19 +209,19 @@ const TrainerApplication = () => {
                       <Controller
                         name="availableSlot"
                         control={control}
-                        defaultValue="" // Single value, not an array
+                        defaultValue="" 
                         render={({ field }) => (
                           <Select
                             {...field}
                             components={animatedComponents}
                             options={availableSlot}
-                            styles={customStyles()}
+                            // styles={customStyles()}
                             onChange={(selectedOption) => {
-                              field.onChange(selectedOption ? selectedOption.value : ""); // Single value
+                              field.onChange(selectedOption ? selectedOption.value : ""); 
                             }}
-                            value={availableSlot.find(slot => slot.value === field.value)} // Match single value
-                            isMulti={false} // Ensure single selection
-                            closeMenuOnSelect={true} // Menu closes after selection
+                            value={availableSlot.find(slot => slot.value === field.value)}
+                            isMulti={false} 
+                            closeMenuOnSelect={true} 
                           />
                         )}
                       />
@@ -257,8 +248,8 @@ const TrainerApplication = () => {
                     <p className="text-lg font-medium text-gray-500">Current Status: Member</p>
                 </div>
 
-                <button type="submit" className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
-                    Submit Application
+                <button type="submit" disabled={uploading} className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+                    {uploading? "Image uploading" : "Submit Application"}
                 </button>
             </form>
             
@@ -267,3 +258,33 @@ const TrainerApplication = () => {
 };
 
 export default TrainerApplication;
+
+
+// const customStyles = () => {
+            
+//   const isDarkMode = document.documentElement.classList.contains("dark");
+//   return {
+//     control: (provided) => ({
+//       ...provided,
+//       backgroundColor: isDarkMode ? "rgb(31 41 55)" : "rgb(255 255 255)",
+//       color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
+//     }),
+//     menu: (provided) => ({
+//       ...provided,
+//       backgroundColor: isDarkMode ? "rgb(31 41 55)" : "rgb(255 255 255)",
+//     }),
+//     singleValue: (provided) => ({
+//       ...provided,
+//       color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
+//     }),
+//     option: (provided, state) => ({
+//       ...provided,
+//       backgroundColor: state.isFocused
+//         ? isDarkMode
+//           ? "rgb(55 65 81)"
+//           : "rgb(229 231 235)" 
+//         : "transparent",
+//       color: isDarkMode ? "rgb(255 255 255)" : "rgb(0 0 0)", 
+//     }),
+//   };
+// };

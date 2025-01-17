@@ -1,23 +1,35 @@
 
 // icons
+import axios from "axios";
 import { useState } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
-const ImageUpload = () => {
-  const [imageLink, setImageLink] = useState("");
-
+const ImageUpload = ({imageLink, setImageLink, setUploading}) => {
+  const cloudinaryApi = import.meta.env.VITE_CLOUDINARY_API
   const handleUploadImageClick = (e) => {
     e.preventDefault();
     document.getElementById("secondImage").click();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setImageLink(imageURL);
+    const imageFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", imageFile)
+    formData.append("upload_preset", "fitVerse")
+    setUploading(true)
+    if (imageFile) {
+      // const imageURL = URL.createObjectURL(file);
+      // setImageLink(imageURL);
+      try {
+        const {data} = await axios.post(`https://api.cloudinary.com/v1_1/${cloudinaryApi}/image/upload`,
+          formData)
+          setImageLink(data?.url)
+          setUploading(false)
+      } catch (error) {
+        console.log(error)
+      }
     }
   };
 
