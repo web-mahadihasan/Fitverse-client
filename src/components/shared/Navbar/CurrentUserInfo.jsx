@@ -1,22 +1,30 @@
 import { Link } from "react-router";
 import { FiPower, FiUserPlus } from "react-icons/fi";
-import { IoSettingsOutline } from "react-icons/io5";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { HiLifebuoy } from "react-icons/hi2";
 // import toast from "react-hot-toast";
 import { RiUserSharedLine } from "react-icons/ri";
 import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
-const CurrentUserInfo = () => {
+const CurrentUserInfo = ({setProfileMenu}) => {
     const {user, logOutUser} = useAuth()
     
 
-    const handleSignOut = () => {
-        // logOutUser()
-        // .then((result) => {
-        //     toast.success("Successfully Sign out")
-        // }).catch(error => {
-        //     toast.error("Failed to Sign ou, try again")
-        // })
+    const handleSignOut = async () => {
+        const toastId = toast.loading('Logging in...');
+        try {
+            const result = await logOutUser()
+                toast.success(`Successfully Logout!`, {
+                    id: toastId, 
+                });
+                setProfileMenu(false)
+        } catch (error) {
+            toast.success(`Failed to Logout! Try again`, {
+                id: toastId, 
+              });
+              console.log(error)
+        }
     }
     return (
            <div className="min-w-60 space-y-1">
@@ -31,7 +39,7 @@ const CurrentUserInfo = () => {
                      </span>
                  </Link>
                  <Link to={'/dashboard'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
-                     <IoSettingsOutline size={20}/>
+                     <LuLayoutDashboard size={20}/>
                      <span className="mx-1">
                         Dashboard
                      </span>

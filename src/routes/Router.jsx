@@ -9,12 +9,10 @@ import AllNewsLetter from '../pages/Dashboard/AllNewsLetter/AllNewsLetter';
 import AppliedTrainer from '../pages/Dashboard/AppliedTrainer/AppliedTrainer';
 import AllTrainer from '../pages/Dashboard/AllTriner/AllTrainer';
 import AddNewClass from '../pages/Dashboard/AddNewClass/AddNewClass';
-import BeATrainer from '../pages/BeATriner/BeATriner';
-import BeATrainerCopy from '../pages/BeATriner/copy';
-import Copy2 from '../pages/BeATriner/Copy2';
 import TrainerApplication from '../pages/TrainerApplication/TrainerApplication';
 import AllTrainers from '../pages/AllTrainers/AllTrainers';
 import TrainerDetails from '../pages/TrainerDetails/TrainerDetails';
+import PrivateRoute from './privateRoute';
 
 
 const Router = createBrowserRouter([
@@ -36,7 +34,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/trainer-application",
-                element: <TrainerApplication/>
+                element: <PrivateRoute><TrainerApplication/></PrivateRoute>
             },
             {
                 path: "/all-trainers",
@@ -50,7 +48,7 @@ const Router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <DashboardLayout/>,
+        element: <PrivateRoute><DashboardLayout/></PrivateRoute>,
         children: [
             {
                 path: "/dashboard",

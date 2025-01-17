@@ -16,6 +16,8 @@ import {  Spin } from 'antd';
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import SocialLogin from "../../../components/shared/SocialLogin/SocialLogin";
 
 const schema = yup.object().shape({
     name: yup 
@@ -46,6 +48,7 @@ const Registration = () => {
     const {loginWithGoogle, setUser, registerNewUser, updataUser} = useAuth()
     const [uploading, setUploading] = useState(false)
     const [image, setImage] = useState("")
+    const axiosPublic = useAxiosPublic()
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -88,10 +91,21 @@ const Registration = () => {
             setUser(result.user)
             console.log(result.user)
             const update = await updataUser(updateData)
-            toast.success(`Welcome ${result.user.displayName}!`, {
-                id: toastId, 
-              });            
-            navigate(from, {replace: true})
+
+                const userProfile = {
+                    name,
+                    email,
+                    image,
+                    createTime: result?.user?.metadata?.creationTime,
+                    role: "member"
+                }
+                const {data} = await axiosPublic.post("/users", userProfile)
+                if(data.insertedId){
+                    toast.success(`Welcome ${result.user.displayName}!`, {
+                        id: toastId, 
+                    });
+                    navigate(from, {replace: true})
+                }          
         } catch (err) {
             Swal.fire({
                 icon: "error",
@@ -102,23 +116,6 @@ const Registration = () => {
         }
         
     };
-
-    const handleGoogleLogin = async () =>  {
-        const toastId = toast.loading('Logging in...');
-        try {
-            const result = await loginWithGoogle()
-
-            toast.success(`Welcome ${result.user.displayName}!`, {
-                id: toastId, 
-              });
-            setUser(result.user)
-            console.log(result.user)
-            navigate(from, {replace: true})
-        } catch (err) {
-            toast.error("Failed to Login")
-            console.log(err)
-        }
-    }
 
     return (
         <div className="min-w-screen min-h-screen flex items-center justify-center ">
@@ -139,13 +136,7 @@ const Registration = () => {
                     <p className="font-semibold text-primary-dark text-white/85">Registration</p>
                     <h3 className="text-4xl font-bold text-white/90 font-kanit">Start Today With us</h3>
                     <div className="mt-5">
-                        <button onClick={handleGoogleLogin} className="relative w-full text-sm inline-block p-[1px] font-medium text-white bg-transparent rounded-lg group">
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg "></span>
-                            <p className="relative flex items-center justify-center gap-5 w-full px-6 py-2 h-full bg-black rounded-lg group-hover:bg-opacity-80 transition duration-200">
-                                <span><FcGoogle size={22} /></span>
-                                <span className="font-poppins">Register With Google</span>
-                            </p>
-                        </button>
+                        {<SocialLogin/>}
                         <Divider plain className="" style={{
                                     borderColor: '#f5f5f5',
                                     color: '#fff'

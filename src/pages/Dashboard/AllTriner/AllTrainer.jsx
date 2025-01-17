@@ -1,5 +1,8 @@
 
 const AllTrainer = () => {
+
+    const {data} = 
+
     return (
         <div>
             <div className="grid grid-cols-4 my-10">

@@ -10,10 +10,11 @@ import { Divider } from 'antd';
 import { useForm } from "react-hook-form"
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
+import SocialLogin from "../../../components/shared/SocialLogin/SocialLogin";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const {loginWithGoogle, setUser, loginWithEmail} = useAuth()
+    const {setUser, loginWithEmail} = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState({})
     const location = useLocation()
@@ -52,22 +53,6 @@ const Login = () => {
 
       }
 
-      const handleGoogleLogin = async () =>  {
-        const toastId = toast.loading('Logging in...');
-        try {
-            const result = await loginWithGoogle()
-
-            toast.success(`Welcome ${result.user.displayName}!`, {
-                id: toastId, 
-              });
-            setUser(result.user)
-            console.log(result.user)
-            navigate(from, {replace: true})
-        } catch (err) {
-            toast.error("Failed to Login")
-            console.log(err)
-        }
-    }
 
     return (
         <div className="min-w-screen min-h-screen flex lg:min-w-5xl items-center justify-center">
@@ -88,13 +73,7 @@ const Login = () => {
                     <p className="font-semibold text-primary-dark text-white/85">Welcomoe Back</p>
                     <h3 className="text-4xl font-bold text-white/90">Members Login</h3>
                     <div className="mt-5">
-                        <button onClick={handleGoogleLogin} className="relative w-full inline-block p-[1px] font-medium text-white bg-transparent rounded-lg group">
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg "></span>
-                            <p className="relative flex items-center h-full justify-center gap-5 w-full px-6 py-2 h-full bg-black rounded-lg group-hover:bg-opacity-80 transition duration-200">
-                                <span><FcGoogle size={22} /></span>
-                                <span>Login With Google</span>
-                            </p>
-                        </button>
+                        {<SocialLogin/>}
                         <Divider plain className="" style={{
                                     borderColor: '#f5f5f5',
                                     color: '#fff'
