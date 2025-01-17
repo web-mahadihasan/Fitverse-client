@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 import useAxiosSecured from "./useAxiosSecured";
 
-const useUsers = () => {
+const useUser = () => {
     const {user} = useAuth()
     const axiosSecured = useAxiosSecured()
 
@@ -16,4 +16,4 @@ const useUsers = () => {
     return[userById, refetch]
 };
 
-export default useUsers;
+export default useUser;

@@ -11,6 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import { format } from "date-fns";
 import { axiosSecured } from "../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
+import useUser from "../../hooks/userUser";
 
 const animatedComponents = makeAnimated();
 
@@ -39,6 +40,9 @@ const schema = yup.object().shape({
 const TrainerApplication = () => {
   const [imageLink, setImageLink] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [userById] = useUser()
+  
+
   const {user} = useAuth()
   const {
         register,
@@ -83,7 +87,9 @@ const TrainerApplication = () => {
           ...data,
           image: imageLink,
           date,
-          status: "pending"
+          status: "pending",
+          userId: userById?._id,
+          role: userById?.role
         }
         try {
           const {data} = await axiosSecured.post("/apply-trainer", applicationInfo)

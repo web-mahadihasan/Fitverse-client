@@ -12,11 +12,12 @@ import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
+import Swal from "sweetalert2";
 
 const AppliedTrainer = () => {
   // Get all application
   const axiosSecured = useAxiosSecured();
-  const { data: allApplication } = useQuery({
+  const { data: allApplication, refetch } = useQuery({
     queryKey: ["applicantAdmin"],
     queryFn: async () => {
       const { data } = await axiosSecured("/get-application");
@@ -116,9 +117,23 @@ const AppliedTrainer = () => {
       });
   }, []);
 
-  const handleAcceptApplication = (id) => {
-    console.log(id)
-    
+  const handleAcceptApplication = async (applicationData) => {
+    try {
+        const {data} = await axiosSecured.patch(`/accept-application/${applicationData._id}`, applicationData)
+        console.log(data)
+        if(data.modifiedCount > 0){
+            Swal.fire({
+              title: "Successfull",
+              text: "Your applicaiton has been approved.",
+              icon: "success"
+            })
+            refetch()
+            setOpenActionMenuId(null)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
     // const {isPending ,mutateAsync} = useMutation({
     //     mutationFn: async () =>  {
     //         await axiosSecured.patch(`/accept-application`, )
@@ -186,7 +201,7 @@ const AppliedTrainer = () => {
                 <td className="p-3">{application.name}</td>
                 <td className="p-3">{application.email}</td>
                 <td className="p-3">{application.date}</td>
-                <td className={``}> <span className={`border w-fit px-4 py-1 font-base font-kanit font-normal text-gray-600 dark:text-gray-300 rounded-full ${application?.status === "pending" && "bg-orange-200 border-orange-200"} ${application?.status === "accept" && "bg-emerald-200 border-emerald-300 "} ${application?.status === "reject" && "bg-red-500 border-red-500"}`}>{application.status}</span> </td>
+                <td className={``}> <span className={`border w-fit px-4 py-[2px] font-base font-kanit font-normal text-gray-600 dark:text-gray-300 rounded-full ${application?.status === "pending" && "bg-orange-200 border-orange-200"} ${application?.status === "approved" && "bg-emerald-200 border-emerald-300 "} ${application?.status === "reject" && "bg-red-500 border-red-500"}`}>{application.status}</span> </td>
                 <td className="p-3 relative">
                   <BsThreeDotsVertical
                     onClick={() => toggleActionMenu(application._id)}
@@ -200,7 +215,7 @@ const AppliedTrainer = () => {
                         : "opacity-0 scale-[0.8] z-[-1]"
                     } zenui-table absolute top-[90%] right-[80%] p-1.5 rounded-md bg-white shadow-md min-w-[160px] transition-all duration-100`}
                   >
-                    <button onClick={() => handleAcceptApplication(application._id)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-green-600 font-poppins transition-all duration-200">
+                    <button onClick={() => handleAcceptApplication(application)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-green-600 font-poppins transition-all duration-200">
                       <IoCheckmarkDoneSharp />
                       Accept
                     </button>
