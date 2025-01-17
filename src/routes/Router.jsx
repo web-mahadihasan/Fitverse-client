@@ -14,6 +14,7 @@ import BeATrainerCopy from '../pages/BeATriner/copy';
 import Copy2 from '../pages/BeATriner/Copy2';
 import TrainerApplication from '../pages/TrainerApplication/TrainerApplication';
 import AllTrainers from '../pages/AllTrainers/AllTrainers';
+import TrainerDetails from '../pages/TrainerDetails/TrainerDetails';
 
 
 const Router = createBrowserRouter([
@@ -40,6 +41,10 @@ const Router = createBrowserRouter([
             {
                 path: "/all-trainers",
                 element: <AllTrainers/>
+            },
+            {
+                path: "/trainer-details",
+                element: <TrainerDetails/>
             }
         ]
     },
