@@ -1,23 +1,49 @@
 
 // icons
+import axios from "axios";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 
-const ProfileImage = () => {
-  const [imageLink, setImageLink] = useState("");
+const ProfileImage = ({setImageLink, imageLink}) => {
+  
 
   const handleUploadImageClick = () => {
     document.getElementById("fourthImage").click();
   };
-
-  const handleFileChange = (e) => {
+  const cloudinaryApi = import.meta.env.VITE_CLOUDINARY_API
+  
+  const handleFileChange = async(e) => {
     e.preventDefault();
-    const file = event.target.files[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setImageLink(imageURL);
+    const imageFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", imageFile)
+    formData.append("upload_preset", "fitVerse")
+
+    if (imageFile) {
+      // const imageURL = URL.createObjectURL(file);
+      // setImageLink(imageURL);
+      try {
+        const {data} = await axios.post(`https://api.cloudinary.com/v1_1/${cloudinaryApi}/image/upload`,
+          formData)
+          setImageLink(data?.url)
+      } catch (error) {
+        console.log(error)
+      }
     }
   };
+//   const handleImageUpload = async (e) => {
+//     const imageFile = e.target.files[0]
+    
+//     setUploading(true)
+//     try {
+        
+      
+//         setImage(data?.url)
+//         setUploading(false)
+//     } catch (error) {
+//         console.log(error)
+//     }   
+// }
 
   return (
     <div className=" ">

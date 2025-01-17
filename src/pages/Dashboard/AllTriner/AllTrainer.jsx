@@ -1,7 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecured from "../../../hooks/useAxiosSecured";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
 
 const AllTrainer = () => {
+    const axiosSecured = useAxiosSecured()
+ 
+    const {data: usersData} = useQuery({
+        queryKey: ["users"],
+        queryFn: async () => {
+            const {data} = await axiosSecured.get("/users")
+            return data
+        }
+    })
 
-    const {data} = 
+   
 
     return (
         <div>

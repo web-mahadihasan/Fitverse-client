@@ -7,6 +7,7 @@ import ProfileImage from "./ProfileImage";
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const animatedComponents = makeAnimated();
 
@@ -33,18 +34,17 @@ const schema = yup.object().shape({
 })
 
 const TrainerApplication = () => {
-    // const [isDarkMode, setDarkMode] = useState(false)
-    const {
+  const [imageLink, setImageLink] = useState("");
+  const {user} = useAuth()
+  const {
         register,
         handleSubmit,
         control,
         formState: { errors },
         } = useForm({ resolver: yupResolver(schema) });
         
-    // useEffect(()=> {
-        
-    //     setDarkMode(darkMode)
-    // }, [])
+        console.log(imageLink)
+   
     const customStyles = () => {
             
         const isDarkMode = document.documentElement.classList.contains("dark");
@@ -98,8 +98,20 @@ const TrainerApplication = () => {
         { value: "Evening", label: "Evening" },
         { value: "Night", label: "Night" }
       ];
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         console.log(data)
+        const time = new Date().toDateString()
+        console.log(time)
+        const applicationInfo = {
+          ...data,
+          image: imageLink,
+          time
+        }
+        // try {
+          
+        // } catch (error) {
+          
+        // }
     }
     return (
         <div className="space-y-8 max-w-4xl mx-auto my-10 font-poppins px-4 xl:px-0">
@@ -109,19 +121,19 @@ const TrainerApplication = () => {
                     {/* Name  */}
                     <div>
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-800 text-left dark:text-white">Your Name</label>
-                        <input type="text" {...register("name", {minLength: 3, maxLength: 20})} name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-800 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="John Doe" required />
+                        <input type="text" {...register("name", {minLength: 3, maxLength: 20})} defaultValue={user?.displayName} readOnly name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-800 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="John Doe" required />
                     </div>
                     {/* Email  */}
                     <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-800 text-left dark:text-white">Your Name</label>
-                        <input type="email" {...register("email")} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="John Doe" required />
+                        <input type="email" {...register("email")} defaultValue={user?.email} readOnly name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="John Doe" required />
                     </div>
                 </div>
 
                 {/* Image upload  */}
                 <div className="md:grid grid-cols-2">
                     <div>
-                        <ProfileImage/>
+                        <ProfileImage setImageLink={setImageLink} imageLink={imageLink}/>
                     </div>
                     <div className="grid grid-cols-1 grid-rows-2">
                         {/* Age  */}

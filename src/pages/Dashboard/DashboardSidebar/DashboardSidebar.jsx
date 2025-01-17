@@ -9,9 +9,14 @@ import { RiAccountCircleLine } from 'react-icons/ri';
 import {BsThreeDots} from "react-icons/bs";
 import { Divider } from 'antd';
 import fitnessLogo from "../../../assets/icon/Fitness-log.png"
+import useAdmin from '../../../hooks/useAdmin';
+import useTrainer from '../../../hooks/useTrainer';
 
 const DashboardSidebar = () => {
     const {user} = useAuth()
+    const [isAdmin] = useAdmin()
+    const [isTrainer] = useTrainer()
+
     const isCollapse = true;
 
     const addminRoutes = [
@@ -72,8 +77,9 @@ const DashboardSidebar = () => {
                                  <span>Dashboard Home</span>
                              </NavLink>
                          </li>
+                         {/* Admin Routes  */}
                         {
-                           addminRoutes.map(link =>   
+                           user && isAdmin && addminRoutes.map(link =>   
                                 <li className="rounded-sm dashboard text-base" key={link.name}>
                                     <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <span className='text-main'>{link.icon}</span>
@@ -82,12 +88,38 @@ const DashboardSidebar = () => {
                                 </li>
                             )
                         }
-                        <li className="rounded-sm dashboard text-base" >
-                             <NavLink to={"/dashboard"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                 <span className='text-main'><Icon icon="material-symbols-light:post-add" width="26" height="26" /></span>
-                                 <span>Add new Forum</span>
-                             </NavLink>
-                         </li>
+                        {/* Trainer Routes  */}
+                        {
+                           user && isTrainer && trainerRoutes.map(link =>   
+                                <li className="rounded-sm dashboard text-base" key={link.name}>
+                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <span className='text-main'>{link.icon}</span>
+                                        <span>{link.name}</span>
+                                    </NavLink>
+                                </li>
+                            )
+                        }
+                        {/* user Routes  */}
+                        {
+                           !isAdmin && !isTrainer && userRoutes.map(link =>   
+                                <li className="rounded-sm dashboard text-base" key={link.name}>
+                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <span className='text-main'>{link.icon}</span>
+                                        <span>{link.name}</span>
+                                    </NavLink>
+                                </li>
+                            )
+                        }
+
+                        {/* Forum routes */}
+                        {
+                            user && isAdmin || isTrainer && <li className="rounded-sm dashboard text-base" >
+                            <NavLink to={"/dashboard"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <span className='text-main'><Icon icon="material-symbols-light:post-add" width="26" height="26" /></span>
+                                <span>Add new Forum</span>
+                            </NavLink>
+                        </li>
+                        }
                         <Divider plain className="text-gra" style={{
                                     borderColor: '#d1d5db',
                                     color: '#4b5563' 
