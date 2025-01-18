@@ -114,7 +114,7 @@ const DashboardSidebar = () => {
                         {/* Forum routes */}
                         {
                             user && isAdmin || isTrainer && <li className="rounded-sm dashboard text-base" >
-                            <NavLink to={"/dashboard"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                            <NavLink to={"/dashboard/common/post-forum"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                 <span className='text-main'><Icon icon="material-symbols-light:post-add" width="26" height="26" /></span>
                                 <span>Add new Forum</span>
                             </NavLink>

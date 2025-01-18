@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // react icons
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
@@ -7,7 +7,7 @@ import {
   BsChevronRight,
   BsThreeDotsVertical,
 } from "react-icons/bs";
-import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { MdDeleteOutline,  } from "react-icons/md";
 import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -15,70 +15,57 @@ import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 
 const AppliedTrainer = () => {
+  const [tableData, setTableData] = useState([])
   // Get all application
   const axiosSecured = useAxiosSecured();
-  const { data: allApplication, refetch } = useQuery({
+  const { data: allApplication, isLoading, refetch } = useQuery({
     queryKey: ["applicantAdmin"],
     queryFn: async () => {
-      const { data } = await axiosSecured("/application-api/get-application");
+      const { data } = await axiosSecured.get("/application-api/get-application");
       return data;
     },
   });
 
-//   const initialData = Array.from(
-//     { length: allApplication?.length || 1 },
-//     (_, index) => ({
-//       id: index + 1,
-//       name: `User ${index + 1}`,
-//       email: `user${index + 1}@example.com`,
-//       role: index % 3 === 0 ? "Admin" : index % 2 === 0 ? "Editor" : "User",
-//       status: index % 2 === 0 ? "Active" : "Inactive",
-//     })
-//   );
+  useEffect(()=> {
+    if(allApplication?.length > 0){
+      setTableData(allApplication)
+    }
+  }, [allApplication])
 
-  const [data, setData] = useState(allApplication || []);
-  const [search, setSearch] = useState("");
+  console.log(allApplication)
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [openActionMenuId, setOpenActionMenuId] = useState(null);
 
-  // Handle search
-  const filteredData = useMemo(() => {
-    return data.filter((item) =>
-      Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [data, search]);
 
-  // Handle sort
   const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
     setSortConfig({ key, direction });
-  };
-
-  const sortedData = useMemo(() => {
-    if (!sortConfig.key) return filteredData;
-
-    return [...filteredData].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? -1 : 1;
+  
+    // Perform the sort on tableData
+    const sorted = [...tableData].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === "asc" ? -1 : 1;
       }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? 1 : -1;
+      if (a[key] > b[key]) {
+        return direction === "asc" ? 1 : -1;
       }
       return 0;
     });
-  }, [filteredData, sortConfig]);
+  
+    // Update the state with the sorted data
+    setTableData(sorted);
+  };
 
   // Pagination calculations
-  const totalPages = Math.ceil(sortedData.length / pageSize);
+  const totalPages = Math.ceil(tableData?.length / pageSize);
 
-  const paginatedData = sortedData.slice(
+  const paginatedData = tableData?.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -103,53 +90,43 @@ const AppliedTrainer = () => {
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
-  const handleOutsideClick = (event) => {
-    if (selectRef.current && !selectRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () =>
-      document.removeEventListener("mousedown", () => {
-        handleOutsideClick();
-      });
-  }, []);
-
   const handleAcceptApplication = async (applicationData) => {
-    try {
-        const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
-        console.log(data)
-        if(data.modifiedCount > 0){
-            Swal.fire({
-              title: "Successfull",
-              text: "Your applicaiton has been approved.",
-              icon: "success"
-            })
-            refetch()
-            setOpenActionMenuId(null)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-
-    // const {isPending ,mutateAsync} = useMutation({
-    //     mutationFn: async () =>  {
-    //         await axiosSecured.patch(`/accept-application`, )
-    //     },
-    // })
+    // try {
+    //     const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
+    //     console.log(data)
+    //     if(data.modifiedCount > 0){
+    //         Swal.fire({
+    //           title: "Successfull",
+    //           text: "Your applicaiton has been approved.",
+    //           icon: "success"
+    //         })
+    //         refetch()
+    //         setOpenActionMenuId(null)
+    //     }
+    // } catch (error) {
+    //     console.log(error)
+    // }
   }
+  if(isLoading) return <p>Loading....</p>
 
   return (
     <div className="mx-auto p-4 my-10">
+      <div className="text-center mt-5 mb-10 space-y-4">
+          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
+            Here's All Trainer Applications
+          </h3>
+          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
+            Create and manage new training slots with details like date, time,
+            duration, and capacity for efficient scheduling.
+          </p>
+        </div>
       <div className="rounded-md border border-gray-200 w-full">
         <table className="w-full text-sm">
           <thead className="bg-gray-100">
             <tr>
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort(allApplication)}
+                onClick={() => handleSort("name")}
               >
                 <div className="flex items-center gap-[5px]">
                   Name
@@ -159,27 +136,29 @@ const AppliedTrainer = () => {
               {/* Email  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort(allApplication)}
+                onClick={() => handleSort("email")}
               >
                 <div className="flex items-center gap-[5px]">
                   Email
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-              {/* Role  */}
+              {/* Role  handleSort(allApplication)*/}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort(allApplication)}
+                onClick={() => handleSort("date") }
               >
                 <div className="flex items-center gap-[5px]">
-                  Role
+                  Date
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
+               {/* Role  handleSort(allApplication)*/}
+               
               {/* Status  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort(allApplication)}
+                onClick={() => handleSort("status")}
               >
                 <div className="flex items-center gap-[5px]">
                   Status
@@ -193,7 +172,7 @@ const AppliedTrainer = () => {
             </tr>
           </thead>
           <tbody>
-            {allApplication?.map((application) => (
+            {paginatedData?.map((application) => (
               <tr
                 key={application._id}
                 className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
@@ -201,6 +180,7 @@ const AppliedTrainer = () => {
                 <td className="p-3">{application.name}</td>
                 <td className="p-3">{application.email}</td>
                 <td className="p-3">{application.date}</td>
+                {/* <td className="p-3">{application.role}</td> */}
                 <td className={``}> <span className={`border w-fit px-4 py-[2px] font-base font-kanit font-normal text-gray-600 dark:text-gray-300 rounded-full ${application?.status === "pending" && "bg-orange-200 border-orange-200"} ${application?.status === "approved" && "bg-emerald-200 border-emerald-300 "} ${application?.status === "reject" && "bg-red-500 border-red-500"}`}>{application.status}</span> </td>
                 <td className="p-3 relative">
                   <BsThreeDotsVertical
@@ -231,38 +211,6 @@ const AppliedTrainer = () => {
                 </td>
               </tr>
             ))}
-            {/* {paginatedData.map((item) => (
-                        <tr key={item.id} className="border-t border-gray-200 hover:bg-gray-50">
-                            {Object.entries(item).map(([key, value]) => (
-                                key !== "id" && (
-                                    <td key={key} className="p-3">
-                                        {value}
-                                    </td>
-                                )
-                            ))}
-                            <td className="p-3 relative">
-                                <BsThreeDotsVertical onClick={() => toggleActionMenu(item
-                                    .id)}
-                                                     className="action-btn action-btn text-gray-600 cursor-pointer"/>
-
-                                <div
-                                    className={`${openActionMenuId === item.id ? "opacity-100 scale-[1] z-30" : "opacity-0 scale-[0.8] z-[-1]"} zenui-table absolute top-[90%] right-[80%] p-1.5 rounded-md bg-white shadow-md min-w-[160px] transition-all duration-100`}>
-                                    <p className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                                        <MdOutlineEdit/>
-                                        Edit
-                                    </p>
-                                    <p className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                                        <MdDeleteOutline/>
-                                        Delete
-                                    </p>
-                                    <p className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                                        <IoEyeOutline/>
-                                        View Details
-                                    </p>
-                                </div>
-                            </td>
-                        </tr>
-                    ))} */}
           </tbody>
         </table>
 
@@ -273,12 +221,14 @@ const AppliedTrainer = () => {
         )}
       </div>
 
+        {/* TODO  */}
+        {/* Exchange sortedData to tableData  */}
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-[5px]">
           <div className="text-sm text-gray-500">
             Showing {(currentPage - 1) * pageSize + 1} to{" "}
-            {Math.min(currentPage * pageSize, sortedData.length)} of{" "}
-            {sortedData.length} results
+            {Math.min(currentPage * pageSize, tableData.length)} of{" "}
+            {tableData.length} results
           </div>
 
           <div ref={selectRef} className="relative w-44">

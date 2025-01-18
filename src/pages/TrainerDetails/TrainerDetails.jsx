@@ -9,17 +9,26 @@ import FlickeringGrid from "@/components/ui/flickering-grid";
 import { Tiles } from "@/components/ui/tiles"
 import CTa from "./CallToAction";
 import CallToAction from "./CallToAction";
+import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { User } from "lucide-react";
 
 const TrainerDetails = () => {
-    const skillsOption = [
-        { label: "Bootcamp", value: "Bootcamp" },
-        { label: "Pilates", value: "Pilates" },
-        { label: "Yoga", value: "Yoga" },
-        { label: "Indoor cycling", value: "Indoor cycling" },
-        { label: "Bounce & Burn", value: "Bounce & Burn" },
-        { label: "Body Blast", value: "Body Blast" },
-        { label: "Pump & Sculpt", value: "Pump & Sculpt" },
-      ];
+    const {id} = useParams()
+    const axiosPublic = useAxiosPublic()
+    const {data: trainerData} = useQuery({
+        queryKey: ["trainerDetails"],
+        queryFn: async () => {
+            const {data} = await axiosPublic.get(`/trainer-api/trainers/byId/${id}`)
+            return data
+        }
+    })
+    const {name, image, experience, role, skills, date, biography, availableDays, availableSlot, age} = trainerData || {}
+    const lines = biography?.split("\n").filter((line) => line.trim() !== "");
+    const firstBiography = lines?.slice(0, 4).join("\n"); 
+    const secondBiography = lines?.slice(4).join("\n"); 
+
       const [isHovering, setIsHovering] = useState(false);
       const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
       const cardRef = useRef(null);
@@ -42,8 +51,8 @@ const TrainerDetails = () => {
                 borderColor: '#d1d5db',
             }}>
                 <div className="flex mt-8 items-center gap-4 mb-10">
-                    <h3 className="text-3xl uppercase font-kanit font-semibold">Amitee Loiselle</h3>
-                    <p className="text-lg font-normal font-poppins">Fitness Coach</p>
+                    <h3 className="text-3xl uppercase font-kanit font-semibold text-main dark:text-main-light">{name}</h3>
+                    <p className="text-lg font-normal font-poppins text-gray-600 dark:text-gray-400">{role}</p>
                 </div>
                 </Divider>
 
@@ -51,7 +60,7 @@ const TrainerDetails = () => {
                 <div className="grid grid-cols-3 gap-8">
                     {/* Left side  */}
                     <div>
-                        <img src="https://i.ibb.co.com/Y2n6tqL/Cardio-Crush.png" alt="" className="trainer-shadow h-[430px] rounded-lg" />
+                        <img src={image} alt="" className="trainer-shadow h-[430px] rounded-lg" />
                     </div>
 
                     {/* Right side  */}
@@ -63,13 +72,13 @@ const TrainerDetails = () => {
 
                         <div className="">
                         <p className="bg-main mt-4 py-[2px] px-6 w-fit text-white font-poppins text-sm rounded-sm"style={{clipPath: 'polygon(0 1%, 100% 1%, 89% 100%, 0% 100%)'}}>About Me</p>
-                        <p className="text-base  leading-7 font-poppins text-gray-600 dark:text-gray-200 my-8">Going to the gym started off as a hobby. Later it became something that I was truly passionate about. As I continued to work on my strength I came to the realization that perhaps I could not only better myself, but others as well. As I continue my journey, I hope to spread my knowledge.</p>
+                        <p className="line-clamp-4 text-base  leading-7 font-poppins text-gray-600 dark:text-gray-200 my-8">{firstBiography}</p>
                         {/* Skills class  */}
                         <div>
                             <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-lg dark:text-gray-300"><span>Skills</span> <GoArrowRight size={22} className="align-middle"/></h5>
                             <div className="flex flex-wrap gap-2 items-center">
                                 {
-                                    skillsOption.slice(0, 5).map(skill =>  <p key={skill.label} className="px-3 py-[2px] bg-main-light w-fit shadow rounded-sm text-white font-poppins">{skill.label}</p>)
+                                    skills?.map(skill =>  <p key={skill} className="px-3 py-[2px] bg-main-light w-fit shadow rounded-sm text-white font-poppins">{skill}</p>)
                                 }
                             </div>
                         </div>
@@ -78,7 +87,7 @@ const TrainerDetails = () => {
                             <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-lg dark:text-gray-300"><span>Available Days</span> <GoArrowRight size={22} className="align-middle"/></h5>
                             <div className="flex flex-wrap gap-2 items-center">
                                 {
-                                    skillsOption.slice(0,4).map(skill =>  <p key={skill.label} className="px-3 py-[2px] bg-main-light w-fit shadow rounded-sm text-white font-poppins">{skill.label}</p>)
+                                    availableDays?.map(day =>  <p key={day} className="px-3 py-[2px] bg-main-light w-fit shadow rounded-sm text-white font-poppins">{day}</p>)
                                 }
                             </div>
                         </div>
@@ -118,23 +127,34 @@ const TrainerDetails = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-14">
                    
                     {/* Content  */}
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                         <div>
                             <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Joining Date:</span></h5>
-                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">01/20/2025</p>
+                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">{date}</p>
                         </div>
                         <div>
                             <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Experience:</span></h5>
-                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">3 years</p>
+                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">{experience} years</p>
                         </div>
                         <div>
-                            <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Available Class:</span></h5>
+                            <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Age:</span></h5>
+                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">{age} years</p>
+                        </div>
+                        <div>
+                            <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Available Slot:</span></h5>
                             <div className="flex items-center flex-wrap gap-4">
-                                <p>3 years</p>
-                                <p>3 years</p>
-                                <p>3 years</p>
+                                {
+                                    availableSlot?.map(slot => <p key={slot} className="font-poppins text-lg text-gray-600 dark:text-gray-400">{slot}</p>)
+                                }
                             </div>
                         </div>
+                            {
+                                lines?.length > 4 && <div>
+                                    <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Biography:</span></h5>
+                                    <p className="line-clamp-3 text-base leading-7 font-poppins text-gray-600 dark:text-gray-200 my-2">{secondBiography}</p>
+                                </div>
+                            }
+                        
                         <div>
 
                         </div>

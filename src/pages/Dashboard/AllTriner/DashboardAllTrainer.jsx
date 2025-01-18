@@ -3,7 +3,7 @@ import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 
-const AllTrainer = () => {
+const DashboardAllTrainer = () => {
     const axiosSecured = useAxiosSecured()
  
     const {data: usersData} = useQuery({
@@ -51,4 +51,4 @@ const AllTrainer = () => {
     );
 };
 
-export default AllTrainer;
+export default DashboardAllTrainer;

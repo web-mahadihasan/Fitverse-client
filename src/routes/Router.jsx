@@ -7,7 +7,6 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
 import AllNewsLetter from '../pages/Dashboard/AllNewsLetter/AllNewsLetter';
 import AppliedTrainer from '../pages/Dashboard/AppliedTrainer/AppliedTrainer';
-import AllTrainer from '../pages/Dashboard/AllTriner/AllTrainer';
 import AddNewClass from '../pages/Dashboard/AddNewClass/AddNewClass';
 import TrainerApplication from '../pages/TrainerApplication/TrainerApplication';
 import AllTrainers from '../pages/AllTrainers/AllTrainers';
@@ -15,6 +14,8 @@ import TrainerDetails from '../pages/TrainerDetails/TrainerDetails';
 import PrivateRoute from './privateRoute';
 import ManageSlot from '../pages/Dashboard/TrainerPage/ManageSlot/ManageSlot';
 import AddNewSlot from '../pages/Dashboard/TrainerPage/AddNewSlot/AddNewSlot';
+import AddNewForum from '../pages/Dashboard/AddNewForum/AddNewForum';
+import DashboardAllTrainer from '../pages/Dashboard/AllTriner/DashboardAllTrainer';
 
 
 const Router = createBrowserRouter([
@@ -43,7 +44,7 @@ const Router = createBrowserRouter([
                 element: <AllTrainers/>
             },
             {
-                path: "/trainer-details",
+                path: "/trainer-details/:id",
                 element: <TrainerDetails/>
             }
         ]
@@ -66,7 +67,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/dashboard/all-trainer",
-                element: <AllTrainer/>,
+                element: <DashboardAllTrainer/>,
             },
             {
                 path: "/dashboard/add-news-class",
@@ -79,6 +80,10 @@ const Router = createBrowserRouter([
             {
                 path: "/dashboard/trainer/add-new-slot",
                 element: <AddNewSlot/>,
+            },
+            {
+                path: "/dashboard/common/post-forum",
+                element: <AddNewForum/>,
             }
         ]
     }
