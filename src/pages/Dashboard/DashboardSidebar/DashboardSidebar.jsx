@@ -27,8 +27,8 @@ const DashboardSidebar = () => {
         {name: "Add New Class",path: "/dashboard/add-news-class",  icon: <PiListStarFill size={24} />},
     ]
     const trainerRoutes = [
-        {name: "Manage Slot", path: "/dashboard/manage-slot",  icon: <Icon icon="mingcute:classify-2-line" width="26" height="26" />},
-        {name: "Add New Slot", path: "/dashboard/add-new-slot",  icon: <Icon icon="mingcute:classify-add-2-line" width="26" height="26" />},
+        {name: "Manage Slot", path: "/dashboard/trainer/manage-slot",  icon: <Icon icon="mingcute:classify-2-line" width="26" height="26" />},
+        {name: "Add New Slot", path: "/dashboard/trainer/add-new-slot",  icon: <Icon icon="mingcute:classify-add-2-line" width="26" height="26" />},
         {name: "My Class Member", path: "/dashboard/my-class-member",  icon: <Icon icon="humbleicons:users" width="26" height="26" />},
     ]
     const userRoutes = [

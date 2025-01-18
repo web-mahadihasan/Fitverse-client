@@ -13,6 +13,8 @@ import TrainerApplication from '../pages/TrainerApplication/TrainerApplication';
 import AllTrainers from '../pages/AllTrainers/AllTrainers';
 import TrainerDetails from '../pages/TrainerDetails/TrainerDetails';
 import PrivateRoute from './privateRoute';
+import ManageSlot from '../pages/Dashboard/TrainerPage/ManageSlot/ManageSlot';
+import AddNewSlot from '../pages/Dashboard/TrainerPage/AddNewSlot/AddNewSlot';
 
 
 const Router = createBrowserRouter([
@@ -69,6 +71,14 @@ const Router = createBrowserRouter([
             {
                 path: "/dashboard/add-news-class",
                 element: <AddNewClass/>,
+            },
+            {
+                path: "/dashboard/trainer/manage-slot",
+                element: <ManageSlot/>,
+            },
+            {
+                path: "/dashboard/trainer/add-new-slot",
+                element: <AddNewSlot/>,
             }
         ]
     }

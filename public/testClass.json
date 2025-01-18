@@ -3,55 +3,55 @@
       "title": "Power Sculpt",
       "description": "A high-intensity strength training class designed to sculpt your muscles and boost your energy. Perfect for all fitness levels.",
       "image": "https://classpass-res.cloudinary.com/image/upload/f_auto/q_auto/wn5nmtwfqdcci3ctylom.jpg",
-      "total_booked": 125
+      "total_booked": 0
     },
     {
       "title": "Spin & Sculpt",
       "description": "A calming mix of yoga and meditation techniques to help you find balance, strength, and flexibility.",
       "image": "https://i.ibb.co.com/QNNgggH/Spin-Sculpt.png",
-      "total_booked": 98
+      "total_booked": 0
     },
     {
       "title": "Rhythm Revolution",
       "description": "Dance your way to fitness in this fun and energizing class set to upbeat music.",
       "image": "https://i.ibb.co.com/1mmQ2D2/Rhythm-Revolution.png",
-      "total_booked": 175
+      "total_booked": 0
     },
     {
       "title": "Fitness Fiesta",
       "description": "An energetic group workout combining cardio and bodyweight exercises to the rhythm of lively music.",
       "image": "https://www.bathecho.co.uk/uploads/2020/02/Team-Bath-exercise-class-770x470.jpg",
-      "total_booked": 142
+      "total_booked": 0
     },
     {
       "title": "Warrior Workout",
       "description": "Push your limits in this intense circuit training class that builds strength and endurance.",
       "image": "https://i.ibb.co.com/Qk68Mwy/Warrior-Workout.png",
-      "total_booked": 160
+      "total_booked": 0
     },
     {
       "title": "Muscle Stretching",
       "description": "A heart-pumping workout focused on cardio exercises to boost stamina and burn calories.",
       "image": "https://i.ibb.co.com/zSBdj98/Warriorr-Workout.png",
-      "total_booked": 135
+      "total_booked": 0
     },
     {
       "title": "Body Blast",
       "description": "Full-body strength and conditioning exercises for a complete fitness boost.",
       "image": "https://i.ibb.co.com/hZ2TYNm/classs.png",
-      "total_booked": 150
+      "total_booked": 0
     },
     {
       "title": "Beginner Pilates",
       "description": "Focus on your core muscles with a mix of Pilates, yoga, and functional movements.",
       "image": "https://i.ibb.co.com/L6fbDg2/Frame.png",
-      "total_booked": 110
+      "total_booked": 0
     },
     {
       "title": "Yoga Flow",
       "description": "A rejuvenating yoga session that flows through postures to improve flexibility and inner peace.",
       "image": "https://i.ibb.co.com/mqBHtDj/image-10.png",
-      "total_booked": 200
+      "total_booked": 0
     }
   ]
   
