@@ -41,7 +41,7 @@ const TrainerApplication = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  console.log(imageLink);
+  // console.log(imageLink);
 
   const skillsOption = [
     { label: "Bootcamp", value: "Bootcamp" },
@@ -81,7 +81,7 @@ const TrainerApplication = () => {
     };
     try {
       const { data } = await axiosSecured.post(
-        "/apply-trainer",
+        "/application-api/apply-trainer",
         applicationInfo
       );
       console.log(data);

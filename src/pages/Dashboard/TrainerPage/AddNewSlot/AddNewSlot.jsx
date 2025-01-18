@@ -3,13 +3,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import ProfileImage from "./ProfileImage";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-// import useUser from "../../../../hooks/useGetUser";
 import useAxiosSecured from "../../../../hooks/useAxiosSecured";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
@@ -34,7 +32,6 @@ const schema = yup.object().shape({
 
 const AddNewSlot = () => {
     const [classOption, setclassOption] = useState([]);
-    const [getUser] = useGetUser();
     const axiosSecured = useAxiosSecured();
     const { user } = useAuth();
     const [allClass] = useGetClass()
@@ -50,7 +47,7 @@ const AddNewSlot = () => {
     const { data: trainerData, isLoading, isSuccess} = useQuery({
       queryKey: [user?.email, "trainerData"],
       queryFn: async () => {
-        const { data } = await axiosSecured.get(`/trainers/${user?.email}`);
+        const { data } = await axiosSecured.get(`/trainer-api/trainers/${user?.email}`);
         return data;
       },
       enabled: !!user?.email,
@@ -98,32 +95,34 @@ const AddNewSlot = () => {
     const onSubmit = async (data) => {
       const postedDate = format(new Date(), "PP");
       const slotApplication = {
+        trainerId: trainerData._id,
+        ...trainerData,
         ...data,
         date: postedDate,
         slotStatus: "pending",
       };
       console.log(slotApplication)
-      // try {
-      //   const { data } = await axiosSecured.post(
-      //     "/apply-trainer",
-      //     applicationInfo
-      //   );
-      //   console.log(data);
-      //   if (data.insertedId) {
-      //     Swal.fire({
-      //       title: "Successfull",
-      //       text: "Your applicaiton has been submit.",
-      //       icon: "success",
-      //     });
-      //     reset();
-      //   }
-      // } catch (error) {
-      //   Swal.fire({
-      //     title: "Failed",
-      //     text: "Failed to submit application.",
-      //     icon: "error",
-      //   });
-      // }
+      try {
+        const { data } = await axiosSecured.post(
+          "/slot-api/slots/add",
+          slotApplication
+        );
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Successfull",
+            text: "Your applicaiton has been submit.",
+            icon: "success",
+          });
+          reset();
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "Failed",
+          text: "Failed to submit application.",
+          icon: "error",
+        });
+      }
     };
     if(isLoading) return <p>Loading...</p>
     return (
@@ -239,35 +238,7 @@ const AddNewSlot = () => {
                 >
                   Your Skills <span className="text-red-500">*</span>
                 </label>
-                {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-                              {skillsOption.map((skill) => (
-                                  <div
-                                  key={skill.value}
-                                  className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"
-                                  >
-                                  <Controller
-                                      name="skills"
-                                      control={control}
-                                      defaultValue={[]}
-                                      render={({ field: { onChange, value } }) => (
-                                      <>
-                                          <Checkbox
-                                          id={skill.value}
-                                          checked={value?.includes(skill.value)}
-                                          onCheckedChange={(isChecked) => {
-                                              const updatedValue = isChecked
-                                              ? [...(value || []), skill.value]
-                                              : value.filter((val) => val !== skill.value);
-                                              onChange(updatedValue);
-                                          }}
-                                          />
-                                          <Label htmlFor={skill.value}>{skill.label}</Label>
-                                      </>
-                                      )}
-                                  />
-                                  </div>
-                              ))}
-                          </div> */}
+
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {skillsOption.map((skill) => (
                     <div
@@ -298,17 +269,6 @@ const AddNewSlot = () => {
                     </div>
                   ))}
                 </div>
-
-                {/* <ul className="flex items-center gap-4 flex-wrap">
-                              {skillsOption?.map((skill) => (
-                              <li key={skill.label}>
-                                  <label>
-
-                                  {skill.label}
-                                  </label>
-                              </li>
-                              ))}
-                          </ul> */}
               </div>
               {/* AbailAble Days  */}
 

@@ -25,7 +25,7 @@ const AddNewClass = () => {
             image: imageLink
         }
         try {            
-            const {data} = await axiosSecured.post(`/api/class/add`, classData)
+            const {data} = await axiosSecured.post(`/class-api/class/add`, classData)
             if(data.insertedId){
                 Swal.fire({
                     title: "Success!",

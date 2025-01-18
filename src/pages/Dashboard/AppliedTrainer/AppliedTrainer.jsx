@@ -20,7 +20,7 @@ const AppliedTrainer = () => {
   const { data: allApplication, refetch } = useQuery({
     queryKey: ["applicantAdmin"],
     queryFn: async () => {
-      const { data } = await axiosSecured("/get-application");
+      const { data } = await axiosSecured("/application-api/get-application");
       return data;
     },
   });
@@ -119,7 +119,7 @@ const AppliedTrainer = () => {
 
   const handleAcceptApplication = async (applicationData) => {
     try {
-        const {data} = await axiosSecured.patch(`/accept-application/${applicationData._id}`, applicationData)
+        const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
         console.log(data)
         if(data.modifiedCount > 0){
             Swal.fire({
