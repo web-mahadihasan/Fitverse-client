@@ -1,6 +1,6 @@
 import { Divider } from "antd";
 import { GoArrowRight } from "react-icons/go";
-import {BsInstagram, BsLinkedin, BsTwitter} from "react-icons/bs";
+import {BsInstagram, BsLinkedin, BsSend, BsTwitter} from "react-icons/bs";
 import {CgFacebook} from "react-icons/cg"
 import { FaLinkedinIn } from "react-icons/fa";
 import React, {useRef, useState} from "react";
@@ -12,7 +12,8 @@ import CallToAction from "./CallToAction";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { User } from "lucide-react";
+import { User, Zap } from "lucide-react";
+import { IoLocationOutline } from "react-icons/io5";
 
 const TrainerDetails = () => {
     const {id} = useParams()
@@ -123,6 +124,8 @@ const TrainerDetails = () => {
 
                 </div>
 
+                
+
                 {/* Part 2  */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-14">
                    
@@ -166,6 +169,52 @@ const TrainerDetails = () => {
                     </div>
 
                 </div>
+
+                {/* Slot info  */}
+            <div>
+                <h3 className="font-kanit text-2xl font-semibold uppercase tracking-wide text-gray-700 text-center my-6 mt-10">All Available Slot here</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {
+                    ["1","2","3"].map((data, idx) => (
+                        <div key={idx} className="bg-gradient-to-r from-[#5A29E4]/15 to-[#9F72F9]/10 w-full rounded-xl">
+                <div className="flex flex-col p-[15px] gap-4">
+                    <div className="flex items-center justify-between w-full">
+                    <h1 className="text-[1rem] flex items-center gap-2 lg:text-[1.3rem] font-bold text-main">
+                        <span><BsSend className="p-[6px] lg:p-[5px] rounded-xl bg-blue-100 text-blue-800 text-[1.5rem] lg:text-[2rem]"/></span>
+                        <span>Class Name</span>
+                    </h1>
+                    <div className=" flex font-medium backdrop-blur-2xl font-poppins items-center gap-2 rounded-full bg-gray-100 px-4 py-1 text-sm text-main">
+                        <Zap className="text-main h-4 w-4 " />
+                        Duration: 2 Hours
+                    </div>
+                    </div>
+                    <div className="flex items-center gap-[10px]">
+                        <h3 className="font-poppins text-lg text-gray-700 dark:text-gray-200">Classes:</h3>
+                        <div className="flex items-center flex-wrap gap-4">
+                             {
+                                 availableSlot?.map(slot => <p key={slot} className="font-poppins text-base text-gray-600 dark:text-gray-400">{slot}</p>)
+                             }
+                         </div>
+                    </div>
+                    <div className="flex items-center gap-[10px]">
+                        <h3 className="font-poppins text-lg text-gray-700 dark:text-gray-200">Days</h3>
+                        <div className="flex items-center flex-wrap gap-4">
+                             {
+                                 availableSlot?.map(slot => <p key={slot} className="font-poppins text-base text-gray-600 dark:text-gray-400">{slot}</p>)
+                             }
+                         </div>
+                    </div>
+                    <button className="font-poppins bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+                        Booked Slot
+                    </button>
+                </div>
+                </div>
+                    ))
+                }
+            </div>
+            </div>
+
+                {/* Call to action  */}
                 <div className="my-24 min-h-[500px] object-cover bg-center bg-no-repeat max-w-7xl mx-auto px-4 xl:px-0">
                     {/* <div className="w-full h-[500px]">
                     <div>
