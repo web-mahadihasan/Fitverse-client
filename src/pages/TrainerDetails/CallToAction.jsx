@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Zap } from 'lucide-react'
+import { Link } from "react-router"
 
 // Sample integration data - in a real app this would likely come from an API or database
 const integrations = [
@@ -24,10 +25,9 @@ export default function CallToAction() {
             <Zap className="text-main h-4 w-4 " />
               Collaborate. Innovate. Thrive.
           </div>
-          <h2 className="text-4xl py-3 font-bold tracking-tight sm:text-4xl">Begin Your Next Chapter Here</h2>
-          <p className="mx-auto max-w-[600px] text-gray-500 font-poppins ">
-            Connect your favorite apps and services to enhance your experience and boost productivity. Synchronize data and
-            unleash the full potential of our platform.
+          <h2 className="text-2xl md:text-3xl lg:text-5xl font-poppins py-3 font-semibold tracking-tight sm:text-4xl">Begin Your Next Chapter Here</h2>
+          <p className="mx-auto max-w-[600px] text-gray-600 font-poppins ">
+            Share your passion, ignite potential, and transform lives. Join our team of exceptional trainers and be the guiding force in shaping brighter futures. Your expertise matters
           </p>
         </CardHeader>
         <CardContent className="pt-8">
@@ -49,9 +49,11 @@ export default function CallToAction() {
               </div>
             </div>
             <div className="mt-12 text-center">
-              <button className="font-poppins bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
-                Be a Trainer
-             </button>
+              <Link to={"/trainer-application"}>
+                <button className="font-poppins bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+                  Be a Trainer
+              </button>
+              </Link>
               {/* <Button
                 variant="outline"
                 className="rounded-full bg-gray-50 px-8 text-gray-900 hover:bg-gray-100 hover:text-gray-900"

@@ -125,7 +125,7 @@ const ManageSlot = () => {
             <tr>
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("name")}
+                onClick={() => handleSort("slotName")}
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
                   Slot Name
@@ -135,17 +135,17 @@ const ManageSlot = () => {
               {/* Email  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("email")}
+                onClick={() => handleSort("classtitle")}
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
-                  Classes
+                  Class Name
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
               {/* Role  handleSort(allApplication)*/}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("date") }
+                onClick={() => handleSort("classHour") }
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
                   Class Hours
@@ -156,12 +156,9 @@ const ManageSlot = () => {
                
               {/* Status  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("status")}
-              >
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer">
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
-                  Status
-                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                  Class Day
                 </div>
               </th>
 
@@ -193,7 +190,9 @@ const ManageSlot = () => {
                 </td>
                 <td className="p-3 font-poppins text-base font-medium text-gray-600 dark:text-gray-300  ">{application.classHour} Hours</td>
                 {/* <td className="p-3">{application.role}</td> */}
-                <td className={``}> <span className={`border w-fit px-4 py-[2px] font-base font-kanit font-normal text-gray-600 dark:text-gray-300 rounded-full ${application?.status === "pending" && "bg-orange-200 border-orange-200"} ${application?.status === "approved" && "bg-emerald-200 border-emerald-300 "} ${application?.status === "reject" && "bg-red-500 border-red-500"}`}>{application.slotStatus}</span> </td>
+                <td className={``}> <span className={`px-4 py-[2px] font-base font-kanit flex gap-2 font-normal text-gray-600 dark:text-gray-300 rounded-full`}>
+                  {application?.availableDays?.map((day, idx) => <p key={idx}>{day} {application?.availableDays?.length - 1 !== idx && "-"} </p>)}
+                  </span> </td>
                 <td className="p-3 relative">
                   <BsThreeDotsVertical
                     onClick={() => toggleActionMenu(application._id)}

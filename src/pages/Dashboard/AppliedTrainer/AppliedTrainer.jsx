@@ -181,7 +181,13 @@ const AppliedTrainer = () => {
                 <td className="p-3">{application.email}</td>
                 <td className="p-3">{application.date}</td>
                 {/* <td className="p-3">{application.role}</td> */}
-                <td className={``}> <span className={`border w-fit px-4 py-[2px] font-base font-kanit font-normal text-gray-600 dark:text-gray-300 rounded-full ${application?.status === "pending" && "bg-orange-200 border-orange-200"} ${application?.status === "approved" && "bg-emerald-200 border-emerald-300 "} ${application?.status === "reject" && "bg-red-500 border-red-500"}`}>{application.status}</span> </td>
+                <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
+                  {
+                  application?.trainerStatus === "approved" && "Approved" 
+                  || application?.trainerStatus === "pending" && "Pending" 
+                  || application?.trainerStatus === "reject" && "Rejected"
+                  }</span> 
+                </td>
                 <td className="p-3 relative">
                   <BsThreeDotsVertical
                     onClick={() => toggleActionMenu(application._id)}

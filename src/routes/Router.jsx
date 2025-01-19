@@ -16,6 +16,8 @@ import ManageSlot from '../pages/Dashboard/TrainerPage/ManageSlot/ManageSlot';
 import AddNewSlot from '../pages/Dashboard/TrainerPage/AddNewSlot/AddNewSlot';
 import AddNewForum from '../pages/Dashboard/AddNewForum/AddNewForum';
 import DashboardAllTrainer from '../pages/Dashboard/AllTriner/DashboardAllTrainer';
+import SlotDetailsWithPayment from '../pages/SlotDetailsWithPayment/SlotDetailsWithPayment';
+import AllClass from '../pages/AllClass/AllClass';
 
 
 const Router = createBrowserRouter([
@@ -46,6 +48,14 @@ const Router = createBrowserRouter([
             {
                 path: "/trainer-details/:id",
                 element: <TrainerDetails/>
+            },
+            {
+                path: "/slot-details/:id",
+                element: <SlotDetailsWithPayment/>
+            },
+            {
+                path: "/all-classes",
+                element: <AllClass/>
             }
         ]
     },

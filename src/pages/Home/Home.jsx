@@ -18,10 +18,10 @@ const Home = () => {
             </div> */}
 
             {/* Top clasess  */}
-            <section>
+            <section className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-3 gap-6 my-10">
                     {
-                        allClass?.slice(0, 6).map((classInfo, idx) => <ClassCard key={idx} classInfo={classInfo}/>)
+                        allClass?.slice(0, 6).map((classInfo) => <ClassCard key={classInfo._id} classInfo={classInfo}/>)
                     }
                 </div>
             </section>

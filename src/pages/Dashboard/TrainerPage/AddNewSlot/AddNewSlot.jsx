@@ -44,7 +44,7 @@ const AddNewSlot = () => {
       },
     });
     // Get skill
-    const { data: trainerData, isLoading, isSuccess} = useQuery({
+    const { data: trainerData, isLoading, isSuccess, refetch} = useQuery({
       queryKey: [user?.email, "trainerData"],
       queryFn: async () => {
         const { data } = await axiosSecured.get(`/trainer-api/trainers/${user?.email}`);
@@ -52,7 +52,7 @@ const AddNewSlot = () => {
       },
       enabled: !!user?.email,
     });
-
+    const {_id: trainerId, ...restTrainerData} = trainerData || {}
 
     useEffect(() => {
       if (isSuccess && trainerData?.skills) {
@@ -94,35 +94,45 @@ const AddNewSlot = () => {
     ];
     const onSubmit = async (data) => {
       const postedDate = format(new Date(), "PP");
+      const {classHour} = data
       const slotApplication = {
-        trainerId: trainerData._id,
-        ...trainerData,
+        trainerId,
+        ...restTrainerData,
         ...data,
         date: postedDate,
-        slotStatus: "pending",
       };
-      console.log(slotApplication)
-      try {
-        const { data } = await axiosSecured.post(
-          "/slot-api/slots/add",
-          slotApplication
-        );
-        console.log(data);
-        if (data.insertedId) {
+      
+      if(trainerData.totalHours >= classHour){
+        try {
+          const { data } = await axiosSecured.post(
+            "/slot-api/slots/add",
+            slotApplication
+          );
+          console.log(data);
+          if (data.insertedId) {
+            Swal.fire({
+              title: "Successfull",
+              text: "Your applicaiton has been submit.",
+              icon: "success",
+            });
+            reset();
+            refetch()
+          }
+        } catch (error) {
           Swal.fire({
-            title: "Successfull",
-            text: "Your applicaiton has been submit.",
-            icon: "success",
+            title: "Failed",
+            text: "Failed to submit application.",
+            icon: "error",
           });
-          reset();
         }
-      } catch (error) {
+      }else{
         Swal.fire({
           title: "Failed",
-          text: "Failed to submit application.",
+          text: "You're reached max class hour in a week.",
           icon: "error",
         });
       }
+      
     };
     if(isLoading) return <p>Loading...</p>
     return (

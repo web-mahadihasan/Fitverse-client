@@ -75,7 +75,7 @@ const TrainerApplication = () => {
       ...data,
       image: imageLink,
       date,
-      status: "pending",
+      trainerStatus: "pending",
       userId: getUser?._id,
       role: getUser?.role,
     };

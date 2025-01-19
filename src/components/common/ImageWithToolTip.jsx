@@ -28,11 +28,17 @@ export const ImageWithToolTip = ({ items, title, className }) => {
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      {items?.map((item) => (
-        item.classtitle.includes(title) && (
+      {items &&
+        Array.from(
+          new Map(
+            items
+              .filter((item) => item.classtitle.includes(title)) 
+              .map((item) => [item.trainerId, item])
+          ).values()
+        ).slice(0, 5).map((item) => (
             <div
           className="-mr-4 relative group"
-          key={item.name}
+          key={item._id}
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -69,7 +75,7 @@ export const ImageWithToolTip = ({ items, title, className }) => {
               </motion.div>
             )}
           </AnimatePresence>
-          <Link to={`/trainer-details/${item._id}`}>
+          <Link to={`/trainer-details/${item.trainerId}`}>
             <img
                 onMouseMove={handleMouseMove}
                 height={100}
@@ -80,7 +86,7 @@ export const ImageWithToolTip = ({ items, title, className }) => {
             />
           </Link>
         </div>
-        )
+        
       ))}
     </div>
   );
