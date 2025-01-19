@@ -22,6 +22,8 @@ export default {
 				DEFAULT: '#5A29E4',
 				light: '#9F72F9'
 			  },
+			  'secondary-black': "#212529",
+			  'primary-black': "#05264e",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

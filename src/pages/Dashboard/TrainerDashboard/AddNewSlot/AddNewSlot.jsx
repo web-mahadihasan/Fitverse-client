@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
 import useGetUser from "../../../../hooks/useGetUser";
 import useGetClass from "../../../../hooks/useGetClass";
+import { useNavigate } from "react-router";
 
 const animatedComponents = makeAnimated();
 
@@ -35,6 +36,8 @@ const AddNewSlot = () => {
     const axiosSecured = useAxiosSecured();
     const { user } = useAuth();
     const [allClass] = useGetClass()
+    const navigate = useNavigate()
+
     const { register, handleSubmit, control, reset, setValue,
       formState: { errors },
     } = useForm({
@@ -117,6 +120,7 @@ const AddNewSlot = () => {
             });
             reset();
             refetch()
+            navigate("/dashboard/trainer/manage-slot")
           }
         } catch (error) {
           Swal.fire({
@@ -476,7 +480,7 @@ const AddNewSlot = () => {
                 type="submit"
                 className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10"
               >
-                Submit Application
+                Add New Slot
               </button>
             </form>
           </div>

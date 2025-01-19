@@ -12,12 +12,13 @@ import TrainerApplication from '../pages/TrainerApplication/TrainerApplication';
 import AllTrainers from '../pages/AllTrainers/AllTrainers';
 import TrainerDetails from '../pages/TrainerDetails/TrainerDetails';
 import PrivateRoute from './privateRoute';
-import ManageSlot from '../pages/Dashboard/TrainerPage/ManageSlot/ManageSlot';
-import AddNewSlot from '../pages/Dashboard/TrainerPage/AddNewSlot/AddNewSlot';
+import ManageSlot from '../pages/Dashboard/TrainerDashboard/ManageSlot/ManageSlot';
+import AddNewSlot from '../pages/Dashboard/TrainerDashboard/AddNewSlot/AddNewSlot';
 import AddNewForum from '../pages/Dashboard/AddNewForum/AddNewForum';
 import DashboardAllTrainer from '../pages/Dashboard/AllTriner/DashboardAllTrainer';
 import SlotDetailsWithPayment from '../pages/SlotDetailsWithPayment/SlotDetailsWithPayment';
 import AllClass from '../pages/AllClass/AllClass';
+import ActivityLog from '../pages/Dashboard/UserDashboard/ActivityLogs/ActivityLog';
 
 
 const Router = createBrowserRouter([
@@ -94,6 +95,10 @@ const Router = createBrowserRouter([
             {
                 path: "/dashboard/common/post-forum",
                 element: <AddNewForum/>,
+            },
+            {
+                path: "/dashboard/user/activity-log",
+                element: <ActivityLog/>,
             }
         ]
     }

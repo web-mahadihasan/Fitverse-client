@@ -1,138 +1,287 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 
-const AllNewsLetter = () => {  
-  return ( 
-        <> 
-            <div className="w-full overflow-x-auto my-24">
-            {/* <table className="w-full text-left border border-separate rounded border-slate-200" cellspacing="0">
-                <tbody>
-                <tr>
-                    <th scope="col" className="h-12 px-6 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">SL No.</th>
-                    <th scope="col" className="h-12 px-6 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Name</th>
-                    <th scope="col" className="h-12 px-6 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Email</th>
-                    <th scope="col" className="h-12 px-6 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Date</th>
-                    <th scope="col" className="h-12 px-6 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Username</th>
-                </tr>
-                <tr className="odd:bg-slate-50">
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Ayub Salas</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Designer</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Carroll Group</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Member</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">salas_a</td>
-                </tr>
-                <tr className="odd:bg-slate-50">
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Agnes Sherman</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Developer</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Apple</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Admin</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">shermanagnes</td>
-                </tr>
-                <tr className="odd:bg-slate-50">
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Jemma Cummings</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Senior Designer</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">20goto10</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Member</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">jemmaC</td>
-                </tr>
-                <tr className="odd:bg-slate-50">
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Jimi Cardenas</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Copywriter</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Wind-UI</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Owner</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">cardenasji</td>
-                </tr>
-                <tr className="odd:bg-slate-50">
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Mateusz Tucker</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Project Manager</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Tailwindui</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">Member</td>
-                    <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">mt</td>
-                </tr>
-                </tbody>
-            </table> */}
-            
+// react icons
+import {RxCross1} from "react-icons/rx";
+import { HiOutlineArrowsUpDown } from "react-icons/hi2";
+import {
+  BsChevronLeft,
+  BsChevronRight,
+  BsThreeDotsVertical,
+} from "react-icons/bs";
+import { MdDeleteOutline,  } from "react-icons/md";
+import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
+import { IoIosArrowDown } from "react-icons/io";
+import { useMutation, useQuery } from "@tanstack/react-query";
+// import useAxiosSecured from "../../../hooks/useAxiosSecured";
+// import Swal from "sweetalert2";
+// import useAxiosSecured from "../../../../hooks/useAxiosSecured";
+// import useAuth from "../../../../hooks/useAuth";
 
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 font-poppins">
-                    <thead className="text-sm font-normal text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 h-14 dark:text-gray-400">
-                        <tr className="my-6">
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Date
-                            </th>
-                            {/* <th scope="col" className="px-6 py-3">
-                                Price
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                <span className="sr-only">Edit</span>
-                            </th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Apple MacBook Pro 
-                            </th>
-                            <td className="px-6 py-4">
-                                Silver
-                            </td>
-                            <td className="px-6 py-4">
-                                Laptop
-                            </td>
-                            {/* <td className="px-6 py-4">
-                                $2999
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td> */}
-                        </tr>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Microsoft Surface Pro
-                            </th>
-                            <td className="px-6 py-4">
-                                White
-                            </td>
-                            <td className="px-6 py-4">
-                                Laptop PC
-                            </td>
-                            {/* <td className="px-6 py-4">
-                                $1999
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td> */}
-                        </tr>
-                        <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Magic Mouse 2
-                            </th>
-                            <td className="px-6 py-4">
-                                Mehedihasanmilu7@gmail.com
-                            </td>
-                            <td className="px-6 py-4">
-                                Accessories
-                            </td>
-                            {/* <td className="px-6 py-4">
-                                $99
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td> */}
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            </div>
-        {/*<!-- End Striped Table --> */}
-        
-        </> 
-    ) 
-}
+const ActivityLog = () => {
+    const [tableData, setTableData] = useState([])
+    const {user} = useAuth()
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    
 
-export default AllNewsLetter;
+    // Get all application
+    const axiosSecured = useAxiosSecured();
+    const { data: userApplicationInfo, isLoading, refetch } = useQuery({
+        queryKey: ["userApplicationInfo"],
+        queryFn: async () => {
+        const { data } = await axiosSecured.get(`/application-api/get-application/${user.email}`);
+        return data;
+        },
+    });
+
+    useEffect(()=> {
+        if(userApplicationInfo?.length > 0){
+        setTableData(userApplicationInfo)
+        }
+    }, [userApplicationInfo])
+
+    // Handle sorting 
+    const handleSort = (key) => {
+        let direction = "asc";
+        if (sortConfig.key === key && sortConfig.direction === "asc") {
+        direction = "desc";
+        }
+        setSortConfig({ key, direction });
+    
+        // Perform the sort on tableData
+        const sorted = [...tableData].sort((a, b) => {
+        if (a[key] < b[key]) {
+            return direction === "asc" ? -1 : 1;
+        }
+        if (a[key] > b[key]) {
+            return direction === "asc" ? 1 : -1;
+        }
+        return 0;
+        });
+    
+        // Update the state with the sorted data
+        setTableData(sorted);
+    };
+
+    // Pagination calculations
+    const totalPages = Math.ceil(tableData?.length / pageSize);
+
+    const paginatedData = tableData?.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
+    const handlePageChange = (page) => {
+        setCurrentPage(Math.min(Math.max(1, page), totalPages));
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef(null);
+
+    // handle how many row show in one col
+    const handleOptionClick = (value) => {
+        setPageSize(Number(value));
+        setCurrentPage(1);
+        setIsOpen(false);
+    };
+
+    const handleToggle = () => setIsOpen((prev) => !prev);
+
+ 
+  if(isLoading) return <p>Loading....</p>
+
+  return (
+    <div className="mx-auto p-4 my-10">
+      <div className="text-center mt-5 mb-10 space-y-4">
+          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
+             User Activity Log and Engagement Tracker
+          </h3>
+          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
+            Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
+          </p>
+        </div>
+      <div className="rounded-md border border-gray-200 w-full">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("name")}
+              >
+                <div className="flex items-center gap-[5px]">
+                  Name
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+              {/* Email  */}
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("email")}
+              >
+                <div className="flex items-center gap-[5px]">
+                  Email
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+              {/* Role  handleSort(userApplicationInfo)*/}
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("date") }
+              >
+                <div className="flex items-center gap-[5px]">
+                  Date
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+               {/* Role  handleSort(userApplicationInfo)*/}
+               
+              {/* Status  */}
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("status")}
+              >
+                <div className="flex items-center gap-[5px]">
+                  Status
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+
+              <th className="p-3 text-left font-medium text-gray-700">
+                Admin Feedback
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData?.map((application) => (
+              <tr
+                key={application._id}
+                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
+              >
+                <td className="p-3">{application.name}</td>
+                <td className="p-3">{application.email}</td>
+                <td className="p-3">{application.date}</td>
+                {/* <td className="p-3">{application.role}</td> */}
+                <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
+                  {
+                  application?.trainerStatus === "approved" && "Approved" 
+                  || application?.trainerStatus === "pending" && "Pending" 
+                  || application?.trainerStatus === "reject" && "Rejected"
+                  }</span> 
+                </td>
+                <td className="p-3 relative">
+                  {
+                    application?.trainerStatus === "pending" ? "Under Review" : <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
+                    <IoEyeOutline size={20}/>
+                    View Details
+                  </button>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {!userApplicationInfo?.length && (
+          <p className="text-[0.9rem] text-gray-500 py-6 text-center w-full">
+            No data found!
+          </p>
+        )}
+      </div>
+
+        {/* TODO  */}
+        {/* Exchange sortedData to tableData  */}
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center gap-[5px]">
+          <div className="text-sm text-gray-500">
+            Showing {(currentPage - 1) * pageSize + 1} to{" "}
+            {Math.min(currentPage * pageSize, tableData.length)} of{" "}
+            {tableData.length} results
+          </div>
+
+          <div ref={selectRef} className="relative w-44">
+            <button
+              onClick={handleToggle}
+              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none"
+            >
+              {pageSize}
+
+              <IoIosArrowDown
+                className={`${
+                  isOpen ? "rotate-[180deg]" : "rotate-0"
+                } transition-all duration-200`}
+              />
+            </button>
+            {isOpen && (
+              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg">
+                <div
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleOptionClick(5)}
+                >
+                  5
+                </div>
+                <div
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleOptionClick(10)}
+                >
+                  10
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="border border-gray-200 hover:bg-gray-50 cursor-pointer px-[10px] text-[0.9rem] py-[5px] rounded-md"
+          >
+            <BsChevronLeft />
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1">
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (currentPage <= 3) {
+                pageNum = i + 1;
+              } else if (currentPage >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = currentPage - 2 + i;
+              }
+
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`${
+                    pageNum === currentPage && "bg-black text-white"
+                  } border border-gray-200 px-[10px] text-[0.9rem] py-[1px] rounded-md`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="border border-gray-200 px-[10px] cursor-pointer hover:bg-gray-50 text-[0.9rem] py-[5px] rounded-md"
+          >
+            <BsChevronRight />
+          </button>
+        </div>
+      </div>
+
+      
+    </div>
+  );
+};
+
+export default ActivityLog;

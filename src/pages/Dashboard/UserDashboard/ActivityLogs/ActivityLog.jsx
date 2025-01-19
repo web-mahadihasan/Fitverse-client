@@ -1,183 +1,103 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-
-// react icons
-import {RxCross1} from "react-icons/rx";
+import { useEffect, useRef, useState } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import {
   BsChevronLeft,
   BsChevronRight,
-  BsThreeDotsVertical,
 } from "react-icons/bs";
-import { MdDeleteOutline,  } from "react-icons/md";
-import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import useAxiosSecured from "../../../hooks/useAxiosSecured";
-import Swal from "sweetalert2";
-import RejectedFeedback from "./rejectedFeedback";
-
-const AppliedTrainer = () => {
-  const [tableData, setTableData] = useState([])
-  const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
-  const [rejectionId, setRejectionId] = useState(null);
-  const [rejectFeedback, setRejectFeedback] = useState("")
-  const [disabledButton, setDisabledButton] = useState(true);
-
-  // Get all application
-  const axiosSecured = useAxiosSecured();
-  const { data: allApplication, isLoading, refetch } = useQuery({
-    queryKey: ["applicantAdmin"],
-    queryFn: async () => {
-      const { data } = await axiosSecured.get("/application-api/get-application");
-      return data;
-    },
-  });
-
-  useEffect(()=> {
-    if(allApplication?.length > 0){
-      setTableData(allApplication)
-    }
-  }, [allApplication])
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecured from "../../../../hooks/useAxiosSecured";
+import { useQuery } from "@tanstack/react-query";
+// import { MdDeleteOutline,  } from "react-icons/md";
+// import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
+// import { useMutation, useQuery } from "@tanstack/react-query";
+// import useAxiosSecured from "../../../hooks/useAxiosSecured";
+// import Swal from "sweetalert2";
+// import useAxiosSecured from "../../../../hooks/useAxiosSecured";
+// import useAuth from "../../../../hooks/useAuth";
 
 
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [openActionMenuId, setOpenActionMenuId] = useState(null);
+const ActivityLog = () => {
+    const [tableData, setTableData] = useState([])
+    const {user} = useAuth()
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    
 
-  // Handle sorting 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  
-    // Perform the sort on tableData
-    const sorted = [...tableData].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === "asc" ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === "asc" ? 1 : -1;
-      }
-      return 0;
+    // Get all application
+    const axiosSecured = useAxiosSecured();
+    const { data: userApplicationInfo, isLoading, } = useQuery({
+        queryKey: ["userApplicationInfo"],
+        queryFn: async () => {
+        const { data } = await axiosSecured.get(`/application-api/get-application/${user.email}`);
+        return data;
+        },
     });
-  
-    // Update the state with the sorted data
-    setTableData(sorted);
-  };
 
-  // Pagination calculations
-  const totalPages = Math.ceil(tableData?.length / pageSize);
-
-  const paginatedData = tableData?.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
-
-  const handlePageChange = (page) => {
-    setCurrentPage(Math.min(Math.max(1, page), totalPages));
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const selectRef = useRef(null);
-
-  // handle how many row show in one col
-  const handleOptionClick = (value) => {
-    setPageSize(Number(value));
-    setCurrentPage(1);
-    setIsOpen(false);
-  };
-
-  const toggleActionMenu = (id) => {
-    setOpenActionMenuId(openActionMenuId === id ? null : id);
-  };
-
-  const handleToggle = () => setIsOpen((prev) => !prev);
-
-  // Modal check confirm
-  const checkIsConfirmAction = (e) => {
-        setDisabledButton(true)
-        setRejectFeedback(e.target.value)
-
-        if(rejectFeedback.length > 10){
-            setDisabledButton(false)
+    useEffect(()=> {
+        if(userApplicationInfo?.length > 0){
+        setTableData(userApplicationInfo)
         }
-        
-    }
+    }, [userApplicationInfo])
 
-  // Handle accept application 
-  const handleAcceptApplication = async (applicationData) => {
-    try {
-        const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
-        console.log(data)
-        if(data.modifiedCount > 0){
-            Swal.fire({
-              title: "Successfull",
-              text: "Your applicaiton has been approved.",
-              icon: "success"
-            })
-            refetch()
-            setOpenActionMenuId(null)
+    // Handle sorting 
+    const handleSort = (key) => {
+        let direction = "asc";
+        if (sortConfig.key === key && sortConfig.direction === "asc") {
+        direction = "desc";
         }
-    } catch (error) {
-        console.log(error)
-    }
-  }
-  // Handle Delete application 
-  const handleRejectApplication = async(id) => {
-    Swal.fire({
-      title: "Are you sure Reject Application?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#10b981",
-      confirmButtonText: "Reject Application",
-      cancelButtonText: "Keep it"
-    }).then(async(result) => {
-      if (result.isConfirmed) {
-        setRejectionId(id)
-        setRejectionModalOpen(true)
-       
-      }
-    }); 
-  }
-  const handleRejectConfirmation = async () => {
-    const rejectNote = {
-      rejectNote: rejectFeedback
-    }
-     try {
-          const {data} = await axiosSecured.patch(`/application-api/reject-application/${rejectionId}`, rejectNote)
-          console.log(data)
-          if(data.modifiedCount > 0){
-              Swal.fire({
-                title: "Successfull",
-                text: "Your applicaiton has been approved.",
-                icon: "success"
-              })
-              setRejectFeedback("")
-              setRejectionModalOpen(false)
-              refetch()
-              setOpenActionMenuId(null)
-          }
-          } catch (error) {
-              console.log(error)
-          }
-  }
- 
+        setSortConfig({ key, direction });
+    
+        // Perform the sort on tableData
+        const sorted = [...tableData].sort((a, b) => {
+        if (a[key] < b[key]) {
+            return direction === "asc" ? -1 : 1;
+        }
+        if (a[key] > b[key]) {
+            return direction === "asc" ? 1 : -1;
+        }
+        return 0;
+        });
+    
+        // Update the state with the sorted data
+        setTableData(sorted);
+    };
+
+    // Pagination calculations
+    const totalPages = Math.ceil(tableData?.length / pageSize);
+
+    const paginatedData = tableData?.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
+    const handlePageChange = (page) => {
+        setCurrentPage(Math.min(Math.max(1, page), totalPages));
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef(null);
+
+    // handle how many row show in one col
+    const handleOptionClick = (value) => {
+        setPageSize(Number(value));
+        setCurrentPage(1);
+        setIsOpen(false);
+    };
+
+    const handleToggle = () => setIsOpen((prev) => !prev);
+
   if(isLoading) return <p>Loading....</p>
 
   return (
     <div className="mx-auto p-4 my-10">
       <div className="text-center mt-5 mb-10 space-y-4">
           <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-            Here's All Trainer Applications
+             User Activity Log and Engagement Tracker
           </h3>
           <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Create and manage new training slots with details like date, time,
-            duration, and capacity for efficient scheduling.
+            Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
           </p>
         </div>
       <div className="rounded-md border border-gray-200 w-full">
@@ -203,7 +123,7 @@ const AppliedTrainer = () => {
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-              {/* Role  handleSort(allApplication)*/}
+              {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
                 onClick={() => handleSort("date") }
@@ -213,7 +133,7 @@ const AppliedTrainer = () => {
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-               {/* Role  handleSort(allApplication)*/}
+               {/* Role  handleSort(newsLetterSubscriber)*/}
                
               {/* Status  */}
               <th
@@ -227,7 +147,7 @@ const AppliedTrainer = () => {
               </th>
 
               <th className="p-3 text-left font-medium text-gray-700">
-                Actions
+                Admin Feedback
               </th>
             </tr>
           </thead>
@@ -249,38 +169,19 @@ const AppliedTrainer = () => {
                   }</span> 
                 </td>
                 <td className="p-3 relative">
-                  <BsThreeDotsVertical
-                    onClick={() => toggleActionMenu(application._id)}
-                    className="action-btn action-btn text-gray-600 cursor-pointer"
-                  />
-
-                  <div
-                    className={`${
-                      openActionMenuId === application._id
-                        ? "opacity-100 scale-[1] z-30"
-                        : "opacity-0 scale-[0.8] z-[-1]"
-                    } zenui-table absolute top-[90%] right-[80%] p-1.5 rounded-md bg-white shadow-md min-w-[180px] space-y-1 transition-all duration-100`}
-                  >
-                    <button disabled={application?.trainerStatus === "approved"} onClick={() => handleAcceptApplication(application)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-green-600 font-poppins transition-all duration-200">
-                      <IoCheckmarkDoneSharp />
-                      {application?.trainerStatus === "approved" ? "Already Approved" : "Accept"}
-                    </button>
-                    <button disabled={application?.trainerStatus === "reject"} onClick={() => handleRejectApplication(application._id)} className={`flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${application?.trainerStatus === "reject" ? "bg-gray-300 cursor-default hover:bg-gray-300": ""}`}>
-                      <MdDeleteOutline size={16}/>
-                      {application?.trainerStatus === "reject" ? "Already Reject" : "Reject"}
-                    </button>
-                    <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                      <IoEyeOutline />
-                      View Details
-                    </button>
-                  </div>
+                  {
+                    application?.trainerStatus === "pending" ? "Under Review" : <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
+                    <IoEyeOutline size={20}/>
+                    View Details
+                  </button>
+                  }
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        {!allApplication?.length && (
+        {!userApplicationInfo?.length && (
           <p className="text-[0.9rem] text-gray-500 py-6 text-center w-full">
             No data found!
           </p>
@@ -377,7 +278,7 @@ const AppliedTrainer = () => {
       </div>
 
       {/* Modal show  */}
-       <>
+       {/* <>
            <div
                className={`${
                    rejectionModalOpen ? " visible" : " invisible"
@@ -418,9 +319,9 @@ const AppliedTrainer = () => {
                    
                </div>
            </div>
-          </>
+          </> */}
     </div>
   );
 };
 
-export default AppliedTrainer;
+export default ActivityLog;
