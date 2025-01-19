@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { axiosSecured } from "../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 import useGetUser from "../../hooks/useGetUser";
+import { useNavigate } from "react-router";
 
 const animatedComponents = makeAnimated();
 
@@ -31,6 +32,7 @@ const TrainerApplication = () => {
   const [imageLink, setImageLink] = useState("");
   const [uploading, setUploading] = useState(false);
   const [getUser] = useGetUser();
+  const navigate = useNavigate()
 
   const { user } = useAuth();
   const {
@@ -51,6 +53,10 @@ const TrainerApplication = () => {
     { label: "Bounce & Burn", value: "Bounce & Burn" },
     { label: "Body Blast", value: "Body Blast" },
     { label: "Pump & Sculpt", value: "Pump & Sculpt" },
+    { label: "Dynamic Dance Fit", value: "Dynamic Dance Fit" },
+    { label: "Spartan Spinning", value: "Spartan Spinning" },
+    { label: "Zen Yoga", value: "Zen Yoga" },
+    { label: "Total Body Tone", value: "Total Body Tone" },
   ];
 
   const availableDays = [
@@ -92,6 +98,7 @@ const TrainerApplication = () => {
           icon: "success",
         });
         reset();
+        navigate('/dashboard/user/activity-log')
       }
     } catch (error) {
       Swal.fire({

@@ -15,6 +15,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 import RejectedFeedback from "./rejectedFeedback";
+import { Modal } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+const { confirm } = Modal;
 
 const AppliedTrainer = () => {
   const [tableData, setTableData] = useState([])
@@ -123,25 +126,31 @@ const AppliedTrainer = () => {
         console.log(error)
     }
   }
-  // Handle Delete application 
-  const handleRejectApplication = async(id) => {
-    Swal.fire({
-      title: "Are you sure Reject Application?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#10b981",
-      confirmButtonText: "Reject Application",
-      cancelButtonText: "Keep it"
-    }).then(async(result) => {
-      if (result.isConfirmed) {
-        setRejectionId(id)
-        setRejectionModalOpen(true)
-       
-      }
-    }); 
-  }
+
+  // Handle reject application 
+  const showPromiseConfirm = (id) => {
+    confirm({
+      title: <span className="font-popins" style={{ fontWeight: 'bold', fontSize: '20px', color: '#ff4d4f' }}>Are you sure to Reject Application?</span>,
+      icon: <ExclamationCircleFilled style={{ color: '#faad14' }} />,
+      content: <span className="font-poppins my-4" style={{ fontSize: '16px', color: '#595959', marginBottom: '8px' }}>This will make changes, but you can change it again anytime</span>,
+      okButtonProps: { style: { backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff', fontFamily: "poppins"} },
+      cancelButtonProps: { style: { backgroundColor: '#ff4d4f', borderColor: '#ff4d4f', color: '#fff', fontFamily: "poppins" } },
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout( resolve , 1000);
+        })
+          .then(async () => {
+            setRejectionId(id)
+            setRejectionModalOpen(true)
+          })
+      },
+      onCancel() {
+        setOpenActionMenuId(null)
+        console.log('Cancelled');
+      },
+    });
+  };
+
   const handleRejectConfirmation = async () => {
     const rejectNote = {
       rejectNote: rejectFeedback
@@ -152,7 +161,7 @@ const AppliedTrainer = () => {
           if(data.modifiedCount > 0){
               Swal.fire({
                 title: "Successfull",
-                text: "Your applicaiton has been approved.",
+                text: "This applicaiton has been rejected.",
                 icon: "success"
               })
               setRejectFeedback("")
@@ -216,7 +225,7 @@ const AppliedTrainer = () => {
               {/* Status  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("status")}
+                onClick={() => handleSort("trainerStatus")}
               >
                 <div className="flex items-center gap-[5px]">
                   Status
@@ -263,7 +272,7 @@ const AppliedTrainer = () => {
                       <IoCheckmarkDoneSharp />
                       {application?.trainerStatus === "approved" ? "Already Approved" : "Accept"}
                     </button>
-                    <button disabled={application?.trainerStatus === "reject"} onClick={() => handleRejectApplication(application._id)} className={`flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${application?.trainerStatus === "reject" ? "bg-gray-300 cursor-default hover:bg-gray-300": ""}`}>
+                    <button disabled={application?.trainerStatus === "reject"} onClick={() => showPromiseConfirm(application._id)} className={`flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${application?.trainerStatus === "reject" ? "bg-gray-300 cursor-default hover:bg-gray-300": ""}`}>
                       <MdDeleteOutline size={16}/>
                       {application?.trainerStatus === "reject" ? "Already Reject" : "Reject"}
                     </button>

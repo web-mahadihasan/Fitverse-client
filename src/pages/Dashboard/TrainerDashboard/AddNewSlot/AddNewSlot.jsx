@@ -44,6 +44,7 @@ const AddNewSlot = () => {
       resolver: yupResolver(schema),
       defaultValues: {
         skills: [],
+        availableDays: []
       },
     });
     // Get skill
@@ -60,6 +61,7 @@ const AddNewSlot = () => {
     useEffect(() => {
       if (isSuccess && trainerData?.skills) {
         setValue("skills", trainerData.skills);
+        setValue("availableDays", trainerData.availableDays);
       }
     }, [isSuccess, trainerData, setValue]);
     useEffect(() => {
@@ -70,15 +72,19 @@ const AddNewSlot = () => {
           setclassOption(transformedOptions)
       }, [allClass]);
 
-    const skillsOption = [
-      { label: "Bootcamp", value: "Bootcamp" },
-      { label: "Pilates", value: "Pilates" },
-      { label: "Yoga", value: "Yoga" },
-      { label: "Indoor cycling", value: "Indoor cycling" },
-      { label: "Bounce & Burn", value: "Bounce & Burn" },
-      { label: "Body Blast", value: "Body Blast" },
-      { label: "Pump & Sculpt", value: "Pump & Sculpt" },
-    ];
+      const skillsOption = [
+        { label: "Bootcamp", value: "Bootcamp" },
+        { label: "Pilates", value: "Pilates" },
+        { label: "Yoga", value: "Yoga" },
+        { label: "Indoor cycling", value: "Indoor cycling" },
+        { label: "Bounce & Burn", value: "Bounce & Burn" },
+        { label: "Body Blast", value: "Body Blast" },
+        { label: "Pump & Sculpt", value: "Pump & Sculpt" },
+        { label: "Dynamic Dance Fit", value: "Dynamic Dance Fit" },
+        { label: "Spartan Spinning", value: "Spartan Spinning" },
+        { label: "Zen Yoga", value: "Zen Yoga" },
+        { label: "Total Body Tone", value: "Total Body Tone" },
+      ];
 
     const availableDays = [
       { value: "Monday", label: "Monday" },
@@ -138,7 +144,10 @@ const AddNewSlot = () => {
       }
       
     };
+
     if(isLoading) return <p>Loading...</p>
+
+
     return (
       <div>
         <div className="text-center my-14 space-y-4">
@@ -154,7 +163,7 @@ const AddNewSlot = () => {
 
         <section>
           <div className="space-y-8 max-w-4xl mx-auto my-10 font-poppins px-4 xl:px-0">
-            <h3 className="font-poppins font-semibold text-xl text-gray-700 dark:text-gray-200">
+            <h3 className="font-poppins font-semibold text-2xl md:text-3xl text-gray-700 dark:text-gray-200">
               Genarel Info{" "}
             </h3>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -339,7 +348,7 @@ const AddNewSlot = () => {
                   <Controller
                     name="availableDays"
                     control={control}
-                    defaultValue={[]}
+                    defaultValue={[trainerData?.availableDays]}
                     render={({ field }) => (
                       <Select
                         {...field}

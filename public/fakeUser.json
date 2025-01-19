@@ -18,11 +18,13 @@
     },
     {
       "name": "Charlie Brown",
-      "email": "charliebrown@gmail.com"
+      "email": "charliebrown@gmail.com",
+      "image": "3"
     },
     {
       "name": "Diana Prince",
       "email": "dianaprince@gmail.com"
+      "iamge" : "female"
     },
     {
       "name": "Ethan Hunt",

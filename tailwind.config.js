@@ -8,22 +8,25 @@ export default {
   ],
   theme: {
   	extend: {
-      fontFamily: {
-        gagalin: ['Gagalin', 'sans-serif'], 
-      },
+  		fontFamily: {
+  			gagalin: [
+  				'Gagalin',
+  				'sans-serif'
+  			]
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-			main: {
-				dark: 'rgb(224, 230, 247)',
-				DEFAULT: '#5A29E4',
-				light: '#9F72F9'
-			  },
-			  'secondary-black': "#212529",
-			  'primary-black': "#05264e",
+  			main: {
+  				dark: 'rgb(224, 230, 247)',
+  				DEFAULT: '#5A29E4',
+  				light: '#9F72F9'
+  			},
+  			'secondary-black': '#212529',
+  			'primary-black': '#05264e',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -66,7 +69,9 @@ export default {
   			}
   		},
   		animation: {
-  			meteor: 'meteor 5s linear infinite'
+  			meteor: 'meteor 5s linear infinite',
+  			move: 'move 5s linear infinite',
+  			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear'
   		},
   		keyframes: {
   			meteor: {
@@ -80,6 +85,19 @@ export default {
   				'100%': {
   					transform: 'rotate(215deg) translateX(-500px)',
   					opacity: '0'
+  				}
+  			},
+  			move: {
+  				'0%': {
+  					transform: 'translateX(-200px)'
+  				},
+  				'100%': {
+  					transform: 'translateX(200px)'
+  				}
+  			},
+  			'border-beam': {
+  				'100%': {
+  					'offset-distance': '100%'
   				}
   			}
   		}

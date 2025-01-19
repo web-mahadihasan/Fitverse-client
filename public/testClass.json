@@ -52,6 +52,29 @@
       "description": "A rejuvenating yoga session that flows through postures to improve flexibility and inner peace.",
       "image": "https://i.ibb.co.com/mqBHtDj/image-10.png",
       "total_booked": 0
-    }
+    },
+  
+      {
+        "className": "Cardio Combat",
+        "description": "An intense, high-energy workout combining martial arts techniques with cardio movements. Perfect for burning calories, boosting stamina, and building strength while unleashing your inner warrior."
+      },
+      {
+        "className": "Total Body Tone",
+        "description": "A comprehensive full-body workout designed to tone and sculpt muscles, improve endurance, and enhance flexibility using a variety of equipment and bodyweight exercises."
+      },
+      {
+        "className": "Combat Cardio",
+        "description": "A dynamic cardio workout inspired by boxing and kickboxing moves, this class is perfect for improving agility, coordination, and cardiovascular fitness while having fun."
+      },
+      {
+        "className": "Sunrise Yoga",
+        "description": "Start your day with calm and clarity through gentle yoga poses, breathing exercises, and mindfulness practices. This session promotes relaxation, flexibility, and mental focus."
+      },
+      {
+        "className": "Body Balance",
+        "description": "A holistic class that blends yoga, Pilates, and tai chi movements to improve posture, core strength, and balance. Ideal for achieving both physical and mental harmony."
+      }
+  
+    
   ]
   

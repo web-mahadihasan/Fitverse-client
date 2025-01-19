@@ -17,7 +17,7 @@ export const HoverEffect = ({
     (<div
       className={cn("grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3  py-10", className)}>
       {items?.map((item, idx) => (
-        <Link
+        <div
           // to={item?.link}
           key={item?.link}
           className="relative group  block p-2 h-full w-full "
@@ -39,8 +39,7 @@ export const HoverEffect = ({
                 }} />
             )}
           </AnimatePresence>
-          <Card className={'bg-white dark:bg-gray-800 dark:hover:bg-gray-700 text-black p-0 hover:bg-gray-100 dark:border-gray-700 border-gray-200'}>
-            <div className="w-full h-full">
+          <Card className={'bg-white flex flex-col dark:bg-gray-800 dark:hover:bg-gray-700 text-black p-0 hover:bg-gray-100 dark:border-gray-700 border-gray-200'}>
               <div className="w-full flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <RiTeamFill className="text-[2rem] p-2 rounded-full 
@@ -54,24 +53,28 @@ export const HoverEffect = ({
                 rounded-full bg-[#3b9df828] text-[#3B9DF8] cursor-pointer" />
               </div>
 
-              <img
-                src="https://i.ibb.co.com/zSBdj98/Warriorr-Workout.png"
-                alt=""
-                className="rounded-lg h-[180px] w-full test-shadow"
-              />
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                <img
+                  src={item?.image}
+                  alt=""
+                  className="rounded-lg h-[180px] w-full test-shadow "
+                />
+                </div>
 
-              <div className="h-full grid grid-cols-1  justify-between">
-              <h2 className="font-[600] text-[1.3rem] py-4">Simple Design</h2>
-              <p className="flex-1">{item.description}</p>
-              <div className="w-full flex items-center justify-between mt-auto ">
-                  <button className="font-poppins w-fit mx-auto px-6 bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
-                      View More
-                  </button>
+                <div className="h-full flex flex-col justify-between flex-1">
+                <h2 className="font-[600] text-[1.3rem] py-4">Simple Design</h2>
+                <p className="flex-1">{item.description}</p>
+                <div className="w-full mt-auto ">
+                    <button className="font-poppins w-fit mx-auto px-6 bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+                        View More
+                    </button>
+                </div>
+                </div>
               </div>
-              </div>
-            </div>
+              
           </Card>
-        </Link>
+        </div>
       ))}
     </div>)
   );

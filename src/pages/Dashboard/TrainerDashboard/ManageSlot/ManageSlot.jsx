@@ -12,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecured from "../../../../hooks/useAxiosSecured";
-// import { Button, Flex, Modal } from 'antd';
 import { Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
