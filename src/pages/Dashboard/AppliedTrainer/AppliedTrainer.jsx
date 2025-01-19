@@ -22,6 +22,10 @@ const AppliedTrainer = () => {
   const [rejectionId, setRejectionId] = useState(null);
   const [rejectFeedback, setRejectFeedback] = useState("")
   const [disabledButton, setDisabledButton] = useState(true);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(7);
+  const [openActionMenuId, setOpenActionMenuId] = useState(null);
 
   // Get all application
   const axiosSecured = useAxiosSecured();
@@ -38,12 +42,6 @@ const AppliedTrainer = () => {
       setTableData(allApplication)
     }
   }, [allApplication])
-
-
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [openActionMenuId, setOpenActionMenuId] = useState(null);
 
   // Handle sorting 
   const handleSort = (key) => {

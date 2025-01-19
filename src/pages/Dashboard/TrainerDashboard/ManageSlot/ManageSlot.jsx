@@ -6,16 +6,28 @@ import {
   BsThreeDotsVertical,
 } from "react-icons/bs";
 import { MdDeleteOutline,  } from "react-icons/md";
-import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
+import {  IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecured from "../../../../hooks/useAxiosSecured";
+// import { Button, Flex, Modal } from 'antd';
+import { Modal } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+
+const { confirm } = Modal;
+
 
 const ManageSlot = () => {
   const [tableData, setTableData] = useState([])
   const {user} = useAuth()
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(7);
+  const [openActionMenuId, setOpenActionMenuId] = useState(null);
+
+
   // Get all application
   const axiosSecured = useAxiosSecured();
   const { data: mySlots, isLoading, refetch } = useQuery({
@@ -31,13 +43,6 @@ const ManageSlot = () => {
       setTableData(mySlots)
     }
   }, [mySlots])
-
-  console.log(mySlots)
-
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [openActionMenuId, setOpenActionMenuId] = useState(null);
 
 
   const handleSort = (key) => {
@@ -90,23 +95,43 @@ const ManageSlot = () => {
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
-  const handleAcceptApplication = async (applicationData) => {
-    // try {
-    //     const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
-    //     console.log(data)
-    //     if(data.modifiedCount > 0){
-    //         Swal.fire({
-    //           title: "Successfull",
-    //           text: "Your applicaiton has been approved.",
-    //           icon: "success"
-    //         })
-    //         refetch()
-    //         setOpenActionMenuId(null)
-    //     }
-    // } catch (error) {
-    //     console.log(error)
-    // }
-  }
+  const showPromiseConfirm = (id) => {
+    confirm({
+      title: <span className="font-popins" style={{ fontWeight: 'bold', fontSize: '20px', color: '#ff4d4f' }}>Do you want to delete these Slot?</span>,
+      icon: <ExclamationCircleFilled style={{ color: '#faad14' }} />,
+      content: <span className="font-poppins my-4" style={{ fontSize: '16px', color: '#595959', marginBottom: '8px' }}>This will make permanent changes and cannot be undone.</span>,
+      okButtonProps: { style: { backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff', fontFamily: "poppins"} },
+      cancelButtonProps: { style: { backgroundColor: '#ff4d4f', borderColor: '#ff4d4f', color: '#fff', fontFamily: "poppins" } },
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout( resolve , 1000);
+        })
+          .then(async () => {
+            // Show success Swal alert when resolved /slots/removed/
+            try {
+              const {data} = await axiosSecured.delete(`/slot-api/slots/removed/${id}`)
+              console.log(data)
+              if(data.deletedCount > 0){
+                  Swal.fire({
+                    title: "Successfull",
+                    text: "Your applicaiton has been approved.",
+                    icon: "success"
+                  })
+                  refetch()
+                  setOpenActionMenuId(null)
+              }
+            } catch (error) {
+                console.log(error)
+            }
+          })
+      },
+      onCancel() {
+        setOpenActionMenuId(null)
+        console.log('Cancelled');
+      },
+    });
+  };
+  
   if(isLoading) return <p>Loading....</p>
 
   return (
@@ -193,12 +218,14 @@ const ManageSlot = () => {
                 <td className={``}> <span className={`px-4 py-[2px] font-base font-kanit flex gap-2 font-normal text-gray-600 dark:text-gray-300 rounded-full`}>
                   {application?.availableDays?.map((day, idx) => <p key={idx}>{day} {application?.availableDays?.length - 1 !== idx && "-"} </p>)}
                   </span> </td>
+                  
                 <td className="p-3 relative">
+                
                   <BsThreeDotsVertical
                     onClick={() => toggleActionMenu(application._id)}
                     className="action-btn action-btn text-gray-600 cursor-pointer"
                   />
-
+                 
                   <div
                     className={`${
                       openActionMenuId === application._id
@@ -206,13 +233,9 @@ const ManageSlot = () => {
                         : "opacity-0 scale-[0.8] z-[-1]"
                     } zenui-table absolute top-[90%] right-[80%] p-1.5 rounded-md bg-white shadow-md min-w-[160px] transition-all duration-100`}
                   >
-                    <button onClick={() => handleAcceptApplication(application)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-green-600 font-poppins transition-all duration-200">
-                      <IoCheckmarkDoneSharp />
-                      Accept
-                    </button>
-                    <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
+                    <button onClick={() => showPromiseConfirm(application._id)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
                       <MdDeleteOutline size={16}/>
-                      Reject
+                      Delete Slot
                     </button>
                     <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
                       <IoEyeOutline />
@@ -320,6 +343,9 @@ const ManageSlot = () => {
           </button>
         </div>
       </div>
+
+      {/* Modal  */}
+      
     </div>
   );
 };

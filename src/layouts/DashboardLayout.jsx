@@ -11,7 +11,7 @@ const DashboardLayout = () => {
                 </div>
                 
                 {/* Content section  */}
-                <main className="col-span-4 mx-10 overflow-y-auto content">
+                <main className="col-span-4 mx-10 content overflow-y-auto">
                     <Outlet/>
                 </main>
             </div>

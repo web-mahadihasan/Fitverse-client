@@ -1,46 +1,37 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-
-// react icons
-import {RxCross1} from "react-icons/rx";
+import { useEffect, useRef, useState } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import {
   BsChevronLeft,
   BsChevronRight,
-  BsThreeDotsVertical,
 } from "react-icons/bs";
-import { MdDeleteOutline,  } from "react-icons/md";
-import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
+
+import useAxiosSecured from "../../../hooks/useAxiosSecured";
+import { useQuery } from "@tanstack/react-query";
 import { IoIosArrowDown } from "react-icons/io";
-import { useMutation, useQuery } from "@tanstack/react-query";
-// import useAxiosSecured from "../../../hooks/useAxiosSecured";
-// import Swal from "sweetalert2";
-// import useAxiosSecured from "../../../../hooks/useAxiosSecured";
-// import useAuth from "../../../../hooks/useAuth";
 
 
 const ActivityLog = () => {
     const [tableData, setTableData] = useState([])
-    const {user} = useAuth()
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(7);
     
 
     // Get all application
     const axiosSecured = useAxiosSecured();
-    const { data: userApplicationInfo, isLoading, refetch } = useQuery({
-        queryKey: ["userApplicationInfo"],
+    const { data: newsLetterSubscriber, isLoading } = useQuery({
+        queryKey: ["newsLetterSubscriber"],
         queryFn: async () => {
-        const { data } = await axiosSecured.get(`/application-api/get-application/${user.email}`);
+        const { data } = await axiosSecured.get(`/newsletter-api/all-subscription-user`);
         return data;
         },
     });
 
     useEffect(()=> {
-        if(userApplicationInfo?.length > 0){
-        setTableData(userApplicationInfo)
+        if(newsLetterSubscriber?.length > 0){
+        setTableData(newsLetterSubscriber)
         }
-    }, [userApplicationInfo])
+    }, [newsLetterSubscriber])
 
     // Handle sorting 
     const handleSort = (key) => {
@@ -96,7 +87,7 @@ const ActivityLog = () => {
     <div className="mx-auto p-4 my-10">
       <div className="text-center mt-5 mb-10 space-y-4">
           <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-             User Activity Log and Engagement Tracker
+            Subscriber List and Insights
           </h3>
           <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
             Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
@@ -125,7 +116,7 @@ const ActivityLog = () => {
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-              {/* Role  handleSort(userApplicationInfo)*/}
+              {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
                 onClick={() => handleSort("date") }
@@ -135,55 +126,25 @@ const ActivityLog = () => {
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-               {/* Role  handleSort(userApplicationInfo)*/}
-               
-              {/* Status  */}
-              <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("status")}
-              >
-                <div className="flex items-center gap-[5px]">
-                  Status
-                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
-                </div>
-              </th>
-
-              <th className="p-3 text-left font-medium text-gray-700">
-                Admin Feedback
-              </th>
+              
             </tr>
           </thead>
           <tbody>
-            {paginatedData?.map((application) => (
+            {paginatedData?.map((subscriber) => (
               <tr
-                key={application._id}
+                key={subscriber._id}
                 className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
               >
-                <td className="p-3">{application.name}</td>
-                <td className="p-3">{application.email}</td>
-                <td className="p-3">{application.date}</td>
-                {/* <td className="p-3">{application.role}</td> */}
-                <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
-                  {
-                  application?.trainerStatus === "approved" && "Approved" 
-                  || application?.trainerStatus === "pending" && "Pending" 
-                  || application?.trainerStatus === "reject" && "Rejected"
-                  }</span> 
-                </td>
-                <td className="p-3 relative">
-                  {
-                    application?.trainerStatus === "pending" ? "Under Review" : <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                    <IoEyeOutline size={20}/>
-                    View Details
-                  </button>
-                  }
-                </td>
+                <td className="p-3">{subscriber.name}</td>
+                <td className="p-3">{subscriber.email}</td>
+                <td className="p-3">{subscriber.date}</td>
+                
               </tr>
             ))}
           </tbody>
         </table>
 
-        {!userApplicationInfo?.length && (
+        {!newsLetterSubscriber?.length && (
           <p className="text-[0.9rem] text-gray-500 py-6 text-center w-full">
             No data found!
           </p>
