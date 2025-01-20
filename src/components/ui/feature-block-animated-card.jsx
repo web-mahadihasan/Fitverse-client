@@ -33,14 +33,6 @@ export function AnimatedCard({trainerData}) {
       <div
       className={cn(
         "w-full h-full flex flex-col  p-4 rounded-xl border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-gray-100 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group")}>
-      {/* <div
-        className={cn(
-          "h-[130px] rounded-xl z-40",
-          "bg-neutral-300 dark:bg-[rgba(40,40,40,0.70)] [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]"
-        )}> */}
-        {/* <AnimatedIcons icons={icons} md:h-[20rem] /> */}
-      {/* </div> */}
-      
       <div className="w-full flex items-center justify-between ">
         <div className="flex items-center gap-2">
           <RiTeamFill className="text-[2rem] p-2 rounded-full 
@@ -54,8 +46,8 @@ export function AnimatedCard({trainerData}) {
         rounded-full bg-[#3b9df828] text-[#3B9DF8] cursor-pointer" />
       </div>
         {/* Image  */}
-      <div>
-          <img src={image} alt="" className="h-[150px] w-[150px] mx-auto trainer-shadow rounded-full"/>
+      <div className="h-[150px] w-[150px] overflow-hidden mx-auto rounded-full">
+          <img src={image} alt="" className="h-[150px] w-[150px] mx-auto trainer-shadow rounded-full hover:scale-110 duration-300"/>
       </div>
       
       <div className="flex flex-col justify-between flex-1">

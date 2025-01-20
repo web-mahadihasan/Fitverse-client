@@ -10,12 +10,20 @@ import {HiOutlineUpload} from "react-icons/hi";
 
 import { Badge } from 'antd';
 import PricingSection from "./PricingSection";
+import toast from "react-hot-toast";
 
 const SlotDetailsWithPayment = () => {
+    const [selectedPrice, setSelectedPrice] = useState(0)
+
 
     const [step, setStep] = useState(1)
 
     const handleNextStep = () => {
+        
+        if(selectedPrice <= 0){
+            toast.error("Please choose a plan for next step")
+            return
+        }
         if(step < 4) {
             setStep(step + 1)
         }
@@ -38,6 +46,7 @@ const SlotDetailsWithPayment = () => {
     ]
 
     const [selectedPostionCardId, setSelectedPositionCardId] = useState(false);
+    console.log(selectedPrice)
 
     const positionCards = [
         {
@@ -101,28 +110,12 @@ const SlotDetailsWithPayment = () => {
                 }
             </div>
 
-            <form className="mt-16 w-full">
+            <form onSubmit={(e) => e.preventDefault()} className="mt-16 w-full">
                 {
                     step === 1 && (
-                        // <div className="flex flex-col w-full">
-                        //     <div className="w-full relative">
-                        //         <label className="text-[1rem] text-gray-600">Location</label> <br/>
-                        //         <input type="text" placeholder="City, area..."
-                        //                className="py-2.5 pl-4 pr-[40px] border border-gray-300 mt-1 w-full rounded-md outline-none"/>
-                        //         <SlLocationPin className="absolute top-[42px] right-3 text-gray-500"/>
-                        //     </div>
-
-                        //     <p className="text-[1rem] font-[400] text-gray-500 mt-8">Suggestions</p>
-                        //     <div className="flex items-center gap-[10px] flex-wrap mt-3">
-                        //         <p className="py-2 px-4 text-[0.9rem] text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">Moulvibazar</p>
-                        //         <p className="py-2 px-4 text-[0.9rem] text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">Sylhet</p>
-                        //         <p className="py-2 px-4 text-[0.9rem] text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">Juri</p>
-                        //         <p className="py-2 px-4 text-[0.9rem] text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">BuwaiBazar</p>
-                        //         <span className="inline-flex items-center justify-center gap-1 rounded bg-emerald-500 px-3 py-[3px] text-sm text-white">Approved</span>
-
-                        //     </div>
-                        // </div>
-                        <PricingSection/>
+                        <>
+                            <PricingSection setSelectedPrice={setSelectedPrice}/>
+                        </>
                     )
                 }
 

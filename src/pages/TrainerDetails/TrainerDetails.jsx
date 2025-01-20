@@ -69,10 +69,10 @@ const TrainerDetails = () => {
                 </Divider>
 
                 {/* Details  */}
-                <div className="grid grid-cols-3 gap-8">
+                <div className="grid grid-cols-3 gap-6">
                     {/* Left side  */}
                     <div>
-                        <img src={image} alt="" className="trainer-shadow h-[430px] rounded-lg" />
+                        <img src={image} alt="" className="trainer-shadow h-[450px] rounded-lg" />
                     </div>
 
                     {/* Right side  */}

@@ -1,0 +1,45 @@
+[
+    {
+      "packageTitle": "Starter Plan",
+      "price": 149,
+      "currency": "USD",
+      "features": [
+        { "feature": "Access to gym facilities during regular hours", "accessible": true },
+        { "feature": "Use of cardio and strength training equipment", "accessible": true },
+        { "feature": "Locker rooms and showers", "accessible": true },
+        { "feature": "Group fitness classes (Yoga, Zumba, etc.)", "accessible": false },
+        { "feature": "Sauna and steam room", "accessible": false },
+        { "feature": "Personal training sessions", "accessible": false },
+        { "feature": "Discounts on additional services", "accessible": false }
+      ]
+    },
+    {
+      "packageTitle": "Advanced Plan",
+      "price": 299,
+      "currency": "USD",
+      "features": [
+        { "feature": "Access to gym facilities anytime", "accessible": true },
+        { "feature": "Use of cardio and strength training equipment", "accessible": true },
+        { "feature": "Locker rooms and showers", "accessible": true },
+        { "feature": "Group fitness classes (Yoga, Zumba, etc.)", "accessible": true },
+        { "feature": "Sauna and steam room", "accessible": true },
+        { "feature": "Personal training sessions", "accessible": false },
+        { "feature": "Discounts on additional services", "accessible": false }
+      ]
+    },
+    {
+      "packageTitle": "Premium Plan",
+      "price": 380,
+      "currency": "USD",
+      "features": [
+        { "feature": "Access to gym facilities anytime", "accessible": true },
+        { "feature": "Use of cardio and strength training equipment", "accessible": true },
+        { "feature": "Locker rooms and showers", "accessible": true },
+        { "feature": "Group fitness classes (Yoga, Zumba, etc.)", "accessible": true },
+        { "feature": "Sauna and steam room", "accessible": true },
+        { "feature": "Personal training sessions", "accessible": true },
+        { "feature": "Discounts on additional services (Massage, Nutrition)", "accessible": true }
+      ]
+    }
+  ]
+  

@@ -52,7 +52,8 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/slot-details/:id",
-                element: <SlotDetailsWithPayment/>
+                element: <SlotDetailsWithPayment/>,
+                loader: () => fetch('/pricing.json')
             },
             {
                 path: "/all-classes",
