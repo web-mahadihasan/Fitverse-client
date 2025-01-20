@@ -8,9 +8,9 @@ import {MdOutlineDone} from "react-icons/md";
 import {RxCross1} from "react-icons/rx";
 import { useLoaderData } from "react-router";
 
-const PricingSection = ({setSelectedPrice}) => {
+const PricingSection = ({setPackagePrice}) => {
+
     const [toggle, setToggle] = useState(false)
-    const [packagePrice, setPackagePrice] = useState(100)
     const [selected, setSelected] = useState("")
     const pricingInfo = useLoaderData()
     
@@ -20,7 +20,11 @@ const PricingSection = ({setSelectedPrice}) => {
     const handleSelectPackage = (packageName, price) => {
         setSelected(packageName)
         const finalPrice = toggle ? price * 10 : price;
-        setSelectedPrice(finalPrice); 
+        const packageInfo = {
+            name: packageName,
+            price: finalPrice
+        }
+        setPackagePrice(packageInfo); 
     }
     return (
         <section className="">
@@ -76,7 +80,7 @@ const PricingSection = ({setSelectedPrice}) => {
                     <div className="mt-8">
                         <div className="flex items-end gap-[8px]">
                             <h3 className={`text-[1.8rem] font-[800] ${idx === 1 && "text-gray-300"}`}>
-                            {toggle
+                            $ {toggle
                                 ? packageItem.price * 10
                                 : packageItem.price}
                             </h3>

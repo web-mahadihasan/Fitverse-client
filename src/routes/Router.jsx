@@ -19,6 +19,8 @@ import DashboardAllTrainer from '../pages/Dashboard/AllTriner/DashboardAllTraine
 import SlotDetailsWithPayment from '../pages/SlotDetailsWithPayment/SlotDetailsWithPayment';
 import AllClass from '../pages/AllClass/AllClass';
 import ActivityLog from '../pages/Dashboard/UserDashboard/ActivityLogs/ActivityLog';
+import Payment from '../pages/Payment/Payment';
+import TestPayment from '../pages/Payment/TestPayment';
 
 
 const Router = createBrowserRouter([
@@ -58,6 +60,10 @@ const Router = createBrowserRouter([
             {
                 path: "/all-classes",
                 element: <AllClass/>
+            },
+            {
+                path: "/booked-slot/payment/:id",
+                element: <TestPayment/>
             }
         ]
     },

@@ -15,7 +15,7 @@ export const HoverEffect = ({
 
   return (
     (<div
-      className={cn("grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3  py-10", className)}>
+      className={cn("grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3  py-10", className)}>
       {items?.map((item, idx) => (
         <div
           // to={item?.link}
@@ -58,7 +58,7 @@ export const HoverEffect = ({
                 <img
                   src={item?.image}
                   alt=""
-                  className="rounded-lg h-[180px] w-full test-shadow "
+                  className="h-[180px] w-full test-shadow object-fit rounded-full"
                 />
                 </div>
 

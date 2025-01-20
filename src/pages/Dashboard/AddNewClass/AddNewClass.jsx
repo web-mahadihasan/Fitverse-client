@@ -22,7 +22,8 @@ const AddNewClass = () => {
         console.log(data)
         const classData = {
             ...data,
-            image: imageLink
+            image: imageLink,
+            total_booked: 0
         }
         try {            
             const {data} = await axiosSecured.post(`/class-api/class/add`, classData)

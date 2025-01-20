@@ -36,6 +36,7 @@ const TrainerDetails = () => {
         },
         enabled: !!trainerData?.email
     })
+    console.log(trainerSlotData)
     const {name, image, experience, role, skills, date, biography, availableDays, availableSlot, age} = trainerData || {}
     const lines = biography?.split("\n").filter((line) => line.trim() !== "");
     const firstBiography = lines?.slice(0, 4).join("\n"); 
@@ -186,8 +187,8 @@ const TrainerDetails = () => {
                 <h3 className="font-kanit text-2xl font-semibold uppercase tracking-wide text-gray-700 text-center my-6 mt-10">All Available Slot here</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {
-                    trainerSlotData?.map((data, idx) => (
-                        <div key={idx} className="bg-gradient-to-r from-[#5A29E4]/15 to-[#9F72F9]/10 w-full rounded-xl">
+                    trainerSlotData?.map((data) => (
+                        <div key={data._id} className="bg-gradient-to-r from-[#5A29E4]/15 to-[#9F72F9]/10 w-full rounded-xl">
                 <div className="flex flex-col p-[15px] gap-4 justify-between h-full">
                     <div className="flex items-center justify-between w-full">
                         <h1 className="text-[1rem] flex items-center gap-2 lg:text-[1.3rem] font-bold text-main">
@@ -200,7 +201,7 @@ const TrainerDetails = () => {
                         </div>
                     </div>
                     <div className="">
-                    <div className="flex items-start gap-[10px]">
+                    <div className="gap-[10px] my-2">
                         <h3 className="font-poppins text-lg text-gray-700 dark:text-gray-200">Classes:</h3>
                         <div className="flex flex-wrap gap-2">
                              {
@@ -208,7 +209,7 @@ const TrainerDetails = () => {
                              }
                          </div>
                     </div>
-                    <div className="flex items-center gap-[10px]">
+                    <div className="gap-[10px]">
                         <h3 className="font-poppins text-lg text-gray-700 dark:text-gray-200">Days</h3>
                         <div className="flex items-center flex-wrap gap-4">
                              {
