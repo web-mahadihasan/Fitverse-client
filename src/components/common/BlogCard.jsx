@@ -17,12 +17,14 @@ const BlogCard = () => {
 
     const handleUpVote = () => {
         setUpVote(!upVote)
+        setDownVote(false)
     }
     const handleDownVote = () => {
         setDownVote(!downVote)
+        setUpVote(false)
     }
   return (
-    <div className="w-[80%] lg:w-full bg-[#fff] rounded blog-shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="w-full lg:w-[80%] lg:mx-auto xl:w-full bg-[#fff] rounded blog-shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <div className="flex w-full justify-between items-center p-4">
         <div className="flex items-center gap-4">
           <div className="w-[50px] h-[50px] flex items-center
@@ -58,7 +60,7 @@ const BlogCard = () => {
         />
         
       <div className="flex items-center gap-4 justify-between w-full py-4 px-2">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 md:gap-1">
             <div className="flex items-center gap-4 border p-[2px] px-3 rounded-full divide-x border-gray-200 dark:bg-[#393939] backdrop-blur-lg dark:text-slate-200 dark:border-slate-500">
             <button onClick={handleUpVote} className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
                 {
@@ -66,7 +68,7 @@ const BlogCard = () => {
                 }
                 
                 {/**/}
-                <span className={`inline-block mt-1 text-base ${upVote? "text-main" : ""}`}>Upvote. <span className="text-gray-500">07</span></span>
+                <span className={`inline-block mt-1 text-base ${upVote? "text-main" : ""}`}>. <span className="text-gray-500">07</span></span>
             </button>
             <button onClick={handleDownVote} className="flex items-center gap-1 text-slate-600 px-1 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
                 {
@@ -89,7 +91,7 @@ const BlogCard = () => {
         <Link to={"/all-trainers"}>
             <ShinyButton className={"px-0 py-0 border-none border-main hover:bg-main  duration-300 transition-all ease-linear group"}>
             <button size="lg" className="flex items-center gap-1 py-1.5 border border-main px-2 rounded-lg text-main font-poppins tracking-wide group-hover:text-white">
-                Read More <ArrowUpRightFromSquareIcon className="w-4 h-4" />
+                Read More <ArrowUpRightFromSquareIcon className="w-4 h-4 md:hidden lg:block" />
             </button>
             </ShinyButton>
         </Link>

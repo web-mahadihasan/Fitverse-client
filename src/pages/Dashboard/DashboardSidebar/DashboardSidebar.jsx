@@ -51,7 +51,7 @@ const DashboardSidebar = () => {
                         <div className="relative">
                           <img src={fitnessLogo} alt="" className="h-9"/>
                         </div>
-                        <span className="text-4xl font-kanit font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
+                        <span className="text-4xl font-gagalin tracking-wider font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
                           FitVerse
                         </span>
                     </div>
@@ -113,12 +113,12 @@ const DashboardSidebar = () => {
 
                         {/* Forum routes */}
                         {
-                            user && isAdmin || isTrainer && <li className="rounded-sm dashboard text-base" >
+                            isAdmin || isTrainer ? <li className="rounded-sm dashboard text-base" >
                             <NavLink to={"/dashboard/common/post-forum"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                 <span className='text-main'><Icon icon="material-symbols-light:post-add" width="26" height="26" /></span>
                                 <span>Add new Forum</span>
                             </NavLink>
-                        </li>
+                        </li> : ""
                         }
                         <Divider plain className="text-gra" style={{
                                     borderColor: '#d1d5db',

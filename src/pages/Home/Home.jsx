@@ -139,14 +139,14 @@ const Home = () => {
             </section>
 
             {/* Recent Blog section  */}
-            <section className="mx-auto my-24">
+            <section className="mx-auto my-24 px-4 xl:px-0">
                 <SectionBadge title={"Recent Blogs"}/>
                 <SectionHeading title={"Our Dedicated Fitness Team"}
                     subtitle={"Behind every great workout is an amazing team. Get to know the skilled professionals who bring energy, expertise, and encouragement to your fitness experience."}
                 />
 
                 {/* Blog card  */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 my-10">
                     <BlogCard/>
                     <BlogCard/>
                     <BlogCard/>

@@ -1,9 +1,18 @@
 import { HeroPill, StarIcon } from "@/components/ui/hero-pill"
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { useRef } from "react";
+import { delay, motion, useInView  } from "framer-motion";
 
 const SectionBadge = ({title}) => {
+    const sectionBadgeRef = useRef(null);
+    const isInView = useInView(sectionBadgeRef, { once: true });
     return (
-        <div className="text-center w-full mx-auto">
+        <motion.div ref={sectionBadgeRef} className="text-center w-full mx-auto"
+            initial={{ opacity: 0, y: -30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+
             <HeroPill className={"border w-fit rounded-full text-center mx-auto text-gray-200 opacity-70"}
                     icon={
                     <svg 
@@ -18,7 +27,7 @@ const SectionBadge = ({title}) => {
                     }
                     text={title}
                 />
-        </div>
+        </motion.div>
     );
 };
 

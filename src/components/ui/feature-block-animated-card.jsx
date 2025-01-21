@@ -29,7 +29,7 @@ export function AnimatedCard({trainerData}) {
   if(isLoading) return <p>Loading...</p>
   return (
     
-    (<div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-xl border md:shadow-xl">
+    (<div className="relative flex w-full sm:w-[70%] md:w-full mx-auto flex-col items-center justify-center overflow-hidden rounded-xl border md:shadow-xl">
       <div
       className={cn(
         "w-full h-full flex flex-col  p-4 rounded-xl border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-gray-100 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group")}>

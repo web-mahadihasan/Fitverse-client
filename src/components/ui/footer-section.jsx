@@ -27,15 +27,15 @@ function Footerdemo() {
 
   return (
     (<footer
-      className="relative border-t bg-gradient-to-b from-white to-blue-50 z-10 text-foreground transition-colors duration-300 dark:bg-none">
+      className="relative font-poppins border-t bg-gradient-to-b from-white to-blue-50 z-10 text-foreground transition-colors duration-300 dark:bg-none">
       <div className="max-width mx-auto px-4 py-12 xl:px-0">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
-            <Link className="flex items-center space-x-2 text-[#1d4ed8]" to="/">
+            <Link className="flex items-center space-x-2 text-[#1d4ed8] pb-2" to="/">
               <div className="relative">
                 <img src={fitnessLogo} alt="" className="h-9"/>
               </div>
-              <span className="text-4xl font-kanit font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
+              <span className="text-4xl font-gagalin tracking-wider font-medium bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
                 FitVerse
               </span>
             </Link>
@@ -61,30 +61,30 @@ function Footerdemo() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
             <nav className="space-y-2 text-base font-poppins uppercase">
-              <a href="#" className="block transition-colors hover:text-primary">
+              <Link to={"/"} className="block transition-colors text-gray-800 dark:text-gray-300 hover:text-primary">
                 Home
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
-                About Us
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
-                Services
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
-                Products
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
+              </Link>
+              <Link to={"/all-classes"} className=" text-gray-800 dark:text-gray-300 transition-colors hover:text-primary">
+                All Classes
+              </Link>
+              <Link to={"/all-trainers"} className="block transition-colors text-gray-800 dark:text-gray-300 hover:text-primary">
+                All Trainer
+              </Link>
+              <Link to={"forums"} className="block transition-colors text-gray-800 dark:text-gray-300 hover:text-primary">
+                Forums
+              </Link>
+              <Link to={"contact-us"} className="block transition-colors text-gray-800 dark:text-gray-300 hover:text-primary">
                 Contact
-              </a>
+              </Link>
             </nav>
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
-            <address className="space-y-2 text-sm not-italic">
+            <h3 className="mb-4 text-lg font-semibold font-poppins">Contact Us</h3>
+            <address className="space-y-2 text-base text-gray-800 dark:text-gray-300 not-italic">
               <p>123 Innovation Street</p>
               <p>Tech City, TC 12345</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@example.com</p>
+              <p>Phone: (+880) 179494-3980</p>
+              <p>Email: mehedihasanmilu7@gmail.com</p>
             </address>
           </div>
           <div className="relative">
@@ -156,7 +156,7 @@ function Footerdemo() {
         <div
           className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2024 Your Company. All rights reserved.
+            © 2024 <span className="font-gagalin tracking-widest font-light text-main">FitVerse</span>. All rights reserved.
           </p>
           <nav className="flex gap-4 text-sm">
             <a href="#" className="transition-colors hover:text-primary">
