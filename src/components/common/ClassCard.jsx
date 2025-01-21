@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { ImageWithToolTip } from "./ImageWithToolTip";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const ClassCard = ({classInfo}) => {
     const {title, description, image, total_booked} = classInfo || {}
     const axiosPublic = useAxiosPublic()
+    const {pathname} = useLocation()
 
     const {data: trainerImage} = useQuery({
         queryKey: ["slotsImage"],
@@ -21,10 +22,13 @@ const ClassCard = ({classInfo}) => {
                 <div className="col-span-1 h-full">
                     <img className="object-cover w-full rounded-t-lg h-full md:w-48 md:rounded-none md:rounded-s-lg" src={image} alt=""/>
                 </div>
-                <div className="flex flex-col justify-between p-4 leading-normal col-span-2">
-                    <h5 className="mb-2 text-2xl font-semibold font-poppins tracking-tight text-gray-800 dark:text-white ">{title}</h5>
-                    <p>Total Booked: {total_booked}</p>
+                <div className="flex flex-col justify-between p-4 leading-normal col-span-2 relative">
+                    <h5 className="mb-2 text-2xl font-semibold font-kanit tracking-tight text-secondary-black dark:text-white ">{title}</h5>
+                    <p className="my-1 text-lg font-poppins">Total Booked: {total_booked}</p>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-2">{description}</p>
+                    {
+                        pathname === "/" && <p className="bg-main/75 text-white px-2 rounded-l rounded-r-sm w-fit drop-shadow-lg py absolute top-1 right-1">Featured</p>
+                    }
                     <div>
                         {/* {
                             trainerImage?.map(images => images.classtitle.includes(title) && (

@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Emma Johnson",
+      "role": "member",
+      "description": "The trainers are amazing, and the environment is so positive! I’ve seen great progress in just two months.",
+      "rating": 5,
+      "date": "Nov 29, 2024",
+      "image": "https://randomuser.me/api/portraits/women/65.jpg"
+    },
+    {
+      "name": "Michael Brown",
+      "role": "member",
+      "description": "Love the variety of classes available. The yoga sessions have completely changed my mornings.",
+      "rating": 4,
+      "date": "Nov 25, 2024",
+      "image": "https://randomuser.me/api/portraits/men/32.jpg"
+    },
+    {
+      "name": "Sophia Martinez",
+      "role": "member",
+      "description": "The gym equipment is top-notch, and the staff is always helpful. Highly recommend!",
+      "rating": 5,
+      "date": "Nov 20, 2024",
+      "image": "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+      "name": "Liam Davis",
+      "role": "member",
+      "description": "Clean facilities and a great atmosphere. The personal training sessions are worth every penny.",
+      "rating": 5,
+      "date": "Nov 18, 2024",
+      "image": "https://randomuser.me/api/portraits/men/45.jpg"
+    },
+    {
+      "name": "Olivia Wilson",
+      "role": "member",
+      "description": "The Zumba and spinning classes are so much fun! I've met some amazing people here too.",
+      "rating": 4,
+      "date": "Nov 15, 2024",
+      "image": "https://randomuser.me/api/portraits/women/68.jpg"
+    },
+    {
+      "name": "Noah Anderson",
+      "role": "member",
+      "description": "Fantastic fitness center with everything you could ask for. Great for beginners and pros alike.",
+      "rating": 5,
+      "date": "Nov 12, 2024",
+      "image": "https://randomuser.me/api/portraits/men/38.jpg"
+    },
+    {
+      "name": "Isabella Garcia",
+      "role": "member",
+      "description": "I’ve never felt more motivated to work out. The group classes are so engaging!",
+      "rating": 5,
+      "date": "Nov 10, 2024",
+      "image": "https://randomuser.me/api/portraits/women/50.jpg"
+    },
+    {
+      "name": "James Moore",
+      "role": "member",
+      "description": "A bit crowded during peak hours, but the quality of service makes up for it. Highly recommend!",
+      "rating": 4,
+      "date": "Nov 8, 2024",
+      "image": "https://randomuser.me/api/portraits/men/23.jpg"
+    },
+    {
+      "name": "Mia Taylor",
+      "role": "member",
+      "description": "The nutritionist sessions offered here were life-changing. I've completely revamped my diet and lifestyle.",
+      "rating": 5,
+      "date": "Nov 5, 2024",
+      "image": "https://randomuser.me/api/portraits/women/39.jpg"
+    },
+    {
+      "name": "William Harris",
+      "role": "member",
+      "description": "The overall vibe is fantastic, and the trainers are really knowledgeable. Best fitness decision I’ve made.",
+      "rating": 5,
+      "date": "Nov 2, 2024",
+      "image": "https://randomuser.me/api/portraits/men/54.jpg"
+    }
+  ]
+  

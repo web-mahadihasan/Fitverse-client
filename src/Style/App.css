@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .font-poppins{
   font-family: "Poppins", serif;
 }
 
 .font-kanit{
-  font-family: "Kanit", serif;
+  font-family: "Hind Siliguri", serif;
 }
 
 .trainer-shadow{
@@ -17,4 +16,23 @@
 
 .step2box-shadow{
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.max-width{
+  max-width: 1440px;
+}
+.featured-shadow:hover{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.section-badge{
+  clip-path: polygon(25% 0, 100% 0, 80% 100%, 1% 100%);
+}
+.blog-shadow{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+@media screen and (min-width: 780px) {
+  .clipped {
+    -webkit-clip-path: polygon(30% 0, 100% 0%, 100% 98%, 0% 100%);
+    clip-path: polygon(30% 0, 100% 0%, 100% 98%, 0% 100%);
+  
+  }
 }

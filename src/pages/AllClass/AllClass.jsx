@@ -7,7 +7,7 @@ const AllClass = () => {
     return (
         <div>
             
-            <section className="">
+            <section className="max-width mx-auto px-4 xl:px-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-24">
                     {
                         allClass?.map(classInfo => <ClassCard key={classInfo._id} classInfo={classInfo}/>)

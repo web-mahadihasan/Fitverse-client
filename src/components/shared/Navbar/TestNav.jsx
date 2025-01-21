@@ -25,13 +25,13 @@ const TestNav = () => {
     </>
   return (
     <nav className=" fixed top-0 w-full z-50 transition-all duration-300 font-poppins bg-white/80">
-      <div className="max-w-7xl mx-auto px-4 xl:px-0 border-b border-gray-100">
+      <div className="max-width mx-auto px-4 xl:px-0 border-b border-gray-100">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link className="flex items-center space-x-2 text-[#1d4ed8]" to="/">
             <div className="relative">
               <img src={fitnessLogo} alt="" className="h-9"/>
             </div>
-            <span className="text-4xl font-kanit font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
+            <span className="text-4xl font-gagalin tracking-wider font-medium bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
               FitVerse
             </span>
           </Link>

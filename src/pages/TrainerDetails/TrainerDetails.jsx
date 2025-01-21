@@ -232,18 +232,7 @@ const TrainerDetails = () => {
 
                 {/* Call to action  */}
                 <div className="my-24 min-h-[500px] object-cover bg-center bg-no-repeat max-w-7xl mx-auto px-4 xl:px-0">
-                    {/* <div className="w-full h-[500px]">
-                    <div>
-                            <h5 className=" flex items-center gap-2 text-gray-700 font-kanit text-2xl dark:text-gray-300"><span>Experience:</span></h5>
-                            <p className="font-poppins text-lg text-gray-500 dark:text-gray-500">3 years</p>
-                        </div>
-                    <Tiles 
-                        rows={50} 
-                        cols={8}
-                        tileSize="md"
-                    />
-                    dgdgd */}
-                    {/* </div> */}
+                    
                 <div className="relative h-[500px] rounded-lg w-full bg-background overflow-hidden border">
                     <FlickeringGrid
                         className="z-0 absolute inset-0 size-full w-full"

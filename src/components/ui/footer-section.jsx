@@ -28,7 +28,7 @@ function Footerdemo() {
   return (
     (<footer
       className="relative border-t bg-gradient-to-b from-white to-blue-50 z-10 text-foreground transition-colors duration-300 dark:bg-none">
-      <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
+      <div className="max-width mx-auto px-4 py-12 xl:px-0">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
             <Link className="flex items-center space-x-2 text-[#1d4ed8]" to="/">

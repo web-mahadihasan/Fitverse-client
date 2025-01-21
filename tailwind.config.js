@@ -100,9 +100,11 @@ export default {
   					'offset-distance': '100%'
   				}
   			}
-  		}
+  		},
+  		backgroundImage: {
+  
   	}
   },
   plugins: [require("tailwindcss-animate")],
 }
-
+}
