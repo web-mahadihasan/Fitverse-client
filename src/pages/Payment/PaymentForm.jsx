@@ -18,12 +18,15 @@ const PaymentForm = ({paymentInfo}) => {
         name: trainerName, 
         email : trainerEmail,
         selectedClass,
+        _id: slotId,
         trainerId,
         slotName,
+        classHour,
         packageName,
         packagePrice
     } = paymentInfo || {}
 
+    console.log(paymentInfo)
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -58,8 +61,10 @@ const PaymentForm = ({paymentInfo}) => {
             trainerEmail, 
             trainerName, 
             selectedClass,
+            slotId,
             trainerId,
             slotName,
+            classHour,
             packageName,
             packagePrice,
             userName: user?.displayName,

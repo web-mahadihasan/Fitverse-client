@@ -33,7 +33,7 @@ const DashboardSidebar = () => {
     ]
     const userRoutes = [
         {name: "Activity Logs", path: "/dashboard/user/activity-log",  icon: <Icon icon="hugeicons:activity-04" width="26" height="26" />},
-        {name: "Profile Badge", path: "/dashboard/user/profile-badge",  icon: <Icon icon="simple-line-icons:badge" width="26" height="26" />},
+        {name: "Profile Badge", path: "/dashboard/user/profile",  icon: <Icon icon="simple-line-icons:badge" width="26" height="26" />},
         {name: "Booked Trainer", path: "/dashboard/user/booked-trainer",  icon: <Icon icon="mdi:user-check-outline" width="26" height="26" />},
         {name: "Payment History", path: "/dashboard/user/payment-history",  icon: <Icon icon="iconamoon:history-light" width="26" height="26" />},
     ]

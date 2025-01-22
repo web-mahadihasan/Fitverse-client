@@ -14,7 +14,7 @@ import { Facebook, Instagram, Linkedin, Moon, Send, Sun, Twitter } from "lucide-
 
 export function AnimatedCard({trainerData}) {
   const axiosPublic = useAxiosPublic()
-  const {_id, name, image, age, email} = trainerData || {}
+  const {_id, name, image, age, email, experience} = trainerData || {}
 
   const {data:findSlot, isLoading} = useQuery({
     queryKey: ["slotForCard"],
@@ -54,7 +54,7 @@ export function AnimatedCard({trainerData}) {
         <div className="flex items-center justify-between mt-3">
           <p className="flex items-center gap-1">
             <span className="text-main"><Icon icon="material-symbols-light:work-history-outline-rounded" width="20" height="20" /></span>
-            <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Experience: {age} Yr</span>
+            <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Experience: {experience} Yr</span>
           </p>
           <p className="flex items-center gap-1">
             <span className="text-main"><Icon icon="material-symbols:data-usage" width="20" height="20" /></span>

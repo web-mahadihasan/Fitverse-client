@@ -23,6 +23,8 @@ import Payment from '../pages/Payment/Payment';
 import TestPayment from '../pages/Payment/TestPayment';
 import UserPaymentHistory from '../pages/Dashboard/UserDashboard/UserPaymentHistory/UserPaymentHistory';
 import PaymentPage from '../pages/Payment/Payment';
+import BookedTrainer from '../pages/Dashboard/UserDashboard/BookedTrainer/BookedTrainer';
+import UserProfile from '../pages/Dashboard/UserDashboard/UserProfile/UserProfile';
 
 
 const Router = createBrowserRouter([
@@ -112,6 +114,14 @@ const Router = createBrowserRouter([
             {
                 path: "/dashboard/user/payment-history",
                 element: <UserPaymentHistory/>,
+            },
+            {
+                path: "/dashboard/user/booked-trainer",
+                element: <BookedTrainer/>,
+            },
+            {
+                path: "/dashboard/user/profile",
+                element: <UserProfile/>,
             }
         ]
     }

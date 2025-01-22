@@ -183,7 +183,7 @@ const UserPaymentHistory = () => {
                 <td className="p-3">{userPayment.trainerName}</td>
                 <td className="p-3">{userPayment.packageName}</td>
                 <td className="p-3">{userPayment.paymentId}</td>
-                <td className="p-3">{userPayment.packagePrice}</td>
+                <td className="p-3">$ {userPayment.packagePrice}</td>
                 <td className="p-3">{userPayment.selectedClass}</td>
                 <td className="p-3">{format(userPayment.paymentDate, "PP")}</td>
                 {/* <td className="p-3">{userPayment.role}</td> */}
