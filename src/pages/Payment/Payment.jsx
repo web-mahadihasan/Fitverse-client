@@ -1,67 +1,83 @@
-import { PaymentElement,  Elements, useElements, useStripe, EmbeddedCheckoutProvider, EmbeddedCheckout, CardElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import CheckoutForm from "./CheckoutForm";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import useAxiosSecured from "../../hooks/useAxiosSecured";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState, useEffect } from "react"
+import { loadStripe } from "@stripe/stripe-js"
+import { Elements } from "@stripe/react-stripe-js"
+import PaymentForm from "./PaymentForm"
+import { useLocation } from "react-router"
+import useAxiosSecured from "../../hooks/useAxiosSecured"
+// import PaymentForm from "./PaymentForm"
 
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY)
 
-// const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
+const PaymentPage = () => {
+  const [clientSecret, setClientSecret] = useState("")
+  const [error, setError] = useState(null)
+  const location = useLocation()
+  const paymentInfo = location?.state?.paymentInfo
+  const axiosSecured = useAxiosSecured()
 
-const Payment = () => {
-    const [clientSecret, setClientSecret] = useState("");
-    const axiosSecured = useAxiosSecured()
+  
 
-    const { data } = useQuery({
-        queryKey: ["stripeKey"],
-        queryFn: async () => {
-          const response = await axios.post("http://localhost:3000/create-checkout-session");
-          return response.data;
-        },
-      });
-      console.log(data)
-      const stripePromise = loadStripe(data?.publishableKey);
+  useEffect(() => {
+    // fetch("http://localhost:3000/create-payment-intent", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error("Network response was not ok")
+    //     }
+    //     return res.json()
+    //   })
+    //   .then((data) => setClientSecret(data.clientSecret))
+    //   .catch((error) => {
+    //     console.error("Error:", error)
+    //     setError(error.message)
+    //   })
+    const totalAmmount = {
+      ammount: paymentInfo?.packagePrice
+    }
+    const sendPaymentInfo = async () => {
+      if(totalAmmount.ammount > 0) {
+        try {
+          const {data} = await axiosSecured.post("http://localhost:3000/create-payment-intent", totalAmmount)
+          setClientSecret(data.clientSecret)         
+        } catch (error) {
+          console.error("Error:", error)
+          setError(error.message)
+        }
+      }
+    }
+    sendPaymentInfo()
+  }, [axiosSecured, paymentInfo?.packagePrice])
 
+  const appearance = {
+    theme: "stripe",
 
+  }
+  const options = {
+    clientSecret,
+    appearance,
+  }
 
-    return (
-        <div className="max-w-sm mx-auto h-full justify-center my-24 text-center">
-            <div>
-                <h3>Here is all payment system</h3>
+  if (error) {
+    return <div>Error: {error}</div>
+  }
 
-                <div>
-                {/* disabled={!stripe || loading} */}
-                {/* {loading ? 'Processing...' : 'Pay'} */}
-                {/* {status && <p>{status}</p>} */}
+  return (
+    <div className="my-24 min-h-[600px] w-full grid place-items-center lg:grid-cols-4 px-4 xl:px-0">
+      <div className="hidden lg:block"></div>
+     <div className="w-full md:w-[70%] lg:w-full lg:col-span-2 mx-auto ">
+      <h1 className="text-3xl text-center font-bold  font-kanit capitalize text-main  mb-7 tracking-wide dark:text-main-dark">Secure Checkout, Pay with Your Card</h1>
+        {clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <PaymentForm paymentInfo={paymentInfo}/>
+          </Elements>
+        )}
+     </div>
+     <div className="hidden lg:block"></div>
+    </div>
+  )
+}
 
-                    {/* strip website  */}
-                {/* <EmbeddedCheckoutProvider
-                    stripe={stripePromise}
-                    options={{ clientSecret }}
-                >
-                    <EmbeddedCheckout />
-                </EmbeddedCheckoutProvider> */}
+export default PaymentPage;
 
-                        {/* PH  */}
-
-                    {/* <Elements stripe={stripePromise}>
-                        <CheckoutForm/>
-                    </Elements> */}
-
-                        {/* element it work  */}
-
-                    <Elements stripe={stripePromise} options={{ clientSecret: data?.clientSecret }}>
-                        <CheckoutForm />
-                    </Elements>
-
-                    {/* Vo  */}
-        
-        
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default Payment;

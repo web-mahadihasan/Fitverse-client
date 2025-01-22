@@ -8,6 +8,7 @@ import {
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import { useQuery } from "@tanstack/react-query";
 import { IoIosArrowDown } from "react-icons/io";
+import { format } from "date-fns";
 
 
 const ActivityLog = () => {
@@ -79,7 +80,7 @@ const ActivityLog = () => {
     };
 
     const handleToggle = () => setIsOpen((prev) => !prev);
-
+    // console.log( new Date(Jan 1, 2025))
  
   if(isLoading) return <p>Loading....</p>
 
@@ -137,7 +138,7 @@ const ActivityLog = () => {
               >
                 <td className="p-3">{subscriber.name}</td>
                 <td className="p-3">{subscriber.email}</td>
-                <td className="p-3">{subscriber.date}</td>
+                <td className="p-3">{format(subscriber.date, "PP")}</td>
                 
               </tr>
             ))}

@@ -21,6 +21,8 @@ import AllClass from '../pages/AllClass/AllClass';
 import ActivityLog from '../pages/Dashboard/UserDashboard/ActivityLogs/ActivityLog';
 import Payment from '../pages/Payment/Payment';
 import TestPayment from '../pages/Payment/TestPayment';
+import UserPaymentHistory from '../pages/Dashboard/UserDashboard/UserPaymentHistory/UserPaymentHistory';
+import PaymentPage from '../pages/Payment/Payment';
 
 
 const Router = createBrowserRouter([
@@ -63,7 +65,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/booked-slot/payment/:id",
-                element: <TestPayment/>
+                element: <PaymentPage/>
             }
         ]
     },
@@ -106,6 +108,10 @@ const Router = createBrowserRouter([
             {
                 path: "/dashboard/user/activity-log",
                 element: <ActivityLog/>,
+            },
+            {
+                path: "/dashboard/user/payment-history",
+                element: <UserPaymentHistory/>,
             }
         ]
     }

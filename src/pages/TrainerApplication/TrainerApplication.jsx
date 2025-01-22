@@ -76,11 +76,11 @@ const TrainerApplication = () => {
   ];
   const onSubmit = async (data) => {
     console.log(data);
-    const date = format(new Date(), "PP");
+    
     const applicationInfo = {
       ...data,
       image: imageLink,
-      date,
+      date: new Date(),
       trainerStatus: "pending",
       userId: getUser?._id,
       role: getUser?.role,

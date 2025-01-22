@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import {
@@ -10,35 +11,34 @@ import useAxiosSecured from "../../../../hooks/useAxiosSecured";
 import { useQuery } from "@tanstack/react-query";
 import { IoEyeOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
+import { format } from "date-fns";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 
-const ActivityLog = () => {
+const UserPaymentHistory = () => {
     const [tableData, setTableData] = useState([])
-    const [viewFeedbackModal, setViewFeedbackModal] = useState(false);
     const {user} = useAuth()
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const [isNote, setIsNote] = useState("")
-    const feedbackRef = useRef()
+
 
     // Get all application
     const axiosSecured = useAxiosSecured();
-    const { data: userApplicationInfo, isLoading, } = useQuery({
-        queryKey: ["userApplicationInfo"],
+    const { data: userPaymentHistory, isLoading, } = useQuery({
+        queryKey: ["userPayment"],
         queryFn: async () => {
-        const { data } = await axiosSecured.get(`/application-api/get-application/${user.email}`);
+        const { data } = await axiosSecured.get(`/payment-api/my-payment/${user.email}`);
         return data;
         },
     });
     
 
     useEffect(()=> {
-        if(userApplicationInfo?.length > 0){
-            setTableData(userApplicationInfo)
+        if(userPaymentHistory?.length > 0){
+            setTableData(userPaymentHistory)
         }
-    }, [userApplicationInfo])
+    }, [userPaymentHistory])
 
     // Handle sorting 
     const handleSort = (key) => {
@@ -87,25 +87,23 @@ const ActivityLog = () => {
 
     const handleToggle = () => setIsOpen((prev) => !prev);
 
-    const handleViewFeedback = (id) => {
-        const getApplication = userApplicationInfo.find(item => item._id === id)
-        const feedback = getApplication.note
-        if (feedbackRef.current) {
-            feedbackRef.current.innerText = feedback;
-          }
-          setViewFeedbackModal(true)
-    }
 
     if(isLoading) return <p>Loading....</p>
 
   return (
     <div className="mx-auto p-4">
       <div className="text-center mt-5 mb-10 space-y-4">
-          <SectionBadge title={"Activity Logs"}/>
-          <SectionHeading
-            title={"User Activity Log and Engagement"}
-            subtitle={"Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement."}
-          />
+        <SectionBadge title={"Payment History"}/>
+        <SectionHeading
+            title={"Your Detailed Payment History"}
+            subtitle={"View your complete payment history with detailed information, including dates, amounts, and payment methods"}
+        />
+          {/* <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
+             User Activity Log and Engagement Tracker
+          </h3>
+          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
+            Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
+          </p> */}
         </div>
       <div className="rounded-md border border-gray-200 w-full">
         <table className="w-full text-sm">
@@ -113,30 +111,40 @@ const ActivityLog = () => {
             <tr>
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("name")}
+                onClick={() => handleSort("trainerName")}
               >
                 <div className="flex items-center gap-[5px]">
-                  Name
+                  Trainer Name
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
               {/* Email  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("email")}
+                onClick={() => handleSort("packageName")}
               >
                 <div className="flex items-center gap-[5px]">
-                  Email
+                    packageName
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("paymentId")}
+              >
+                <div className="flex items-center gap-[5px]">
+                    Transaction ID
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
               {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("date") }
+                onClick={() => handleSort("packagePrice") }
               >
                 <div className="flex items-center gap-[5px]">
-                  Date
+                    packagePrice
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
@@ -145,50 +153,47 @@ const ActivityLog = () => {
               {/* Status  */}
               <th
                 className="p-3 text-left font-medium text-gray-700 cursor-pointer"
-                onClick={() => handleSort("status")}
+                onClick={() => handleSort("selectedClass")}
               >
                 <div className="flex items-center gap-[5px]">
-                  Status
+                  Selected Class
+                  <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
+                </div>
+              </th>
+              {/* Status  */}
+              <th
+                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                onClick={() => handleSort("paymentDate")}
+              >
+                <div className="flex items-center gap-[5px]">
+                  Payment Date
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
 
-              <th className="p-3 text-left font-medium text-gray-700">
-                Admin Feedback
-              </th>
+              
             </tr>
           </thead>
           <tbody>
-            {paginatedData?.map((application) => (
+            {paginatedData?.map((userPayment) => (
               <tr
-                key={application._id}
+                key={userPayment._id}
                 className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
               >
-                <td className="p-3">{application.name}</td>
-                <td className="p-3">{application.email}</td>
-                <td className="p-3">{application.date}</td>
-                {/* <td className="p-3">{application.role}</td> */}
-                <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
-                  {
-                  application?.trainerStatus === "approved" && "Approved" 
-                  || application?.trainerStatus === "pending" && "Pending" 
-                  || application?.trainerStatus === "reject" && "Rejected"
-                  }</span> 
-                </td>
-                <td className="p-3 relative">
-                  {
-                    application?.trainerStatus === "pending" ? "Under Review" : <button onClick={()=> handleViewFeedback(application._id)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                    <IoEyeOutline size={20}/>
-                    View Details
-                  </button>
-                  }
-                </td>
+                <td className="p-3">{userPayment.trainerName}</td>
+                <td className="p-3">{userPayment.packageName}</td>
+                <td className="p-3">{userPayment.paymentId}</td>
+                <td className="p-3">{userPayment.packagePrice}</td>
+                <td className="p-3">{userPayment.selectedClass}</td>
+                <td className="p-3">{format(userPayment.paymentDate, "PP")}</td>
+                {/* <td className="p-3">{userPayment.role}</td> */}
+                
               </tr>
             ))}
           </tbody>
         </table>
 
-        {!userApplicationInfo?.length && (
+        {!userPaymentHistory?.length && (
           <p className="text-[0.9rem] text-gray-500 py-6 text-center w-full">
             No data found!
           </p>
@@ -285,42 +290,9 @@ const ActivityLog = () => {
       </div>
 
       {/* Modal show  */}
-       <>
-           <div
-               className={`${
-                   viewFeedbackModal ? " visible" : " invisible"
-               } w-full h-screen fixed top-0 left-0 z-50 bg-[#0201012a] flex items-center justify-center transition-all duration-300`}
-           >
-               <div
-                   className={`${
-                    viewFeedbackModal
-                           ? " scale-[1] opacity-100"
-                           : " scale-[0] opacity-0"
-                   } lg:w-[30%] md:w-[40%] sm:w-[90%] w-full bg-gray-100 rounded-lg p-5 transition-all duration-300`}
-               >
-                   <div className="min-w-full flex items-center justify-between">
-                       <h2 className="primary-black my-3 dark:text-gray-100 text-2xl font-poppins font-[600]">Admin Feedback is here</h2>
-                       <RxCross1
-                           className="p-2 text-[2rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                           onClick={() => setViewFeedbackModal(false)}
-                       />
-                   </div>
-                   <div className="w-full">
-                       <p ref={feedbackRef} className="text-red-500 text-[1rem] font-poppins font-[400]">
-                             
-                       </p>
-                       <div className="mt-8 flex w-full items-end justify-end gap-[13px]">
-                           <button onClick={() => setViewFeedbackModal(false)}
-                                   className={`py-2 px-6 font-popins rounded font-[500] z-10 border border-[#cecece] text-gray-500`}>Close
-                           </button>
-                       </div>
-                   </div>
-                   
-               </div>
-           </div>
-          </>
+      
     </div>
   );
 };
 
-export default ActivityLog;
+export default UserPaymentHistory;

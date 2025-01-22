@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth"
 import { format } from "date-fns"
 import useAxiosSecured from "../../hooks/useAxiosSecured"
 import Swal from "sweetalert2"
+import { useNavigate } from "react-router"
 
 const PaymentForm = ({paymentInfo}) => {
     const stripe = useStripe()
@@ -12,6 +13,7 @@ const PaymentForm = ({paymentInfo}) => {
     const [isProcessing, setIsProcessing] = useState(false)
     const {user} = useAuth()
     const axiosSecured = useAxiosSecured()
+    const navigate = useNavigate()
     const {
         name: trainerName, 
         email : trainerEmail,
@@ -49,10 +51,9 @@ const PaymentForm = ({paymentInfo}) => {
       setMessage(error.message)
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       setMessage("Payment status: " + paymentIntent.status)
-      console.log(paymentIntent)
+      // console.log(paymentIntent.id)
 
         // Save payment info in data base 
-        const paymentDate = format(new Date(), "PP");
         const savePaymentData = {
             trainerEmail, 
             trainerName, 
@@ -63,16 +64,17 @@ const PaymentForm = ({paymentInfo}) => {
             packagePrice,
             userName: user?.displayName,
             userEmail: user?.email,
-            paymentDate
+            paymentDate: new Date(),
+            paymentId: paymentIntent?.id
         }
         const {data} = await axiosSecured.post("/payment-api/new-payment", savePaymentData)
-        console.log(data)
         if(data.insertedId){
             Swal.fire({
               title: "Successfull",
               text: "Thank you for purchase plan. Best wishes.",
               icon: "success",
             });
+            navigate("/dashboard/user/payment-history")
         }
     } else {
       setMessage("Unexpected state")
@@ -83,7 +85,7 @@ const PaymentForm = ({paymentInfo}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
       <PaymentElement id="payment-element"
       options={{
         layout: {
@@ -94,9 +96,9 @@ const PaymentForm = ({paymentInfo}) => {
         },
       }}
       />
-      <button disabled={isProcessing || !stripe || !elements} type="submit">
-        {isProcessing ? "Processing..." : "Pay now"}
-      </button>
+       <button disabled={isProcessing || !stripe || !elements} type="submit" className=" font-poppins w-full bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+         {isProcessing ? "Processing..." : `Pay now $ ${packagePrice}`}
+        </button>
       {message && <div>{message}</div>}
     </form>
   )
