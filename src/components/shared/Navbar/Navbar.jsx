@@ -1,118 +1,98 @@
-import { Link, NavLink } from "react-router";
-// import logo from "../../../assets/images/stayroom.png"
-import { MdOutlineNotificationsActive } from "react-icons/md";
-import { HiMenu } from "react-icons/hi";
-// import useAppContext from "../../../hooks/useAppContext";
-// import MobileMenuAside from "./MobileMenuAside";
-// import useAuth from "../../../hooks/useAuth";
-// import CurrentUser from "./CurrentUser";
-import { CiMenuFries } from "react-icons/ci";
-import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
-import fitnessLogo from "../../../assets/icon/Fitness-log.png"
+import { Link, NavLink } from "react-router";
+import MobileMenu from "./MobileMenu";
+import useApp from "../../../hooks/useApp";
 import fitnessLogo1 from "../../../assets/icon/icon1.png"
+import { CiMenuFries } from "react-icons/ci";
+import CurrentUserInfo from "./CurrentUserInfo";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import fitnessLogo from "../../../assets/icon/Fitness-log.png"
+import useAuth from "../../../hooks/useAuth";
+import userIcon  from "../../../assets/icon/user.png"
 
 const Navbar = () => {
-    // const {user, loginUser} = useAuth()
-    // const {setOpenMenu} = useAppContext();
-    const [openMenu, setOpenMenu] = useState(false)
-    const user= false;
+    const [dropdownMenu, setDropdownMenu] = useState(false)
+    const [profileMenu, setProfileMenu] = useState(false)
+    const {openMenu, setOpenMenu} = useApp()
+    const {user} = useAuth()
 
     const navLinks = <>
-        <li> <NavLink to={"/"}>Home</NavLink> </li>
-        <li><NavLink to={"/rooms"}>Rooms</NavLink></li>
-        <li><NavLink to={"/my-bookings"}>My Bookings</NavLink></li>
-        <li><NavLink to={"/about-us"}>About Us</NavLink></li>
-        <li><NavLink to={"/contact-us"}>Contact Us</NavLink></li>
+        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200 cursor-pointer" to="/all-classes"> All Classes </Link>
+        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
+        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
+        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
+        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
     </>
-    return (
-        <div className="">
-            <div className="flex items-center justify-between container mx-auto">
-                <div className="flex items-center">
-                    <img src={fitnessLogo} alt="" className="h-10"/>
-                    <h3 className="font-kanit text-4xl font-semibold">FitVerse</h3>
-                </div>
-
-                <div>
-                    <ul className="flex items-center gap-4">
-                        {navLinks}
-                    </ul>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                    <img src={fitnessLogo1} alt="" className="h-12 w-12 rounded-full"/>
-                    <button>
-                        <CiMenuFries/>
-                    </button>
-                </div>
+  return (
+    <nav className=" fixed top-0 w-full z-50 transition-all duration-300 font-poppins bg-white/80">
+      <div className="max-width mx-auto px-4 xl:px-0 border-b border-gray-100">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          <Link className="flex items-center space-x-2 text-[#1d4ed8]" to="/">
+            <div className="relative">
+              <img src={fitnessLogo} alt="" className="h-9"/>
             </div>
+            <span className="text-4xl font-gagalin tracking-wider font-medium bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
+              FitVerse
+            </span>
+          </Link>
+
+
+          <div className="hidden md:flex items-center space-x-1">
+            <div className="relative font-poppins">
+              
+            </div>
+            <ul className="flex items-center gap-4">
+                <li> <NavLink to={"/"}>Home</NavLink> </li>
+                <li><NavLink to={"/all-trainers"}>All Trainer</NavLink></li>
+                <li className="relative"><NavLink to={""}>
+                    <button onClick={() => setDropdownMenu(!dropdownMenu)} className="py-2 rounded-lg text-base transition-colors duration-200 flex items-center gap-1 ">
+                        Classes
+                        <MdOutlineKeyboardArrowDown />
+                    </button>
+                    <div className={`absolute top-full left-0 w-64 bg-white rounded-lg shadow-lg mt-4 py-4 transition-all duration-200 transform origin-top scale-95 pointer-events-none ${dropdownMenu? 'opacity-100': 'opacity-0'}`}>
+                        <ul>
+                            {navLinks}
+                        </ul>
+                    </div>
+                </NavLink></li>
+                <li><NavLink to={"/Forums"}>Forums</NavLink></li>
+                <li><NavLink to={"/About us"}>About us</NavLink></li>
+            </ul>
+            {/* <a
+              className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200"
+            >
+              Contact
+            </a> */}
+          </div>
+          <div className="relative flex items-center gap-3">
+            {
+              user? <button onClick={()=> setProfileMenu(!profileMenu)} type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <span className="sr-only">Open user menu</span>
+                <img className="w-10 h-10 rounded-full ring-2 ring-main ring-offset-2 ring-offset-white" src={user?.photoURL || userIcon} alt="user photo"/>
+                </button> : <Link to={"/auth/login"}>
+                  <button className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10">
+                        Log in
+                    </button>
+                </Link>
+            }
+                        
+                <div className={`${profileMenu? "block": "hidden "} absolute top-[100%] right-1 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown">
+                    <CurrentUserInfo setProfileMenu={setProfileMenu}/>
+                   
+                </div>
+          <button onClick={()=> setOpenMenu(true)} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <CiMenuFries/>
+          </button>
+            
+          </div>
         </div>
-    );
+        {
+            openMenu && <MobileMenu/>
+        }
+        
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
-
-
-{/* <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 z-40" id="navbar-user">
-<ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-<li>
-    <a href="#" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
-</li>
-<li>
-    <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-</li>
-<li>
-    <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-</li>
-<li>
-    <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
-</li>
-<li>
-    <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-</li>
-</ul>
-</div> */}
-
-
-// <div className="container mx-auto px-4 xl:px-0 flex items-center justify-between">
-//                 {/* Logo  */}
-//                 <div>
-//                     <Link to={"/"}><img src="" alt="Stay Rooms" className="h-10 md:h-12"/></Link>
-//                 </div>
-
-//                 {/* Nav links  */}
-//                 <div className="hidden lg:block inset-x-0 bg-white/80 backdrop-blur-lg transition-all duration-300 ease-in-out border-b -translate-y-full opacity-0">
-//                     <ul className="flex uppercase items-center text-sm font-medium text-secondary-black gap-4">
-//                         {navLinks}
-//                     </ul>
-//                 </div>
-
-//                 {/* Action button  */}
-//                 <div className="flex items-center gap-2">
-//                     {
-//                         user ? <div className="flex items-center gap-3">
-//                             <span className="p-2 border bg-white rounded-full cursor-pointer"><MdOutlineNotificationsActive size={23} className="text-primary"/></span>
-//                             {/* <img src="" alt="" className="w-10 h-10 rounded-full"/> */}
-//                             <details className="dropdown dropdown-end">
-//                                 <summary className="btn p-0 bg-transparent hover:bg-transparent rounded-full flex items-center gap-2 border-gray-300 px-2">
-//                                     <img src={user?.photoURL} alt="" className="w-9 h-9 rounded-full ring-2 ring-offset-2 ring-gray-100"/>
-//                                     <IoIosArrowDown size={20} />
-//                                 </summary>
-//                                 <ul className="menu dropdown-content bg-white z-[1] p-2 min-w-60 space-y-2 border shadow-md rounded-md border-t-4 border-t-primary mt-3">
-//                                     {/* <CurrentUser/> */}
-//                                 </ul>
-//                             </details>
-//                         </div> : (<div className="hidden font-medium md:flex items-center">
-//                         <Link to={"/auth/login"}><button className="px-5 py-1.5 bg-white text-primary rounded shadow-md border border-primary hover:bg-primary hover:text-white hover:border-primary duration-500">Login</button></Link>
-//                         <div className="mx-2 text-sm font-medium">OR</div>
-//                         <Link to={"/auth/register"}><button className="px-5 py-1.5 bg-primary text-white rounded shadow-xl border border-primary hover:bg-secondary-black hover:border-secondary-black duration-500 tracking-wide">Register</button></Link>
-//                     </div>)
-//                     }
-//                     {/* Hamburger  */}
-//                     <div onClick={() => setOpenMenu(!openMenu)} className="lg:hidden"><HiMenu size={30} /></div>
-//                     <aside>
-//                         {/* <MobileMenuAside/> */}
-//                     </aside>
-//                 </div>
-//             </div>
-            

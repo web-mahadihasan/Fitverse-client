@@ -11,11 +11,29 @@ import { Divider } from 'antd';
 import fitnessLogo from "../../../assets/icon/Fitness-log.png"
 import useAdmin from '../../../hooks/useAdmin';
 import useTrainer from '../../../hooks/useTrainer';
+import toast from 'react-hot-toast';
 
-const DashboardSidebar = () => {
-    const {user} = useAuth()
+const DashboardSidebar = ({setOpenSidebar, openSidebar}) => {
+    const {user, logOutUser} = useAuth()
     const [isAdmin] = useAdmin()
     const [isTrainer] = useTrainer()
+    
+
+    const handleSignOut = async () => {
+        const toastId = toast.loading('Logging in...');
+        try {
+            const result = await logOutUser()
+                toast.success(`Successfully Logout!`, {
+                    id: toastId, 
+                });
+                console.log(result)
+        } catch (error) {
+            toast.success(`Failed to Logout! Try again`, {
+                id: toastId, 
+              });
+              console.log(error)
+        }
+    }
 
     const isCollapse = true;
 
@@ -44,20 +62,20 @@ const DashboardSidebar = () => {
         {name: "Contact", path: "/contact", icon: <Icon icon="mdi-light:email" width="24" height="24" />}
     ]
     return (
-        <div className="border font-poppins flex min-h-screen flex-col justify-between h-full p-3 px-6 w-full dark:bg-yellow text-black/80 font-inter">
+        <div className={`min-h-screen border font-poppins flex flex-col justify-between h-full p-3 px-6 w-full dark:bg-yellow text-black/80 font-inter`}>
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="relative">
                     <div className='flex items-center gap-2'>
                         <div className="relative">
                           <img src={fitnessLogo} alt="" className="h-9"/>
                         </div>
-                        <span className="text-4xl font-gagalin tracking-wider font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
+                        <span className="text-3xl lg:text-4xl font-gagalin tracking-wider font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#5A29E4] to-[#9F72F9]">
                           FitVerse
                         </span>
                     </div>
-                    <button className="p-2">
-                        <HiMenu size={26} />
-                    </button>
+                    <div onClick={() => setOpenSidebar(false)} className='absolute -right-8 top-3'>
+                        <Icon icon="octicon:sidebar-collapse-24" width="24" height="24" />
+                    </div>
                 </div>
                 <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center py-4">
@@ -67,12 +85,12 @@ const DashboardSidebar = () => {
                             </svg>
                         </button>
                     </span>
-                    <input type="search" name="Search" placeholder="Search..." className="w-full py-2 pl-10 text-sm dark:border- rounded-md focus:outline-none dark:bg-gray-100 dark:text-gray-800 focus:dark:bg-gray-50" />
+                    <input type="search" name="Search" placeholder="Search..." className="w-full py-2 pl-10 text-sm dark:border- rounded-md focus:outline-none dark:bg-gray-800 dark:text-gray-800 focus:dark:bg-gray-50" />
                 </div>
                 <div className="flex-1">
                     <ul className="pt-2 pb-4 space-y-3 text-sm">
                         <li className="rounded-sm dashboard text-base" >
-                             <NavLink to={"/dashboard"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                             <NavLink to={"/dashboard"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                  <span className=''><GoHome size={24} className='text-main'/></span>
                                  <span>Dashboard Home</span>
                              </NavLink>
@@ -81,7 +99,7 @@ const DashboardSidebar = () => {
                         {
                            user && isAdmin && addminRoutes.map(link =>   
                                 <li className="rounded-sm dashboard text-base" key={link.name}>
-                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                         <span className='text-main'>{link.icon}</span>
                                         <span>{link.name}</span>
                                     </NavLink>
@@ -92,7 +110,7 @@ const DashboardSidebar = () => {
                         {
                            user && isTrainer && trainerRoutes.map(link =>   
                                 <li className="rounded-sm dashboard text-base" key={link.name}>
-                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                         <span className='text-main'>{link.icon}</span>
                                         <span>{link.name}</span>
                                     </NavLink>
@@ -103,7 +121,7 @@ const DashboardSidebar = () => {
                         {
                            !isAdmin && !isTrainer && userRoutes.map(link =>   
                                 <li className="rounded-sm dashboard text-base" key={link.name}>
-                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                    <NavLink to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                         <span className='text-main'>{link.icon}</span>
                                         <span>{link.name}</span>
                                     </NavLink>
@@ -114,7 +132,7 @@ const DashboardSidebar = () => {
                         {/* Forum routes */}
                         {
                             isAdmin || isTrainer ? <li className="rounded-sm dashboard text-base" >
-                            <NavLink to={"/dashboard/common/post-forum"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                            <NavLink to={"/dashboard/common/post-forum"} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                 <span className='text-main'><Icon icon="material-symbols-light:post-add" width="26" height="26" /></span>
                                 <span>Add new Forum</span>
                             </NavLink>
@@ -128,7 +146,7 @@ const DashboardSidebar = () => {
                         {
                            dashboardCommonLinks.map(link =>   
                                 <li className="rounded-base font-poppins" key={link.name}>
-                                    <Link to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                    <Link to={link.path} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md dark:text-gray-300">
                                         <span className='text-main'>{link.icon}</span>
                                         <span>{link.name}</span>
                                     </Link>
@@ -141,12 +159,12 @@ const DashboardSidebar = () => {
 
             {/* Profile iamge */}
             <div
-                className={`${isCollapse ? "justify-between" : "justify-center"} bg-gray-100 py-3 px-[20px] flex items-center mt-10`}>
+                className={`${isCollapse ? "justify-between" : "justify-center"} bg-gray-100 py-3 px-[20px] flex items-center mt-10 dark:bg-gray-800`}>
                 <div className="flex items-center gap-[10px]">
                     <img
-                        src="https://img.freepik.com/free-photo/indoor-picture-cheerful-handsome-young-man-having-folded-hands-looking-directly-smiling-sincerely-wearing-casual-clothes_176532-10257.jpg?t=st=1724478146~exp=1724481746~hmac=7de91a5b9271ecb4309974122ae6f47d71c01f7fff840c69755f781a03d9e340&w=996"
-                        alt="avatar" className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover"/>
-                    <h3 className={`${isCollapse ? "inline" : "hidden"} text-[0.9rem] text-gray-800 font-[500]`}>{user?.displayName}</h3>
+                        src={user?.photoURL}
+                        alt="avatar" className="w-[33px] h-[33px] cursor-pointer rounded-full object-cover"/>
+                    <h3 className={`${isCollapse ? "inline" : "hidden"} text-[0.9rem] text-gray-800 font-[500] dark:text-white/80`}>{user?.displayName}</h3>
                 </div>
 
                 <div className={`${isCollapse ? "inline" : "hidden"} relative group`}>
@@ -157,7 +175,7 @@ const DashboardSidebar = () => {
                             <RiAccountCircleLine/>
                             Profile
                         </li>
-                        <li className="flex items-center gap-[7px] text-[0.9rem] text-red-500 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer">
+                        <li onClick={handleSignOut} className="flex items-center gap-[7px] text-[0.9rem] text-red-500 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer">
                             <CiLogout/>
                             Logout
                         </li>

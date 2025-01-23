@@ -85,7 +85,7 @@ const ActivityLog = () => {
   if(isLoading) return <p>Loading....</p>
 
   return (
-    <div className="mx-auto p-4 my-10">
+    <div className="mx-auto p-4 my-10 md:max-w-6xl">
       <div className="text-center mt-5 mb-10 space-y-4">
           <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
             Subscriber List and Insights
@@ -94,12 +94,13 @@ const ActivityLog = () => {
             Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
           </p>
         </div>
-      <div className="rounded-md border border-gray-200 w-full">
+      <div className="overflow-y-auto">
+      <div className="overflow-x-auto min-w-[950px] rounded-md border border-gray-200 w-full ">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-400 text-gray-700 dark:text-white/85">
             <tr>
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium cursor-pointer"
                 onClick={() => handleSort("name")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -109,7 +110,7 @@ const ActivityLog = () => {
               </th>
               {/* Email  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium cursor-pointer"
                 onClick={() => handleSort("email")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -119,7 +120,7 @@ const ActivityLog = () => {
               </th>
               {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("date") }
               >
                 <div className="flex items-center gap-[5px]">
@@ -134,7 +135,7 @@ const ActivityLog = () => {
             {paginatedData?.map((subscriber) => (
               <tr
                 key={subscriber._id}
-                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
+                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300 dark:hover:bg-gray-600"
               >
                 <td className="p-3">{subscriber.name}</td>
                 <td className="p-3">{subscriber.email}</td>
@@ -151,6 +152,8 @@ const ActivityLog = () => {
           </p>
         )}
       </div>
+      </div>
+
 
         {/* TODO  */}
         {/* Exchange sortedData to tableData  */}
@@ -165,7 +168,7 @@ const ActivityLog = () => {
           <div ref={selectRef} className="relative w-44">
             <button
               onClick={handleToggle}
-              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none"
+              className="w-max px-2 dark:text-gray-700 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none"
             >
               {pageSize}
 
@@ -176,7 +179,7 @@ const ActivityLog = () => {
               />
             </button>
             {isOpen && (
-              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg">
+              <div className="absolute w-max mt-1 bg-white border border-gray-300 dark:bg-gray-500 rounded shadow-lg ">
                 <div
                   className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleOptionClick(5)}
@@ -222,7 +225,7 @@ const ActivityLog = () => {
                   key={pageNum}
                   onClick={() => handlePageChange(pageNum)}
                   className={`${
-                    pageNum === currentPage && "bg-black text-white"
+                    pageNum === currentPage && "bg-black dark:bg-white dark:text-secondary-black font-poppins text-white"
                   } border border-gray-200 px-[10px] text-[0.9rem] py-[1px] rounded-md`}
                 >
                   {pageNum}

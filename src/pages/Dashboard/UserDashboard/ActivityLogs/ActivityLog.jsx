@@ -107,12 +107,13 @@ const ActivityLog = () => {
             subtitle={"Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement."}
           />
         </div>
+      <div className="overflow-y-auto">
       <div className="rounded-md border border-gray-200 w-full">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-400 text-gray-700 dark:text-white/85">
             <tr>
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("name")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -122,7 +123,7 @@ const ActivityLog = () => {
               </th>
               {/* Email  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("email")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -132,7 +133,7 @@ const ActivityLog = () => {
               </th>
               {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("date") }
               >
                 <div className="flex items-center gap-[5px]">
@@ -144,7 +145,7 @@ const ActivityLog = () => {
                
               {/* Status  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("status")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -153,7 +154,7 @@ const ActivityLog = () => {
                 </div>
               </th>
 
-              <th className="p-3 text-left font-medium text-gray-700">
+              <th className="p-3 text-left font-medium ">
                 Admin Feedback
               </th>
             </tr>
@@ -162,7 +163,7 @@ const ActivityLog = () => {
             {paginatedData?.map((application) => (
               <tr
                 key={application._id}
-                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
+                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300 dark:hover:bg- gray-700"
               >
                 <td className="p-3">{application.name}</td>
                 <td className="p-3">{application.email}</td>
@@ -193,6 +194,7 @@ const ActivityLog = () => {
             No data found!
           </p>
         )}
+      </div>
       </div>
 
         {/* TODO  */}

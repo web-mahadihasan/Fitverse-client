@@ -98,19 +98,15 @@ const UserPaymentHistory = () => {
             title={"Your Detailed Payment History"}
             subtitle={"View your complete payment history with detailed information, including dates, amounts, and payment methods"}
         />
-          {/* <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-             User Activity Log and Engagement Tracker
-          </h3>
-          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
-          </p> */}
+          
         </div>
-      <div className="rounded-md border border-gray-200 w-full">
+      <div className="overflow-y-auto">
+      <div className="min-w-[950px] rounded-md border border-gray-200 w-full">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-400 text-gray-700 dark:text-white/85">
             <tr>
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("trainerName")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -120,7 +116,7 @@ const UserPaymentHistory = () => {
               </th>
               {/* Email  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("packageName")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -130,7 +126,7 @@ const UserPaymentHistory = () => {
               </th>
 
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("paymentId")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -140,7 +136,7 @@ const UserPaymentHistory = () => {
               </th>
               {/* Role  handleSort(newsLetterSubscriber)*/}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("packagePrice") }
               >
                 <div className="flex items-center gap-[5px]">
@@ -152,7 +148,7 @@ const UserPaymentHistory = () => {
                
               {/* Status  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("selectedClass")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -162,7 +158,7 @@ const UserPaymentHistory = () => {
               </th>
               {/* Status  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("paymentDate")}
               >
                 <div className="flex items-center gap-[5px]">
@@ -178,7 +174,7 @@ const UserPaymentHistory = () => {
             {paginatedData?.map((userPayment) => (
               <tr
                 key={userPayment._id}
-                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
+                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300 dark:hover:bg-gray-700"
               >
                 <td className="p-3">{userPayment.trainerName}</td>
                 <td className="p-3">{userPayment.packageName}</td>
@@ -199,6 +195,7 @@ const UserPaymentHistory = () => {
           </p>
         )}
       </div>
+      </div>
 
         {/* TODO  */}
         {/* Exchange sortedData to tableData  */}
@@ -213,7 +210,7 @@ const UserPaymentHistory = () => {
           <div ref={selectRef} className="relative w-44">
             <button
               onClick={handleToggle}
-              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none"
+              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px]  dark:text-secondary-black"
             >
               {pageSize}
 
@@ -224,7 +221,7 @@ const UserPaymentHistory = () => {
               />
             </button>
             {isOpen && (
-              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg">
+              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg dark:bg-gray-500 dark:hover:text-secondary-black">
                 <div
                   className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleOptionClick(5)}
@@ -270,7 +267,7 @@ const UserPaymentHistory = () => {
                   key={pageNum}
                   onClick={() => handlePageChange(pageNum)}
                   className={`${
-                    pageNum === currentPage && "bg-black text-white"
+                    pageNum === currentPage && "bg-black dark:bg-white dark:text-secondary-black font-poppins text-white"
                   } border border-gray-200 px-[10px] text-[0.9rem] py-[1px] rounded-md`}
                 >
                   {pageNum}

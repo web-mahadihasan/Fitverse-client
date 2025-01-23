@@ -58,11 +58,11 @@ const AddNewForum = () => {
             {/* form area */}
             <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-[50px]">
                 <div className="flex mx-auto flex-col sm:flex-row items-center gap-[20px]">
-                    <div className="flex flex-col gap-[5px] w-full sm:w-[50%] mx-auto">
-                        <label className="relative">
-                            <input  {...register("title", { required: true })} type="text" name="title" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300"  />
-                            <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Title </span>
-                        </label>
+                    <div className="flex flex-col gap-[5px] w-full md:w-[80%] lg:w-[70%] mx-auto">
+                        <label className="relative w-full text-gray-700 dark:text-gray-400">Forum Title</label>
+                        <input  {...register("title", { required: true })} placeholder="Forum title" type="text" name="title" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"  />
+                        <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Title </span>
+                      
                     </div>
 
                     {/* <div className="flex flex-col gap-[5px] w-full sm:w-[50%]">
@@ -72,15 +72,14 @@ const AddNewForum = () => {
                         </label>
                     </div> */}
                 </div>
-                    <div className="w-1/2 mx-auto">
+                    <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
                         <p className="text-[#777777]  my-4">Upload Class Imgae</p>
                         <ImageUpload imageLink={imageLink} setImageLink={setImageLink} setUploading={setuploading}/>
                     </div>
-                <div className="flex flex-col gap-[5px] w-full mt-[20px]">
-                    <label className="relative w-full lg:w-1/2 mx-auto">
-                          <textarea   {...register("description", { required: true })} name="description" className="peer min-h-[100px] border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300"></textarea>
-                        <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Details</span>
-                    </label>
+                <div className="flex flex-col gap-[5px] w-full md:w-[80%] lg:w-[70%] mx-auto">
+                    <label className="relative w-full text-gray-700 dark:text-gray-400">Forum Description</label>
+                    <textarea   {...register("description", { required: true })} placeholder="Forum details" name="description" className="peer min-h-[100px] border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></textarea>
+                    <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Details</span>
                 </div>
 
 

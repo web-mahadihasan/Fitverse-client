@@ -1,9 +1,8 @@
 import { Outlet, useLocation } from "react-router";
 import { Footerdemo } from "@/components/ui/footer-section";
 import "../Style/App.css"
-import Navbar from "../components/shared/Navbar/Navbar";
-import TestNav from "../components/shared/Navbar/TestNav";
 import { Toaster } from "react-hot-toast";
+import Navbar from "../components/shared/Navbar/Navbar";
 // import 'antd/dist/reset.css';
 
 const MainLayout = () => {
@@ -13,7 +12,7 @@ const MainLayout = () => {
             <Toaster />
 
             <div className="min-h-16">
-                <TestNav/>
+                <Navbar/>
             </div> 
             
            

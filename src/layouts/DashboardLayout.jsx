@@ -4,9 +4,12 @@ import DashboardSidebar from "../pages/Dashboard/DashboardSidebar/DashboardSideb
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Moon,  Sun, } from "lucide-react"
+import { HiMenu } from "react-icons/hi";
+import { useState } from "react";
 
 const DashboardLayout = () => {
     const [isDarkMode, setIsDarkMode] = React.useState(false)
+    const [openSidebar, setOpenSidebar] = useState(false)
   
     React.useEffect(() => {
       if (isDarkMode) {
@@ -18,18 +21,25 @@ const DashboardLayout = () => {
 
     return (
         <div>
-            <div className="grid grid-cols-5 min-h-screen">
+            <div className="lg:grid grid-cols-5 min-h-screen relative">
                 {/* Sidebar  */}
-                <div className="h-screen  sticky top-0">
-                    <DashboardSidebar/>
+                <div className={`relative dark:bg-background dark:text-white lg:sticky top-0`}>
+                    <div className={`absolute z-40 bg-white w-[70%] md:w-[40%] ${openSidebar ? "left-0 top-0 min-h-screen" : "-left-3/4"} dark:bg-background lg:w-full lg:static duration-700 transition-all`}>
+                        <DashboardSidebar setOpenSidebar={setOpenSidebar} openSidebar={openSidebar}/>
+                    </div>
                 </div>
                 
                 {/* Content section  */}
-                <main className="col-span-4 content overflow-y-auto ">
+                <main className="w-full lg:col-span-4 content overflow-y-auto">
                     {/* dashboard nav  */}
-                    <div className="h-14 shadow-md sticky top-0 bg-base-100">
-                       <nav className="flex items-center justify-between h-full max-w-[90%] mx-auto">
-                            <div></div>
+                    <div className="h-14 shadow-md sticky top-0 bg-base-100 dark:bg-gray-800 ">
+                       <nav className="z-10 flex items-center  justify-between h-full max-w-[95%] pl-2">
+                            <div className="flex items-center gap-2">
+                            <button onClick={() => setOpenSidebar(true)} className="p-2 lg:hidden">
+                                <HiMenu size={26} />
+                            </button>
+                            <h3 className="text-2xl font-kanit font-semibold px-4">Dashboard</h3>
+                            </div>
                             <div className="flex items-center space-x-2">
                                 <Sun className="h-4 w-4" />
                                 <Switch id="dark-mode" checked={isDarkMode} onCheckedChange={setIsDarkMode} />
@@ -40,7 +50,7 @@ const DashboardLayout = () => {
                             </div>
                        </nav>
                     </div>
-                    <section className="w-full">
+                    <section className="max-w-6xl mx-auto">
                         <Outlet/>
                     </section>
                 </main>

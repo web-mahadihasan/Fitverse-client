@@ -134,7 +134,7 @@ const ManageSlot = () => {
   if(isLoading) return <p>Loading....</p>
 
   return (
-    <div className="mx-auto p-4 my-10">
+    <div className="mx-auto p-4 my-10 md:max-w-6xl ">
       <div className="text-center mt-5 mb-10 space-y-4">
           <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
             Trainer Slot Management
@@ -143,12 +143,15 @@ const ManageSlot = () => {
             Manage trainer slots efficiently with options to view, sort, filter, and update schedules for seamless coordination.
           </p>
         </div>
-      <div className="rounded-md border border-gray-200 w-full">
+        {/* Table start  */}
+
+      <div className="overflow-y-auto">
+      <div className=" min-w-[950px] rounded-md border border-gray-200 w-full ">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-400 text-gray-700 dark:text-white/85">
             <tr>
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium cursor-pointer"
                 onClick={() => handleSort("slotName")}
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
@@ -158,7 +161,7 @@ const ManageSlot = () => {
               </th>
               {/* Email  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("classtitle")}
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
@@ -168,7 +171,7 @@ const ManageSlot = () => {
               </th>
               {/* Role  handleSort(allApplication)*/}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer"
+                className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("classHour") }
               >
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
@@ -180,13 +183,13 @@ const ManageSlot = () => {
                
               {/* Status  */}
               <th
-                className="p-3 text-left font-medium text-gray-700 cursor-pointer">
+                className="p-3 text-left font-medium  cursor-pointer">
                 <div className="flex items-center gap-[5px] text-base font-poppins text-gray-700 dark:text-gray-200">
                   Class Day
                 </div>
               </th>
 
-              <th className="p-3 text-left font-medium text-gray-700 text-base font-poppins text-gray-700 dark:text-gray-200">
+              <th className="p-3 text-left font-medium  text-base font-poppins  dark:text-gray-200">
                 Actions
               </th>
             </tr>
@@ -195,20 +198,20 @@ const ManageSlot = () => {
             {paginatedData?.map((application) => (
               <tr
                 key={application._id}
-                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base dark:text-gray-300"
+                className="border-t py-2 h-14 border-gray-200 hover:bg-gray-50 font-poppins text-gray-700 text-base  dark:hover:bg-gray-600"
               >
                 <td className="p-3 w-fit font-poppins text-base font-medium text-gray-600 dark:text-gray-300">{application.slotName}</td>
                 <td className="p-3 flex flex-col gap-1">
                     <div>
                     {
                          application.classtitle.slice(0,2).map((classTitle, index) => (
-                            <span key={index} className="border mx-[2px] px-1 border-main-light rounded-lg bg-main-dark text-gray-600 dark:text-gray-400">{classTitle}</span>))
+                            <span key={index} className="border mx-[2px] px-1 border-main-light rounded-lg bg-main-dark text-gray-600 dark:text-gray-600">{classTitle}</span>))
                     }
                     </div>
                     <div>
                         {
                          application.classtitle.slice(2).map((classTitle, index) => (
-                            <span key={index} className="border mx-[2px] px-1 border-main-light rounded-lg bg-main-dark text-gray-600 dark:text-gray-400">{classTitle}</span>))
+                            <span key={index} className="border mx-[2px] px-1 border-main-light rounded-lg bg-main-dark text-gray-600 dark:text-gray-600">{classTitle}</span>))
                     }
                     </div>
                 </td>
@@ -253,6 +256,7 @@ const ManageSlot = () => {
           </p>
         )}
       </div>
+      </div>
 
         {/* TODO  */}
         {/* Exchange sortedData to tableData  */}
@@ -267,7 +271,7 @@ const ManageSlot = () => {
           <div ref={selectRef} className="relative w-44">
             <button
               onClick={handleToggle}
-              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none"
+              className="w-max px-2 py-0.5 text-left bg-white border border-gray-300 rounded shadow-sm flex items-center justify-between gap-[10px] hover:border-gray-400 focus:outline-none dark:text-gray-700"
             >
               {pageSize}
 
@@ -278,15 +282,15 @@ const ManageSlot = () => {
               />
             </button>
             {isOpen && (
-              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg">
+              <div className="absolute w-max mt-1 bg-white border border-gray-300 rounded shadow-lg dark:bg-gray-600">
                 <div
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:text-primary-black"
                   onClick={() => handleOptionClick(5)}
                 >
                   5
                 </div>
                 <div
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100  dark:hover:text-primary-black"
                   onClick={() => handleOptionClick(10)}
                 >
                   10
@@ -324,7 +328,7 @@ const ManageSlot = () => {
                   key={pageNum}
                   onClick={() => handlePageChange(pageNum)}
                   className={`${
-                    pageNum === currentPage && "bg-black text-white"
+                    pageNum === currentPage && "bg-black dark:bg-white dark:text-black text-white"
                   } border border-gray-200 px-[10px] text-[0.9rem] py-[1px] rounded-md`}
                 >
                   {pageNum}

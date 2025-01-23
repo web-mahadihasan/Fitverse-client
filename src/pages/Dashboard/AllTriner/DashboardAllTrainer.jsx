@@ -8,6 +8,7 @@ import { ShinyButton } from "@/components/ui/shiny-button";
 import { ArrowUpRightFromSquareIcon, Trash2 } from "lucide-react";
 import SectionBadge from "../../../components/common/SectionBadge";
 import SectionHeading from "../../../components/common/SectionHeading";
+import { format } from "date-fns";
 
 const DashboardAllTrainer = () => {
     const axiosSecured = useAxiosSecured()
@@ -32,22 +33,22 @@ const DashboardAllTrainer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-24">
             
             {
-                trainerData?.map(data => <div key={data._id} className="w-full sm:w-[80%] lg:w-full flex flex-col  justify-center p-6 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-200  dark:border-gray-700 dark:hover:border-transparent">         
+                trainerData?.map(data => <div key={data._id} className="w-full sm:w-[80%] lg:w-full flex flex-col  justify-center p-6 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-200 dark:hover:bg-gray-700  dark:border-gray-700 dark:hover:border-transparent">         
                     <img className="mx-auto object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src={data?.image} alt=""/>
                     <div className="flex items-center justify-between mt-3">
                        <p className="flex items-center gap-1">
                          <span className="text-main"><Icon icon="material-symbols-light:work-history-outline-rounded" width="20" height="20" /></span>
-                         <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Experience: 32 Yr</span>
+                         <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Experience: {data.experience} Yr</span>
                        </p>
                        <p className="flex items-center gap-1">
                          <span className="text-main"><Icon icon="material-symbols:data-usage" width="20" height="20" /></span>
-                         <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Age: 32 Yr</span>
+                         <span className="font-poppins text-sm text-gray-700 dark:text-gray-400">Age: {data.age} Yr</span>
                        </p>
                      </div>
-                    <h1 className="mt-3 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-gray-800">arthur melo</h1>
+                    <h1 className="mt-3 text-2xl font-semibold text-gray-700 capitalize dark:text-white  group-hover:text-secondary-black dark:group-hover:text-white">{data.name}</h1>
     
-                    <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-700">design director</p>
-                    <p>Joining Date: 21-01-2025</p>
+                    <p className="mt-2 text-gray-500 capitalize dark:text-gray-300  dark:group-hover:text-white/85 group-hover:text-gary-900 font-poppins">{data.role}</p>
+                    <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 dark:group-hover:text-white/85 group-hover:text-gary-900 font-poppins">Joining Date: {format(data.date, "PP")}</p>
     
                     <div className="mt-3 w-full text-center">
                     <ShinyButton className={"mt-2 px-0 py-0 border-none border-red-500 hover:bg-red-600  duration-300 transition-all ease-linear group"}>

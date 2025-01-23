@@ -43,7 +43,7 @@ const ImageUpload = ({imageLink, setImageLink, setUploading}) => {
         onChange={handleFileChange}
       />
       {imageLink === "" ? (
-        <div className="w-[90%] flex items-center justify-center flex-col bg-white border border-dashed border-[#3B9DF8] rounded-md py-6 ">
+        <div className="w-full flex items-center justify-center flex-col bg-white dark:bg-gray-700 dark:text-white/80 border border-dashed border-[#3B9DF8] rounded-md py-6 ">
           <IoMdCloudUpload className="text-[3rem] text-[#3B9DF8]" />
           <p className="mt-2 text-text">Drag and drop here</p>
           <p className=" text-text">or</p>
@@ -55,7 +55,7 @@ const ImageUpload = ({imageLink, setImageLink, setUploading}) => {
           </button>
         </div>
       ) : (
-        <div className="relative w-[80%] h-[200px]">
+        <div className="relative w-full h-[200px]">
           <img
             src={imageLink}
             alt="image"

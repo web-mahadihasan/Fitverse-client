@@ -36,7 +36,7 @@ const BookedTrainer = () => {
             </div>
 
             {/* Booked Data Card  */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
                 {
                     myPayment.length > 0 ? myPayment?.map((item, idx) => (
                         <div key={idx}
@@ -93,7 +93,7 @@ const BookedTrainer = () => {
                                 </div>
                                 <div className="my-2">
                                     <ShinyButton className={"mt-2 px-0 py-0 border-none border-main hover:bg-main  duration-300 transition-all ease-linear group"}>
-                                        <button size="lg" className="flex items-center gap-1 py-2.5 border border-main px-6 rounded-lg text-main font-poppins tracking-wide group-hover:text-white">
+                                        <button size="lg" className="flex items-center gap-1 py-2.5 border border-main px-6 rounded-lg text-main font-poppins dark:text-white tracking-wide group-hover:text-white">
                                             Write A Review <ArrowUpRightFromSquareIcon className="w-4 h-4 md:hidden lg:block" />
                                         </button>
                                     </ShinyButton>

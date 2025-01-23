@@ -58,13 +58,11 @@ const AddNewClass = () => {
             </div>
 
             {/* form area */}
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-[50px]">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-[50px] dark:text-secondary-black">
                 <div className="flex flex-col sm:flex-row items-center gap-[20px]">
-                    <div className="flex flex-col gap-[5px] w-full sm:w-[50%]">
-                        <label className="relative">
-                            <input  {...register("title", { required: true })} type="text" name="title" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300"  />
-                            <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Title </span>
-                        </label>
+                    <div className="flex flex-col gap-[5px] w-full md:w-[80%] lg:w-[70%] mx-auto">
+                        <label className="relative w-full text-gray-700 dark:text-gray-400">Class Description</label>
+                        <input  {...register("title", { required: true })} placeholder="New class title" type="text" name="title" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 text-secondary-black w-full focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-700 dark:text-white/80"  />
                     </div>
 
                     {/* <div className="flex flex-col gap-[5px] w-full sm:w-[50%]">
@@ -74,21 +72,22 @@ const AddNewClass = () => {
                         </label>
                     </div> */}
                 </div>
-                    <div className="w-1/2">
+                    <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
                         <p className="text-[#777777]  my-4">Upload Class Imgae</p>
                         <ImageUpload imageLink={imageLink} setImageLink={setImageLink} setUploading={setuploading}/>
                     </div>
-                <div className="flex flex-col gap-[5px] w-full mt-[20px]">
-                    <label className="relative w-full">
-                          <textarea   {...register("description", { required: true })} name="description" className="peer min-h-[100px] lg:w-1/2 border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300"></textarea>
-                        <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Details</span>
-                    </label>
+                <div className="flex flex-col gap-[5px] mt-[20px] w-full md:w-[80%] lg:w-[70%] mx-auto">
+                    <label className="relative w-full text-gray-700 dark:text-gray-400">Class Description</label>
+                    <textarea   {...register("description", { required: true })} placeholder="Class details here" name="description" className="peer min-h-[100px] border-[#e5eaf2] border rounded-md outline-none px-4 py- focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-700 dark:text-white/80"></textarea>
+                    
                 </div>
 
 
-                <button type="submit" disabled={uploading} className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-3 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
-                        {uploading? "Image Uploading" : "Add Class"}
+                <div className="text-center mt-6">
+                <button type="submit" disabled={uploading} className="font-poppins bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-3 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >
+                    {uploading? "Image Uploading" : "Add Class"}
                 </button>
+                </div>
 
             </form>
         </section>
