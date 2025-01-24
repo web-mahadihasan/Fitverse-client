@@ -24,7 +24,7 @@ export function AnimatedCard({trainerData}) {
     },
     enabled: !!email
   })
-  console.log(trainerData)
+
 
   if(isLoading) return <p>Loading...</p>
   return (

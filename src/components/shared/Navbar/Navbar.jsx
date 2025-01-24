@@ -42,21 +42,11 @@ const Navbar = () => {
               
             </div>
             <ul className="flex items-center gap-4">
-                <li> <NavLink to={"/"}>Home</NavLink> </li>
-                <li><NavLink to={"/all-trainers"}>All Trainer</NavLink></li>
-                <li className="relative"><NavLink to={""}>
-                    <button onClick={() => setDropdownMenu(!dropdownMenu)} className="py-2 rounded-lg text-base transition-colors duration-200 flex items-center gap-1 ">
-                        Classes
-                        <MdOutlineKeyboardArrowDown />
-                    </button>
-                    <div className={`absolute top-full left-0 w-64 bg-white rounded-lg shadow-lg mt-4 py-4 transition-all duration-200 transform origin-top scale-95 pointer-events-none ${dropdownMenu? 'opacity-100': 'opacity-0'}`}>
-                        <ul>
-                            {navLinks}
-                        </ul>
-                    </div>
-                </NavLink></li>
-                <li><NavLink to={"/Forums"}>Forums</NavLink></li>
-                <li><NavLink to={"/About us"}>About us</NavLink></li>
+                <li className="navbar"> <NavLink to={"/"}>Home</NavLink> </li>
+                <li className="navbar"><NavLink to={"/all-trainers"}>All Trainer</NavLink></li>
+                <li className="navbar"><NavLink to={"all-classes"}> Classes </NavLink></li>
+                <li className="navbar"><NavLink to={"/Forums"}>Forums</NavLink></li>
+                <li className="navbar"><NavLink to={"/About us"}>About us</NavLink></li>
             </ul>
             {/* <a
               className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200"

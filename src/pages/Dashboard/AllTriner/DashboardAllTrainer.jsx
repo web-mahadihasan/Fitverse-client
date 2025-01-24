@@ -2,26 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { RiTeamFill } from "react-icons/ri";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight, BsThreeDotsVertical } from "react-icons/bs";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { ArrowUpRightFromSquareIcon, Trash2 } from "lucide-react";
 import SectionBadge from "../../../components/common/SectionBadge";
 import SectionHeading from "../../../components/common/SectionHeading";
 import { format } from "date-fns";
+import { useState } from "react";
 
 const DashboardAllTrainer = () => {
-    const axiosSecured = useAxiosSecured()
- 
-    const {data: trainerData} = useQuery({
-        queryKey: ["trainerData"],
+    const axiosPublic = useAxiosPublic()
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const {data: allTrainers} = useQuery({
+        queryKey: ["allTrainers"],
         queryFn: async () => {
-            const {data} = await axiosSecured.get("/trainer-api/trainers")
+            const {data} = await axiosPublic.get(`/trainer-api/trainers?search="searchtext"&&page=${currentPage}`)
             return data
         }
     })
+    const {trainers, totalPage, page} = allTrainers || {}
 
-   console.log(trainerData)
 
     return (
         <div className="mx-auto p-4">
@@ -33,7 +35,7 @@ const DashboardAllTrainer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-24">
             
             {
-                trainerData?.map(data => <div key={data._id} className="w-full sm:w-[80%] lg:w-full flex flex-col  justify-center p-6 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-200 dark:hover:bg-gray-700  dark:border-gray-700 dark:hover:border-transparent">         
+                trainers?.map(data => <div key={data._id} className="w-full sm:w-[80%] lg:w-full flex flex-col  justify-center p-6 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-200 dark:hover:bg-gray-700  dark:border-gray-700 dark:hover:border-transparent">         
                     <img className="mx-auto object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src={data?.image} alt=""/>
                     <div className="flex items-center justify-between mt-3">
                        <p className="flex items-center gap-1">
@@ -60,6 +62,54 @@ const DashboardAllTrainer = () => {
                 </div>)
             }
             
+         </div>
+
+         {/* Paginate Data  */}
+
+         <div className="flex items-center gap-2 justify-center">
+               <button
+                 onClick={() => setCurrentPage(currentPage - 1)}
+                 disabled={currentPage === 1}
+                 className="border border-gray-200 hover:bg-gray-50 cursor-pointer px-[10px] text-[0.9rem] py-[5px] rounded-md dark:hover:text-secondary-black"
+               >
+                 <BsChevronLeft />
+               </button>
+        
+               {/* Page Numbers */}
+               <div className="flex items-center gap-1">
+                 {Array.from({ length: Math.min(5, totalPage) }, (_, i) => {
+                   let pageNum;
+                   if (totalPage <= 5) {
+                     pageNum = i + 1;
+                   } else if (currentPage <= 3) {
+                     pageNum = i + 1;
+                   } else if (currentPage >= totalPage - 2) {
+                     pageNum = totalPage - 4 + i;
+                   } else {
+                     pageNum = currentPage - 2 + i;
+                   }
+        
+                   return (
+                     <button
+                       key={pageNum}
+                       onClick={() => setCurrentPage(pageNum)}
+                       className={`${
+                         pageNum === currentPage && "bg-black dark:bg-white dark:text-secondary-black font-poppins text-white"
+                       } border border-gray-200 px-[10px] text-[0.9rem] py-[1px] rounded-md`}
+                     >
+                       {pageNum}
+                     </button>
+                   );
+                 })}
+               </div>
+        
+               <button
+                 onClick={() => setCurrentPage(currentPage + 1)}
+                 disabled={currentPage === totalPage}
+                 className="border border-gray-200 px-[10px] cursor-pointer hover:bg-gray-50 text-[0.9rem] py-[5px] rounded-md dark:hover:text-secondary-black"
+               >
+                 <BsChevronRight />
+               </button>
          </div>
         </div>
     );

@@ -29,6 +29,10 @@
 .blog-shadow{
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+.navbar a.active{
+  color: #5A29E4;
+  font-weight: 700;
+}
 @media screen and (min-width: 780px) {
   .clipped {
     -webkit-clip-path: polygon(30% 0, 100% 0%, 100% 98%, 0% 100%);
