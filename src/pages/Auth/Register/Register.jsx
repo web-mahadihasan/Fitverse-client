@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import SocialLogin from "../../../components/shared/SocialLogin/SocialLogin";
+import { Helmet } from "react-helmet";
 
 const schema = yup.object().shape({
     name: yup 
@@ -125,6 +126,10 @@ const Registration = () => {
             backgroundImage: `url('${bg}')`,
         }}
         >
+        <Helmet>
+            <title>Fitverse | Registration </title>
+            <meta name="author" content="https://fitverse-bd.web.app/" />
+        </Helmet>
         {/* <div className="absolute w-full inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 duration-300 rounded-md"></div> */}
         <div className="min-h-[90vh] w-full flex items-center max-w-5xl mx-auto xl:px-0 rounded-md lg:min-w-5xl">
         <div className="text-center rounded-md  w-full login-shadow" >

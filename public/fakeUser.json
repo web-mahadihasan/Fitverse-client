@@ -10,7 +10,7 @@
     },
     {
       "name": "Alice Johnson",
-      "email": "alicejohnson@gmail.com"
+      "email": "alicejohnson@gmail.com" "user"
     },
     {
       "name": "Bob Williams",
@@ -28,7 +28,7 @@
     },
     {
       "name": "Ethan Hunt",
-      "email": "ethanhunt@gmail.com"
+      "email": "ethanhunt@gmail.com" "user "
     },
     {
       "name": "Fiona Gallagher",
@@ -40,7 +40,7 @@
     },
     {
       "name": "Hannah Davis",
-      "email": "hannahdavis@gmail.com"
+      "email": "hannahdavis@gmail.com" 'done'
     }
   ]
   

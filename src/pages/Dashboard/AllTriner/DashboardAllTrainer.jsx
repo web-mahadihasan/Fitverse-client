@@ -1,32 +1,79 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { RiTeamFill } from "react-icons/ri";
-import { BsChevronLeft, BsChevronRight, BsThreeDotsVertical } from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight, } from "react-icons/bs";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ShinyButton } from "@/components/ui/shiny-button";
-import { ArrowUpRightFromSquareIcon, Trash2 } from "lucide-react";
 import SectionBadge from "../../../components/common/SectionBadge";
-import SectionHeading from "../../../components/common/SectionHeading";
 import { format } from "date-fns";
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { Modal } from 'antd';
+const { confirm } = Modal;
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import useAxiosSecured from "../../../hooks/useAxiosSecured";
+import Loading from "../../Loading/Loading";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const DashboardAllTrainer = () => {
     const axiosPublic = useAxiosPublic()
     const [currentPage, setCurrentPage] = useState(1)
+    const axiosSecured = useAxiosSecured()
 
-    const {data: allTrainers} = useQuery({
+    const {data: allTrainers, refetch, isLoading} = useQuery({
         queryKey: ["allTrainers"],
         queryFn: async () => {
-            const {data} = await axiosPublic.get(`/trainer-api/trainers?search="searchtext"&&page=${currentPage}`)
+            const {data} = await axiosPublic.get(`/trainer-api/trainers?page=${currentPage}`)
             return data
         }
     })
     const {trainers, totalPage, page} = allTrainers || {}
+    // Handle reject application 
+  const showPromiseConfirm = (id) => {
+    confirm({
+      title: <span className="font-popins" style={{ fontWeight: 'bold', fontSize: '20px', color: '#ff4d4f' }}>Are you sure to Reject Application?</span>,
+      icon: <ExclamationCircleFilled style={{ color: '#faad14' }} />,
+      content: <span className="font-poppins my-4" style={{ fontSize: '16px', color: '#595959', marginBottom: '8px' }}>This will make changes, but you can change it again anytime</span>,
+      okButtonProps: { style: { backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff', fontFamily: "poppins"} },
+      cancelButtonProps: { style: { backgroundColor: '#ff4d4f', borderColor: '#ff4d4f', color: '#fff', fontFamily: "poppins" } },
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout( resolve , 1000);
+        })
+          .then(async () => {
+            handleRemoveTrainer(id)
+          })
+      },
+      onCancel() {
+        console.log('Cancelled');
+      },
+    });
+  };
+    const handleRemoveTrainer = async (id) =>{
+      try {
+            const {data} = await axiosSecured.delete(`/trainer-api/removed-trainer/${id}`)
+            console.log(data)
+            if(data.deletedCount > 0){
+                Swal.fire({
+                  title: "Successfull",
+                  text: "Trainer has been demotion to member.",
+                  icon: "success"
+                })
+                refetch()
+            }
+        } catch (error) {
+          console.log(error)
+        }
 
+    }
+    if(isLoading) return <Loading/>
 
     return (
         <div className="mx-auto p-4">
+          <Helmet>
+              <title>Fitverse | Dashboard - All trainers </title>
+              <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+          </Helmet>
             <div className="text-center mt-5 mb-10 space-y-4">
                 <SectionBadge title={"Activity Logs"}/>
                 
@@ -53,7 +100,7 @@ const DashboardAllTrainer = () => {
                     <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 dark:group-hover:text-white/85 group-hover:text-gary-900 font-poppins">Joining Date: {format(data.date, "PP")}</p>
     
                     <div className="mt-3 w-full text-center">
-                    <ShinyButton className={"mt-2 px-0 py-0 border-none border-red-500 hover:bg-red-600  duration-300 transition-all ease-linear group"}>
+                    <ShinyButton onClick={() => showPromiseConfirm(data._id)} className={"mt-2 px-0 py-0 border-none border-red-500 hover:bg-red-600  duration-300 transition-all ease-linear group"}>
                          <button size="lg" className="flex items-center gap-1 py-2.5 border border-red-500 px-6 rounded-lg text-red-500 font-poppins tracking-wide group-hover:text-gray-800 hover:text-white">
                              Removed Trainer <Trash2 className="w-4 h-4 md:hidden lg:block" />
                          </button>

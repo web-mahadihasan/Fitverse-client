@@ -11,24 +11,23 @@ import {
 import { MdDeleteOutline,  } from "react-icons/md";
 import { IoCheckmarkDoneSharp, IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {  useQuery } from "@tanstack/react-query";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 import RejectedFeedback from "./rejectedFeedback";
-import { Modal } from 'antd';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-const { confirm } = Modal;
+import SectionBadge from "../../../components/common/SectionBadge";
+import SectionHeading from "../../../components/common/SectionHeading";
+import { Link, useNavigate } from "react-router";
+import { format } from "date-fns";
+import { Helmet } from "react-helmet";
 
 const AppliedTrainer = () => {
   const [tableData, setTableData] = useState([])
-  const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
-  const [rejectionId, setRejectionId] = useState(null);
-  const [rejectFeedback, setRejectFeedback] = useState("")
-  const [disabledButton, setDisabledButton] = useState(true);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(7);
   const [openActionMenuId, setOpenActionMenuId] = useState(null);
+  const navigate = useNavigate()
 
   // Get all application
   const axiosSecured = useAxiosSecured();
@@ -39,7 +38,6 @@ const AppliedTrainer = () => {
       return data;
     },
   });
-
   useEffect(()=> {
     if(allApplication?.length > 0){
       setTableData(allApplication)
@@ -97,103 +95,28 @@ const AppliedTrainer = () => {
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
-  // Modal check confirm
-  const checkIsConfirmAction = (e) => {
-        setDisabledButton(true)
-        setRejectFeedback(e.target.value)
-
-        if(rejectFeedback.length > 10){
-            setDisabledButton(false)
-        }
-        
-    }
-
-  // Handle accept application 
-  const handleAcceptApplication = async (applicationData) => {
-    try {
-        const {data} = await axiosSecured.patch(`/application-api/accept-application/${applicationData._id}`, applicationData)
-        console.log(data)
-        if(data.modifiedCount > 0){
-            Swal.fire({
-              title: "Successfull",
-              text: "Your applicaiton has been approved.",
-              icon: "success"
-            })
-            refetch()
-            setOpenActionMenuId(null)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-  }
-
-  // Handle reject application 
-  const showPromiseConfirm = (id) => {
-    confirm({
-      title: <span className="font-popins" style={{ fontWeight: 'bold', fontSize: '20px', color: '#ff4d4f' }}>Are you sure to Reject Application?</span>,
-      icon: <ExclamationCircleFilled style={{ color: '#faad14' }} />,
-      content: <span className="font-poppins my-4" style={{ fontSize: '16px', color: '#595959', marginBottom: '8px' }}>This will make changes, but you can change it again anytime</span>,
-      okButtonProps: { style: { backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff', fontFamily: "poppins"} },
-      cancelButtonProps: { style: { backgroundColor: '#ff4d4f', borderColor: '#ff4d4f', color: '#fff', fontFamily: "poppins" } },
-      onOk() {
-        return new Promise((resolve, reject) => {
-          setTimeout( resolve , 1000);
-        })
-          .then(async () => {
-            setRejectionId(id)
-            setRejectionModalOpen(true)
-          })
-      },
-      onCancel() {
-        setOpenActionMenuId(null)
-        console.log('Cancelled');
-      },
-    });
-  };
-
-  const handleRejectConfirmation = async () => {
-    const rejectNote = {
-      rejectNote: rejectFeedback
-    }
-     try {
-          const {data} = await axiosSecured.patch(`/application-api/reject-application/${rejectionId}`, rejectNote)
-          console.log(data)
-          if(data.modifiedCount > 0){
-              Swal.fire({
-                title: "Successfull",
-                text: "This applicaiton has been rejected.",
-                icon: "success"
-              })
-              setRejectFeedback("")
-              setRejectionModalOpen(false)
-              refetch()
-              setOpenActionMenuId(null)
-          }
-          } catch (error) {
-              console.log(error)
-          }
-  }
- 
   if(isLoading) return <p>Loading....</p>
 
   return (
-    <div className="mx-auto p-4 my-10 md:max-w-6xl">
+    <div className="mx-auto p-4 md:max-w-6xl">
+      <Helmet>
+          <title>Fitverse | Dashboard - trainer applications </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="text-center mt-5 mb-10 space-y-4">
-          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-            Here's All Trainer Applications
-          </h3>
-          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Create and manage new training slots with details like date, time,
-            duration, and capacity for efficient scheduling.
-          </p>
+          <SectionBadge title={"Applied Trainer"}/>
+          <SectionHeading
+            title={"Here's All Trainer Applications"}
+            subtitle={"Create and manage new training slots with details like date, time, duration, and capacity for efficient scheduling."}
+          />
         </div>
 
         {/* Table start  */}
 
-      <div className="overflow-y-auto md:overflow-y-hidden">
+      <div className="overflow-y-auto h-full">
       <div className=" min-w-[950px] rounded-md border border-gray-200 w-full">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100 dark:bg-gray-400 text-gray-700 dark:text-white/85">
+          <thead className="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-white/85">
             <tr>
               <th
                 className="p-3 text-left font-medium  cursor-pointer"
@@ -214,7 +137,6 @@ const AppliedTrainer = () => {
                   <HiOutlineArrowsUpDown className="hover:bg-gray-200 p-[5px] rounded-md text-[1.6rem]" />
                 </div>
               </th>
-              {/* Role  handleSort(allApplication)*/}
               <th
                 className="p-3 text-left font-medium  cursor-pointer"
                 onClick={() => handleSort("date") }
@@ -250,7 +172,7 @@ const AppliedTrainer = () => {
               >
                 <td className="p-3">{application.name}</td>
                 <td className="p-3">{application.email}</td>
-                <td className="p-3">{application.date}</td>
+                <td className="p-3">{format(application.date, "PP")}</td>
                 {/* <td className="p-3">{application.role}</td> */}
                 <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
                   {
@@ -260,31 +182,10 @@ const AppliedTrainer = () => {
                   }</span> 
                 </td>
                 <td className="p-3 relative">
-                  <BsThreeDotsVertical
-                    onClick={() => toggleActionMenu(application._id)}
-                    className="action-btn action-btn text-gray-600 cursor-pointer dark:text-gray-400"
-                  />
-
-                  <div
-                    className={`${
-                      openActionMenuId === application._id
-                        ? "opacity-100 scale-[1] z-30"
-                        : "opacity-0 scale-[0.8] z-[-1]"
-                    } zenui-table absolute top-[90%] right-[80%] p-1.5 rounded-md bg-white shadow-md min-w-[180px] space-y-1 transition-all duration-100`}
-                  >
-                    <button disabled={application?.trainerStatus === "approved"} onClick={() => handleAcceptApplication(application)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-green-600 font-poppins transition-all duration-200">
-                      <IoCheckmarkDoneSharp />
-                      {application?.trainerStatus === "approved" ? "Already Approved" : "Accept"}
-                    </button>
-                    <button disabled={application?.trainerStatus === "reject"} onClick={() => showPromiseConfirm(application._id)} className={`flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-red-700 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${application?.trainerStatus === "reject" ? "bg-gray-300 cursor-default hover:bg-gray-300": ""}`}>
-                      <MdDeleteOutline size={16}/>
-                      {application?.trainerStatus === "reject" ? "Already Reject" : "Reject"}
-                    </button>
-                    <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
-                      <IoEyeOutline />
-                      View Details
-                    </button>
-                  </div>
+                  <button onClick={()=> navigate(`/dashboard/admin/applicant-details/${application._id}`, {state: {id: application._id}})} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 rounded-md text-gray-700 cursor-pointer transition-all duration-300 p-1.5 border w-fit hover:bg-gray-200">
+                    <IoEyeOutline  size={22}/>
+                  </button>
+         
                 </td>
               </tr>
             ))}
@@ -389,48 +290,7 @@ const AppliedTrainer = () => {
       </div>
 
       {/* Modal show  */}
-       <>
-           <div
-               className={`${
-                   rejectionModalOpen ? " visible" : " invisible"
-               } w-full h-screen fixed top-0 left-0 z-50 bg-[#0201012a] flex items-center justify-center transition-all duration-300`}
-           >
-               <div
-                   className={`${
-                    rejectionModalOpen
-                           ? " scale-[1] opacity-100"
-                           : " scale-[0] opacity-0"
-                   } lg:w-[30%] md:w-[40%] sm:w-[90%] w-full bg-gray-100 rounded-lg p-5 transition-all duration-300`}
-               >
-                   <div className="min-w-full flex items-center justify-between">
-                       <h2 className="primary-black my-3 dark:text-gray-100 text-2xl font-poppins font-[600]">Add a Feeback for user</h2>
-                       <RxCross1
-                           className="p-2 text-[2rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                           onClick={() => setRejectionModalOpen(false)}
-                       />
-                   </div>
-                   <div className="w-full">
-                       <p className="text-gray-500 text-[1rem] font-poppins font-[400]">
-                           Provide a brief reason for rejection and guide the applicant on how to improve and reapply.  
-                       </p>
-                       <div className="mt-5 flex flex-col gap-4">
-                           <label className="font-[400] text-gray-700 font-poppins">Write something for comfirm rejection.</label>
-                           <textarea onChange={checkIsConfirmAction} value={rejectFeedback} name="description" className="font-poppins peer min-h-[100px] border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300"></textarea>                    
-                       </div>
-                       <div className="mt-8 flex w-full items-end justify-end gap-[13px]">
-                           <button onClick={() => setRejectionModalOpen(false)}
-                                   className={`py-2 px-6 rounded font-[500] z-10 border border-[#cecece] text-gray-500`}>Cancel
-                           </button>
-                           <button onClick={handleRejectConfirmation}
-                                   className={`py-2 font-popins text-lg font-medium px-5 rounded-md ${disabledButton ? "!bg-[#FDECEB] !border-[#FDECEB] text-red-200 cursor-not-allowed" : "bg-red-600 text-white border-red-600"}`}
-                                   disabled={disabledButton}>Rejected
-                           </button>
-                       </div>
-                   </div>
-                   
-               </div>
-           </div>
-          </>
+       
     </div>
   );
 };

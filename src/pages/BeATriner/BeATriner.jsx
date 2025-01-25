@@ -14,24 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CloudUpload, Paperclip } from "lucide-react";
-// import {
-//   FileInput,
-//   FileUploader,
-//   FileUploaderContent,
-//   FileUploaderItem,
-// } from "@/components/ui/file-upload";
 import { Checkbox } from "@/components/ui/checkbox";
-// import {
-//   MultiSelector,
-//   MultiSelectorContent,
-//   MultiSelectorInput,
-//   MultiSelectorItem,
-//   MultiSelectorList,
-//   MultiSelectorTrigger,
-// } from "@/components/ui/multi-select";
 import toast from "react-hot-toast";
 import BeATrainerCopy from "./copy";
 import Copy2 from "./Copy2";
+import PageCover from "../../components/common/PageCover";
 
 const formSchema = z.object({
   name: z.string(),
@@ -59,7 +46,6 @@ export default function BeATrainer() {
   useEffect(() => {
     // Simulate a data fetch (replace this with your real API call)
     // const fetchUserData = async () => {
-      // Simulate API call delay
       const data = {
         name: "John Doe",
         email: "johndoe@example.com",
@@ -78,7 +64,7 @@ export default function BeATrainer() {
         email: userData?.email || "",
         age: "",
         // skills: [],
-        availableDays: ["React"],  // Your initial value for availableDays
+        availableDays: ["React"],  
         availableTime: ""
       },
   });
@@ -97,11 +83,13 @@ export default function BeATrainer() {
     }
   }
   if (!userData) {
-    return <div>Loading...</div>; // Render loading state until data is available
+    return <div>Loading...</div>; 
   }
 
   return (
-    <Form {...form}>
+    <div className="mt-4">
+      <PageCover title={"Trainer Application"} page={"trainer-appication"}/>
+      <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 max-w-3xl mx-auto py-10"
@@ -122,20 +110,6 @@ export default function BeATrainer() {
       <div className="">
         <Copy2/>
       </div>
-        {/* <div>
-        <label
-          htmlFor="newName"
-          className="block mb-2 text-sm font-medium text-white text-left dark:text-white"
-        >
-          New name aded
-        </label>
-        <input
-          type="text"
-          id="newName"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-          placeholder="John Doe"
-        />
-      </div> */}
 
         <FormField
           control={form.control}
@@ -168,125 +142,10 @@ export default function BeATrainer() {
           )}
         />
 
-        {/* <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <FileUploader
-                  value={files}
-                  onValueChange={setFiles}
-                  dropzoneOptions={dropZoneConfig}
-                  className="relative bg-background rounded-lg p-2"
-                >
-                  <FileInput
-                    id="fileInput"
-                    className="outline-dashed outline-1 outline-slate-500"
-                  >
-                    <div className="flex items-center justify-center flex-col p-8 w-full">
-                      <CloudUpload className="text-gray-500 w-10 h-10" />
-                      <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold">Click to upload</span>
-                        &nbsp; or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        SVG, PNG, JPG or GIF
-                      </p>
-                    </div>
-                  </FileInput>
-                  <FileUploaderContent>
-                    {files &&
-                      files.length > 0 &&
-                      files.map((file, i) => (
-                        <FileUploaderItem key={i} index={i}>
-                          <Paperclip className="h-4 w-4 stroke-current" />
-                          <span>{file.name}</span>
-                        </FileUploaderItem>
-                      ))}
-                  </FileUploaderContent>
-                </FileUploader>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        {/* Additional fields like checkboxes, multi-select, etc., omitted for brevity */}
-        {/* <div className="grid grid-cols-12 gap-4">
-            {[
-                { label: "Bootcamp", value: "Bootcamp" },
-                { label: "Pilates", value: "Pilates" },
-                { label: "Yoga", value: "Yoga" },
-                { label: "Indoor cycling", value: "Indoor cycling" },
-                { label: "Bounce & Burn", value: "Bounce & Burn" },
-                { label: "Body Blast", value: "Body Blast" },
-                { label: "Pump & Sculpt", value: "Pump & Sculpt" },
-            ].map((skill, index) => (
-                <div key={index} className="col-span-4">
-                <FormField
-                    control={form.control}
-                    name="skills"
-                    render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                        <Checkbox
-                            checked={field.value?.includes(skill.value) || false}
-                            onCheckedChange={(checked) => {
-                            const updatedSkills = checked
-                                ? [...(field.value || []), skill.value]
-                                : field.value?.filter((item) => item !== skill.value);
-                            field.onChange(updatedSkills); // Update the field value
-                            }}
-                        />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                        <FormLabel>{skill.label}</FormLabel>
-                        <FormMessage />
-                        </div>
-                    </FormItem>
-                    )}
-                />
-                </div>
-            ))}
-            </div> */}
-
             {
                 <BeATrainerCopy setSkills={setSkills}/>
             }
-        
-           {/* <FormField
-              control={form.control}
-              name="availableDays"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Select Days</FormLabel>
-                  <FormControl>
-                    <MultiSelector
-                      values={field.value}
-                      onValuesChange={field.onChange}
-                      loop
-                      className="max-w-xs"
-                    >
-                      <MultiSelectorTrigger>
-                        <MultiSelectorInput placeholder="Select languages" />
-                      </MultiSelectorTrigger>
-                      <MultiSelectorContent>
-                      <MultiSelectorList>
-                        <MultiSelectorItem value={"React"}>React</MultiSelectorItem>
-                        <MultiSelectorItem value={"Vue"}>Vue</MultiSelectorItem>
-                        <MultiSelectorItem value={"Svelte"}>Svelte</MultiSelectorItem>
-                      </MultiSelectorList>
-                      </MultiSelectorContent>
-                    </MultiSelector>
-                  </FormControl>
-                  
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-        
+                
         <FormField
           control={form.control}
           name="availableTime"
@@ -309,5 +168,6 @@ export default function BeATrainer() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    </div>
   );
 }

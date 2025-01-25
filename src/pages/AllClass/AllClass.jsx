@@ -11,6 +11,8 @@ import Select from 'react-select'
 import { TbCategoryPlus } from "react-icons/tb";
 import { useForm } from "react-hook-form";
 import useParamsFilter from "../../hooks/useParamsFilter";
+import { Helmet } from "react-helmet";
+import PageCover from "../../components/common/PageCover";
 
 const AllClass = () => {
     const axiosPublic = useAxiosPublic()
@@ -64,8 +66,13 @@ const AllClass = () => {
     if(isLoading) return <Loading/>
     
     return (
-        <div className="my-24">
-            <div>
+        <div className=" mb-24">
+            <Helmet>
+                <title>Fitverse | All classes </title>
+                <meta name="author" content="https://fitverse-bd.web.app/" />
+            </Helmet>
+            <PageCover title={"All Classes"} page={"all-classes"}/>
+            <div className="mt-8">
             <SectionBadge title={"Our Trainers"}/>
             <SectionHeading
               title={"Find Your Perfect Class Today"}
@@ -74,7 +81,7 @@ const AllClass = () => {
             </div>
 
             {/* Search & Sort  */}
-            <div className="py-4 max-w-5xl mx-auto px-4 font-poppins mt-10">
+            <div className="py-4 max-w-5xl mx-auto px-4 font-poppins mt-4">
             <form onSubmit={handleQuery} className="flex min-h-20 items-center p-3 backdrop-blur-2xl btn-shadow border gap-2 rounded-md bg-white/50 flex-wrap">
                 <div className="flex items-center flex-1 gap-1 rounded-md p-3 bg-gray-100">
                     <span className="px-2 border-r border-gray-400"> <PiListStarFill size={24} className="text-main"/> </span>
@@ -96,7 +103,7 @@ const AllClass = () => {
             </div>
 
             <section className="max-width mx-auto px-4 xl:px-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
                     {
                         allClasses?.map(classInfo => <ClassCard key={classInfo._id} classInfo={classInfo}/>)
                     }

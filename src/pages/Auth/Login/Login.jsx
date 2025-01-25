@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form"
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import SocialLogin from "../../../components/shared/SocialLogin/SocialLogin";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -62,6 +63,10 @@ const Login = () => {
             backgroundImage: `url('${bg}')`,
           }}
         >
+        <Helmet>
+            <title>Fitverse | Login </title>
+            <meta name="author" content="https://fitverse-bd.web.app/" />
+        </Helmet>
         {/* <div className="absolute w-full inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 duration-300 rounded-md"></div> */}
         <div className="min-h-[90vh] w-full flex items-center max-w-5xl mx-auto xl:px-0 rounded-md">
           <div className="text-center rounded-md  w-full login-shadow" >

@@ -11,22 +11,14 @@ import useAuth from "../../../hooks/useAuth";
 import userIcon  from "../../../assets/icon/user.png"
 
 const Navbar = () => {
-    const [dropdownMenu, setDropdownMenu] = useState(false)
     const [profileMenu, setProfileMenu] = useState(false)
     const {openMenu, setOpenMenu} = useApp()
     const {user} = useAuth()
 
-    const navLinks = <>
-        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200 cursor-pointer" to="/all-classes"> All Classes </Link>
-        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
-        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
-        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
-        <Link className="block px-4 py-2 text-sm text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200" to="/all-classes"> Classes Name</Link>
-    </>
   return (
     <nav className=" fixed top-0 w-full z-50 transition-all duration-300 font-poppins bg-white/80">
       <div className="max-width mx-auto px-4 xl:px-0 border-b border-gray-100">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20">
           <Link className="flex items-center space-x-2 text-[#1d4ed8]" to="/">
             <div className="relative">
               <img src={fitnessLogo} alt="" className="h-9"/>
@@ -37,7 +29,7 @@ const Navbar = () => {
           </Link>
 
 
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1">
             <div className="relative font-poppins">
               
             </div>
@@ -45,8 +37,9 @@ const Navbar = () => {
                 <li className="navbar"> <NavLink to={"/"}>Home</NavLink> </li>
                 <li className="navbar"><NavLink to={"/all-trainers"}>All Trainer</NavLink></li>
                 <li className="navbar"><NavLink to={"all-classes"}> Classes </NavLink></li>
-                <li className="navbar"><NavLink to={"/Forums"}>Forums</NavLink></li>
-                <li className="navbar"><NavLink to={"/About us"}>About us</NavLink></li>
+                <li className="navbar"><NavLink to={"/forums"}>Forums</NavLink></li>
+                <li className="navbar"><NavLink to={"/about-us"}>About us</NavLink></li>
+                <li className="navbar"><NavLink to={"/contact-us"}>Contact us</NavLink></li>
             </ul>
             {/* <a
               className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1d4ed8] hover:bg-blue-50 transition-colors duration-200"
@@ -70,8 +63,8 @@ const Navbar = () => {
                     <CurrentUserInfo setProfileMenu={setProfileMenu}/>
                    
                 </div>
-          <button onClick={()=> setOpenMenu(true)} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-            <CiMenuFries/>
+          <button onClick={()=> setOpenMenu(true)} className="md:px-4 lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <CiMenuFries size={26}/>
           </button>
             
           </div>

@@ -11,14 +11,14 @@ const MainLayout = () => {
         <div className="">
             <Toaster />
 
-            <div className="min-h-16">
+            <div className="h-20">
                 <Navbar/>
             </div> 
             
            
             
             {/* Main content  */}
-            <main className="container mx-auto min-h-[calc(100vh-450px)]">
+            <main className="w-full mx-auto min-h-[calc(100vh-450px)]">
                 <Outlet/>
             </main>
 

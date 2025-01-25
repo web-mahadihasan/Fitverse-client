@@ -20,42 +20,61 @@ const DashboardLayout = () => {
     }, [isDarkMode])
 
     return (
-        <div>
-            <div className="lg:grid grid-cols-5 min-h-screen relative">
-                {/* Sidebar  */}
-                <div className={`relative dark:bg-background dark:text-white lg:sticky top-0`}>
-                    <div className={`absolute z-40 bg-white w-[70%] md:w-[40%] ${openSidebar ? "left-0 top-0 min-h-screen" : "-left-3/4"} dark:bg-background lg:w-full lg:static duration-700 transition-all`}>
-                        <DashboardSidebar setOpenSidebar={setOpenSidebar} openSidebar={openSidebar}/>
-                    </div>
-                </div>
-                
-                {/* Content section  */}
-                <main className="w-full lg:col-span-4 content overflow-y-auto">
-                    {/* dashboard nav  */}
-                    <div className="h-14 shadow-md sticky top-0 bg-base-100 dark:bg-gray-800 ">
-                       <nav className="z-10 flex items-center  justify-between h-full max-w-[95%] pl-2">
-                            <div className="flex items-center gap-2">
-                            <button onClick={() => setOpenSidebar(true)} className="p-2 lg:hidden">
-                                <HiMenu size={26} />
-                            </button>
-                            <h3 className="text-2xl font-kanit font-semibold px-4">Dashboard</h3>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Sun className="h-4 w-4" />
-                                <Switch id="dark-mode" checked={isDarkMode} onCheckedChange={setIsDarkMode} />
-                                <Moon className="h-4 w-4" />
-                                <Label htmlFor="dark-mode" className="sr-only">
-                                    Toggle dark mode
-                                </Label>
-                            </div>
-                       </nav>
-                    </div>
-                    <section className="max-w-6xl mx-auto">
-                        <Outlet/>
-                    </section>
-                </main>
+        <div className="w-full">
+        <div className="lg:grid grid-cols-5 min-h-screen relative">
+          {/* Sidebar */}
+          <div
+            className={`relative dark:bg-background dark:text-white lg:sticky top-0 z-50`}
+          >
+            <div
+              className={`absolute z-40 bg-white w-[70%] md:w-[40%] ${
+                openSidebar ? "left-0 top-0 min-h-screen" : "-left-3/4"
+              } dark:bg-background lg:w-full lg:static lg:min-h-screen lg:block duration-700 transition-all`}
+            >
+              <DashboardSidebar
+                setOpenSidebar={setOpenSidebar}
+                openSidebar={openSidebar}
+              />
             </div>
+          </div>
+      
+          {/* Content section */}
+          <main className="w-full lg:col-span-4 overflow-y-auto h-screen">
+            {/* Dashboard nav */}
+            <div className="h-14 shadow-md sticky top-0 bg-base-100 z-50 dark:bg-gray-800">
+              <nav className="z-50 flex items-center justify-between h-full max-w-[95%] pl-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setOpenSidebar(true)}
+                    className="p-2 lg:hidden"
+                  >
+                    <HiMenu size={26} />
+                  </button>
+                  <h3 className="text-2xl font-kanit font-semibold px-4">
+                    Dashboard
+                  </h3>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Sun className="h-4 w-4" />
+                  <Switch
+                    id="dark-mode"
+                    checked={isDarkMode}
+                    onCheckedChange={setIsDarkMode}
+                  />
+                  <Moon className="h-4 w-4" />
+                  <Label htmlFor="dark-mode" className="sr-only">
+                    Toggle dark mode
+                  </Label>
+                </div>
+              </nav>
+            </div>
+            <section className="max-w-6xl mx-auto ">
+              <Outlet />
+            </section>
+          </main>
         </div>
+      </div>
+      
     );
 };
 

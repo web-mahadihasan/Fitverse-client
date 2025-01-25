@@ -38,16 +38,15 @@ const DashboardSidebar = ({setOpenSidebar, openSidebar}) => {
     const isCollapse = true;
 
     const addminRoutes = [
-        {name: "All Trainer", path: "/dashboard/all-trainer",  icon: <Icon icon="clarity:users-line" width="26" height="26" />},
-        {name: "Applied Trainer", path: "/dashboard/applied-trainer",  icon: <Icon icon="humbleicons:user-add" width="26" height="26" />},
-        {name: "All Newsletter", path: "/dashboard/all-newsletter",  icon: <Icon icon="ri:record-mail-line" width="26" height="26" />},
-        {name: "Balance", path: "/dashboard/balance",  icon: <Icon icon="grommet-icons:money" width="24" height="24" />},
-        {name: "Add New Class",path: "/dashboard/add-news-class",  icon: <PiListStarFill size={24} />},
+        {name: "All Trainer", path: "/dashboard/admin/all-trainer",  icon: <Icon icon="clarity:users-line" width="26" height="26" />},
+        {name: "Applied Trainer", path: "/dashboard/admin/applied-trainer",  icon: <Icon icon="humbleicons:user-add" width="26" height="26" />},
+        {name: "All Newsletter", path: "/dashboard/admin/all-newsletter",  icon: <Icon icon="ri:record-mail-line" width="26" height="26" />},
+        {name: "Balance", path: "/dashboard/admin/balance",  icon: <Icon icon="grommet-icons:money" width="24" height="24" />},
+        {name: "Add New Class",path: "/dashboard/admin/add-news-class",  icon: <PiListStarFill size={24} />},
     ]
     const trainerRoutes = [
         {name: "Manage Slot", path: "/dashboard/trainer/manage-slot",  icon: <Icon icon="mingcute:classify-2-line" width="26" height="26" />},
         {name: "Add New Slot", path: "/dashboard/trainer/add-new-slot",  icon: <Icon icon="mingcute:classify-add-2-line" width="26" height="26" />},
-        {name: "My Class Member", path: "/dashboard/my-class-member",  icon: <Icon icon="humbleicons:users" width="26" height="26" />},
     ]
     const userRoutes = [
         {name: "Activity Logs", path: "/dashboard/user/activity-log",  icon: <Icon icon="hugeicons:activity-04" width="26" height="26" />},
@@ -57,9 +56,8 @@ const DashboardSidebar = ({setOpenSidebar, openSidebar}) => {
     ]
     const dashboardCommonLinks = [
         {name: "Home", path: "/", icon: <Icon icon="fluent:home-32-filled" width="26" height="26" />},
-        {name: "Menu", path: "/our-menu", icon: <HiMenu size={24} className=''/>},
         {name: "Class", path: "/all-classes", icon: <Icon icon="mingcute:classify-3-line" width="26" height="26" />},
-        {name: "Contact", path: "/contact", icon: <Icon icon="mdi-light:email" width="24" height="24" />}
+        {name: "Contact", path: "/contact-us", icon: <Icon icon="mdi-light:email" width="24" height="24" />}
     ]
     return (
         <div className={`min-h-screen border font-poppins flex flex-col justify-between h-full p-3 px-6 w-full dark:bg-yellow text-black/80 font-inter`}>
@@ -171,10 +169,12 @@ const DashboardSidebar = ({setOpenSidebar, openSidebar}) => {
                     <BsThreeDots className="text-[1.2rem] text-gray-500 cursor-pointer"/>
 
                     <ul className="translate-y-[20px] text-sm font-poppins font-normal h-20 opacity-0 justify-between z-[-1] group-hover:translate-y-0 group-hover:opacity-100 group-hover:z-30 absolute bottom-0 left-[30px] bg-white boxShadow transition-all duration-300 p-[8px] rounded-md flex flex-col gap-[3px]">
+                        <Link to={"/dashboard/user/profile"}>
                         <li className="flex items-center gap-[7px] text-gray-600 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer">
                             <RiAccountCircleLine/>
                             Profile
                         </li>
+                        </Link>
                         <li onClick={handleSignOut} className="flex items-center gap-[7px] text-[0.9rem] text-red-500 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer">
                             <CiLogout/>
                             Logout

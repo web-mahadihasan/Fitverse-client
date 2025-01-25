@@ -23,7 +23,7 @@ const useAxiosSecured = () => {
     axiosSecured.interceptors.response.use(function (response) {
         return response;
       }, async(error)=> {
-        const status = error.response.status
+        const status = error?.response?.status
         
         // Handle 401 and 403 error code 
         if(status === 401 || status === 403){

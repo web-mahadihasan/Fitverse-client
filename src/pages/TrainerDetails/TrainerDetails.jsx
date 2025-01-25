@@ -15,6 +15,8 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { User, Zap } from "lucide-react";
 import { IoLocationOutline } from "react-icons/io5";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet";
+import PageCover from "../../components/common/PageCover";
 
 const TrainerDetails = () => {
     const {id} = useParams()
@@ -57,9 +59,13 @@ const TrainerDetails = () => {
           }
       };
     return (
-        <div className="max-w-7xl mx-auto px-4 xl:px-0 my-10">
-            
-            <section>
+        <div className="">
+            <Helmet>
+                <title>Fitverse | Trainers details </title>
+                <meta name="author" content="https://fitverse-bd.web.app/" />
+            </Helmet>
+            <PageCover title={`Details of ${name}`} page={"trainers-details"}/>
+            <section className="max-width mx-auto px-4 xl:px-0 my-10">
             <Divider orientation="left" style={{
                 borderColor: '#d1d5db',
             }}>

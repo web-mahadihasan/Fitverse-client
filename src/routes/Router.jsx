@@ -25,12 +25,23 @@ import UserPaymentHistory from '../pages/Dashboard/UserDashboard/UserPaymentHist
 import PaymentPage from '../pages/Payment/Payment';
 import BookedTrainer from '../pages/Dashboard/UserDashboard/BookedTrainer/BookedTrainer';
 import UserProfile from '../pages/Dashboard/UserDashboard/UserProfile/UserProfile';
+import AboutUs from '../pages/AboutUs/AboutUs';
+import ContactUs from '../pages/ContactUs/ContactUs';
+import Balance from '../pages/Dashboard/AdminDashboard/Balance/Balance';
+import ApplicantDetails from '../pages/Dashboard/AdminDashboard/ApplicantDetails/ApplicantDetails';
+import AdminRoute from './AdminRoute';
+import TrainerRoute from './TrainerRoute';
+import Forums from '../pages/Forums/Forums';
+import BlogDetails from '../pages/BlogDetails/BlogDetails';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import Loading from '../pages/Loading/Loading';
 
 
 const Router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout/>,
+        errorElement: <NotFoundPage/>,
         children: [
             {
                 path: "/",
@@ -58,7 +69,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/slot-details/:id",
-                element: <SlotDetailsWithPayment/>,
+                element: <PrivateRoute><SlotDetailsWithPayment/></PrivateRoute>,
                 loader: () => fetch('/pricing.json')
             },
             {
@@ -67,7 +78,27 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/booked-slot/payment/:id",
-                element: <PaymentPage/>
+                element: <PrivateRoute><PaymentPage/></PrivateRoute>
+            },
+            {
+                path: "/about-us",
+                element: <AboutUs/>
+            },
+            {
+                path: "/contact-us",
+                element: <ContactUs/>
+            },
+            {
+                path: "/forums",
+                element: <Forums/>
+            },
+            {
+                path: "/forums/details/:id",
+                element: <BlogDetails/>
+            },
+            {
+                path: "/loading-test",
+                element: <Loading/>
             }
         ]
     },
@@ -80,28 +111,36 @@ const Router = createBrowserRouter([
                 element: <DashboardHome/>,
             },
             {
-                path: "/dashboard/all-newsletter",
-                element: <AllNewsLetter/>,
+                path: "/dashboard/admin/all-newsletter",
+                element: <AdminRoute ><AllNewsLetter/></AdminRoute>,
             },
             {
-                path: "/dashboard/applied-trainer",
-                element: <AppliedTrainer/>,
+                path: "/dashboard/admin/applied-trainer",
+                element: <AdminRoute ><AppliedTrainer/></AdminRoute>,
             },
             {
-                path: "/dashboard/all-trainer",
-                element: <DashboardAllTrainer/>,
+                path: "/dashboard/admin/balance",
+                element:  <AdminRoute ><Balance/></AdminRoute>,
             },
             {
-                path: "/dashboard/add-news-class",
-                element: <AddNewClass/>,
+                path: "/dashboard/admin/all-trainer",
+                element:  <AdminRoute ><DashboardAllTrainer/></AdminRoute>,
+            },
+            {
+                path: "/dashboard/admin/add-news-class",
+                element:  <AdminRoute ><AddNewClass/></AdminRoute>,
+            },
+            {
+                path: "/dashboard/admin/applicant-details/:id",
+                element: <AdminRoute ><ApplicantDetails /></AdminRoute>,
             },
             {
                 path: "/dashboard/trainer/manage-slot",
-                element: <ManageSlot/>,
+                element: <TrainerRoute><ManageSlot/></TrainerRoute> ,
             },
             {
                 path: "/dashboard/trainer/add-new-slot",
-                element: <AddNewSlot/>,
+                element: <TrainerRoute><AddNewSlot/></TrainerRoute>,
             },
             {
                 path: "/dashboard/common/post-forum",
@@ -109,7 +148,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "/dashboard/user/activity-log",
-                element: <ActivityLog/>,
+                element: <ActivityLog/>
             },
             {
                 path: "/dashboard/user/payment-history",

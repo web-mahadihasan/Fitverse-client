@@ -11,7 +11,7 @@ const Banner = () => {
  
   return (
     <div className="max-w-[1440px] mx-auto px-4 xl:px-0 ">
-        <div className="relative flex items-center justify-center min-h-[700px] w-full flex-col overflow-hidden rounded-lg bg-background z-40 pt-4">
+        <div className="relative flex items-center justify-center min-h-[700px] w-full flex-col overflow-hidden rounded-lg bg-background z-40">
             <Meteors number={30} />
               <svg
                 aria-hidden="true"
@@ -87,12 +87,6 @@ const Banner = () => {
                 
                 <div className="relative w-full h-full overflow-hidden z-20 flex-1">
                 <div className="w-full max-h-[400px] lg:min-h-[700px] bg-transparent clipped">
-                    {/* <img
-                    src="https://zele.bold-themes.com/slant/wp-content/uploads/sites/3/2021/06/image_03_team.png" // Replace with your image path
-                    alt="Clipped Shape"
-                    className="z-10 w-full min-h-[650px] object-cover trainer-shadow"
-                    
-                    /> */}
                         <BannerCarousel/>
                 </div>
         </div>

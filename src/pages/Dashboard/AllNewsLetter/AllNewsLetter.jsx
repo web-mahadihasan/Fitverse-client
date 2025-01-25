@@ -9,6 +9,9 @@ import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import { useQuery } from "@tanstack/react-query";
 import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
+import SectionBadge from "../../../components/common/SectionBadge";
+import SectionHeading from "../../../components/common/SectionHeading";
+import { Helmet } from "react-helmet";
 
 
 const ActivityLog = () => {
@@ -86,13 +89,16 @@ const ActivityLog = () => {
 
   return (
     <div className="mx-auto p-4 my-10 md:max-w-6xl">
+      <Helmet>
+          <title>Fitverse | Dashboard - All newsletter </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="text-center mt-5 mb-10 space-y-4">
-          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-            Subscriber List and Insights
-          </h3>
-          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement.
-          </p>
+        <SectionBadge title={"All Newsletter"}/>
+        <SectionHeading
+          title={"Subscriber List and Insights"}
+          subtitle={"Monitor and review user actions, from logins to updates, ensuring transparency and a comprehensive view of system engagement."}
+        />
         </div>
       <div className="overflow-y-auto">
       <div className="overflow-x-auto min-w-[950px] rounded-md border border-gray-200 w-full ">

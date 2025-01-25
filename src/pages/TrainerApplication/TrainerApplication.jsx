@@ -13,6 +13,10 @@ import { axiosSecured } from "../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 import useGetUser from "../../hooks/useGetUser";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+import PageCover from "../../components/common/PageCover";
+import SectionBadge from "../../components/common/SectionBadge";
+import SectionHeading from "../../components/common/SectionHeading";
 
 const animatedComponents = makeAnimated();
 
@@ -109,8 +113,20 @@ const TrainerApplication = () => {
     }
   };
   return (
-    <div className="space-y-8 max-w-4xl mx-auto my-10 font-poppins px-4 xl:px-0">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <div className="mb-24">
+      <Helmet>
+          <title>Fitverse | Application </title>
+          <meta name="author" content="https://fitverse-bd.web.app/" />
+      </Helmet>
+      {/* <PageCover title={"All Classes"} page={"all-classes"}/> */}
+      <div className="my-10 px-4">
+          <SectionBadge title={"About us"}/>
+          <SectionHeading
+          title={"Application Be a Trainer"}
+          subtitle={"From passion to progress, we’re here to support you in every step of your fitness journey. Together, we build strength and confidence."}
+          />
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-4xl mx-auto my-10 font-poppins px-4 xl:px-0">
         <div className="md:grid grid-cols-2 gap-4">
           {/* Name  */}
           <div>

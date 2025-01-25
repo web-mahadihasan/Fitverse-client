@@ -12,6 +12,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
+import { format } from "date-fns";
+import { Helmet } from "react-helmet";
 
 const ActivityLog = () => {
     const [tableData, setTableData] = useState([])
@@ -100,6 +102,10 @@ const ActivityLog = () => {
 
   return (
     <div className="mx-auto p-4">
+      <Helmet>
+          <title>Fitverse | Dashboard - Activity logs </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="text-center mt-5 mb-10 space-y-4">
           <SectionBadge title={"Activity Logs"}/>
           <SectionHeading
@@ -167,7 +173,7 @@ const ActivityLog = () => {
               >
                 <td className="p-3">{application.name}</td>
                 <td className="p-3">{application.email}</td>
-                <td className="p-3">{application.date}</td>
+                <td className="p-3">{format(application.date, "PP")}</td>
                 {/* <td className="p-3">{application.role}</td> */}
                 <td className={``}> <span className={`inline-flex items-center justify-center gap-1 rounded px-3 py-[3px] text-sm text-white ${application.trainerStatus === "approved" && "bg-emerald-500" || application.trainerStatus === "pending" && "bg-orange-600 px-4" || application.trainerStatus === "reject" && "bg-red-600 px-4"}`}>
                   {

@@ -4,6 +4,9 @@ import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import SectionBadge from "../../../components/common/SectionBadge";
+import SectionHeading from "../../../components/common/SectionHeading";
+import { Helmet } from "react-helmet";
 
 const AddNewClass = () => {
     const [imageLink, setImageLink] = useState("");
@@ -49,12 +52,18 @@ const AddNewClass = () => {
 
 
     return (
-        <section className="w-full font-poppins my-24">
-
+        <section className="w-full font-poppins my-10">
+            <Helmet>
+                <title>Fitverse | Dashboard - Add new class </title>
+                <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+            </Helmet>
             {/* title */}
             <div className="w-full flex flex-col items-center justify-center">
-                <h1 className="text-3xl font-poppins text-main uppercase font-bold leading-[36px]">Add New class</h1>
-                <p className="text-[1rem] text-gray-500 my-4 font-poppins max-w-2xl mx-auto text-center">Create and customize new classes to inspire growth, enhance learning opportunities, and build a stronger foundation for success.</p>
+                <SectionBadge title={"New class"}/>
+                <SectionHeading 
+                    title={"Add New class"}
+                    subtitle={"Create and customize new classes to inspire growth, enhance learning opportunities, and build a stronger foundation for success."}
+                />
             </div>
 
             {/* form area */}
@@ -64,13 +73,6 @@ const AddNewClass = () => {
                         <label className="relative w-full text-gray-700 dark:text-gray-400">Class Description</label>
                         <input  {...register("title", { required: true })} placeholder="New class title" type="text" name="title" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 text-secondary-black w-full focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-700 dark:text-white/80"  />
                     </div>
-
-                    {/* <div className="flex flex-col gap-[5px] w-full sm:w-[50%]">
-                        <label className="relative">
-                            <input type="email" className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-[#3B9DF8] transition-colors duration-300"/>
-                            <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-[#3B9DF8] text-[#777777] peer-focus:px-1 transition-all duration-300 ">  Email Address </span>
-                        </label>
-                    </div> */}
                 </div>
                     <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
                         <p className="text-[#777777]  my-4">Upload Class Imgae</p>

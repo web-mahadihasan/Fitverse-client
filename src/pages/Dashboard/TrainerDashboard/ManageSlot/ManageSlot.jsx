@@ -14,6 +14,11 @@ import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecured from "../../../../hooks/useAxiosSecured";
 import { Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { RxCross1 } from "react-icons/rx";
+import { format } from "date-fns";
+import SectionBadge from "../../../../components/common/SectionBadge";
+import SectionHeading from "../../../../components/common/SectionHeading";
+import { Helmet } from "react-helmet";
 
 const { confirm } = Modal;
 
@@ -25,6 +30,8 @@ const ManageSlot = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(7);
   const [openActionMenuId, setOpenActionMenuId] = useState(null);
+  const [myClassMember, setMyClassMember] = useState([])
+  const [viewMember, setViewMember] = useState(false)
 
 
   // Get all application
@@ -36,6 +43,8 @@ const ManageSlot = () => {
       return data;
     },
   });
+
+  
 
   useEffect(()=> {
     if(mySlots?.length > 0){
@@ -130,18 +139,26 @@ const ManageSlot = () => {
       },
     });
   };
+  const handleViewDetails = async (id) => {
+    const {data} = await axiosSecured.get(`/payment-api/my-class-member/${id}`)
+    setMyClassMember(data)
+    setViewMember(true)
+  }
   
   if(isLoading) return <p>Loading....</p>
 
   return (
     <div className="mx-auto p-4 my-10 md:max-w-6xl ">
+      <Helmet>
+          <title>Fitverse | Dashboard - Manage Slot </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="text-center mt-5 mb-10 space-y-4">
-          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-            Trainer Slot Management
-          </h3>
-          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Manage trainer slots efficiently with options to view, sort, filter, and update schedules for seamless coordination.
-          </p>
+        <SectionBadge title={"Slot Management"}/>
+        <SectionHeading
+          title={"Trainer Slot Management"}
+          subtitle={"Manage trainer slots efficiently with options to view, sort, filter, and update schedules for seamless coordination."}
+        />
         </div>
         {/* Table start  */}
 
@@ -239,7 +256,7 @@ const ManageSlot = () => {
                       <MdDeleteOutline size={16}/>
                       Delete Slot
                     </button>
-                    <button className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
+                    <button onClick={() => handleViewDetails(application._id)} className="flex items-center gap-[8px] text-[0.9rem] py-1.5 px-2 w-full rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition-all duration-200">
                       <IoEyeOutline />
                       View Details
                     </button>
@@ -348,7 +365,58 @@ const ManageSlot = () => {
       </div>
 
       {/* Modal  */}
-      
+      <>
+         <div
+             className={`${
+                 viewMember ? " visible" : " invisible"
+             } w-full h-screen fixed top-0 left-0 z-50 bg-[#0201012a] flex items-center justify-center transition-all duration-300`}>
+             <div
+                 className={`${
+                  viewMember
+                         ? " scale-[1] opacity-100"
+                         : " scale-[0] opacity-0"
+                 } lg:w-[50%] md:w-[90%] min-h-[250px] sm:w-[90%] w-full bg-gray-100 rounded-lg p-5 transition-all duration-300`}
+             >
+                 <div className="min-w-full flex items-center justify-between">
+                     <h2 className="primary-black my-3 dark:text-gray-800 text-2xl font-poppins font-[600]">Your class Member</h2>
+                     <RxCross1
+                         className="p-2 text-[2rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
+                         onClick={() => setViewMember(false)}
+                     />
+                 </div>
+                 <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                     {/* <p ref={feedbackRef} className="text-red-500 text-[1rem] font-poppins font-[400]">
+                           
+                     </p> */}
+                     {
+                      myClassMember.length > 0? myClassMember?.map(member => (
+                        <div key={member._id} className="bg-gray-200 p-3 rounded-md shadow-md space-y-2">
+                        <p className="font-poppins flex items-center gap-4 text-secondary-black text-lg">
+                          <span>Name:</span>
+                          <span>{member.userName}</span>
+                        </p>
+                        <p className="font-poppins flex items-center gap-4 text-secondary-black text-lg">
+                          <span>Email:</span>
+                          <span>{member.userEmail}</span>
+                        </p>
+                        <p className="font-poppins flex items-center gap-4 text-secondary-black text-lg">
+                          <span>Joining Date:</span>
+                          <span>{format(member.paymentDate, "PP")}</span>
+                        </p>
+                     </div>
+                      )): <h3 className="col-span-1 text-3xl text-red-500 my-6 font-semibold font-kanit">No user found</h3>
+                     }
+                     
+                 </div>
+                 <div className="mt-10 flex w-full  gap-[13px] items-end justify-end">
+                         <button onClick={() => setViewMember(false)}
+                                 className={`py-2 px-6 font-popins rounded font-[500] z-10 border border-[#cecece] text-gray-500`}>Close
+                         </button>
+                     </div>
+                 
+             </div>
+         </div>
+        </>
     </div>
   );
 };

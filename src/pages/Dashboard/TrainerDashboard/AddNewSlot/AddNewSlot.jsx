@@ -14,6 +14,9 @@ import useAuth from "../../../../hooks/useAuth";
 import useGetUser from "../../../../hooks/useGetUser";
 import useGetClass from "../../../../hooks/useGetClass";
 import { useNavigate } from "react-router";
+import SectionBadge from "../../../../components/common/SectionBadge";
+import SectionHeading from "../../../../components/common/SectionHeading";
+import { Helmet } from "react-helmet";
 
 const animatedComponents = makeAnimated();
 
@@ -150,14 +153,16 @@ const AddNewSlot = () => {
 
     return (
       <div>
+        <Helmet>
+          <title>Fitverse | Dashboard - Add new slot </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+        </Helmet>
         <div className="text-center my-14 space-y-4">
-          <h3 className="font-kanit text-3xl font-semibold uppercase tracking-wide text-main dark:text-main">
-            Add New Training Slot
-          </h3>
-          <p className="max-w-2xl mx-auto text-center font-poppins text-gray-600 dark:text-gray-300">
-            Create and manage new training slots with details like date, time,
-            duration, and capacity for efficient scheduling.
-          </p>
+          <SectionBadge title={"New Slot"}/>
+          <SectionHeading
+            title={"Add New Training Slot"}
+            subtitle={"Create and manage new training slots with details like date, time, duration, and capacity for efficient scheduling."}
+          />
         </div>
         {/* Add slot data details  */}
 

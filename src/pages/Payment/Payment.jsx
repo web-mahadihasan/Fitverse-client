@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js"
 import PaymentForm from "./PaymentForm"
 import { useLocation } from "react-router"
 import useAxiosSecured from "../../hooks/useAxiosSecured"
+import { Helmet } from "react-helmet"
 // import PaymentForm from "./PaymentForm"
 
 const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY)
@@ -65,6 +66,10 @@ const PaymentPage = () => {
 
   return (
     <div className="my-24 min-h-[600px] w-full grid place-items-center lg:grid-cols-4 px-4 xl:px-0">
+      <Helmet>
+          <title>Fitverse | Payments </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="hidden lg:block"></div>
      <div className="w-full md:w-[70%] lg:w-full lg:col-span-2 mx-auto ">
       <h1 className="text-3xl text-center font-bold  font-kanit capitalize text-main  mb-7 tracking-wide dark:text-main-dark">Secure Checkout, Pay with Your Card</h1>

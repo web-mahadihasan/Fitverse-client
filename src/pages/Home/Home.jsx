@@ -15,18 +15,30 @@ import SectionHeading from "../../components/common/SectionHeading";
 import TeamSection from "./TeamSection/TeamSection";
 import BlogCard from "../../components/common/BlogCard";
 import NewsLetterSection from "./NewLetterSection/NewsLetterSection";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet";
+import CalculateBMI from "./CalculateBMI/CalculateBMI";
 
 
 
 const Home = () => {
+    const axiosPublic = useAxiosPublic()
     const [allClass] = useGetClass()
     const {data: testimonial} = useQuery({
         queryKey: ["testimonial"],
         queryFn: async () => {
-            const {data} = await axios.get("/testReview.json")
+            const {data} = await axiosPublic.get("/review-api/all-review")
             return data
         }
     })
+    const {data: forums} = useQuery({
+        queryKey: ["forums"],
+        queryFn: async () => {
+            const {data} = await axiosPublic.get(`/forum-api/forums?page=1`)
+            return data
+        }
+    })
+    const {blogs} = forums || {}
     const ourTeam = [
         {
           "name": "James Wilson",
@@ -52,6 +64,10 @@ const Home = () => {
       
     return (
         <div className="min-h-screen font-poppins max-width mx-auto">
+            <Helmet>
+                <title>Fitverse | Home </title>
+                <meta name="author" content="https://fitverse-bd.web.app/" />
+            </Helmet>
             <div>
                 <Banner/>
             </div>
@@ -98,15 +114,15 @@ const Home = () => {
                     text="About us"
                 />
             </div>
-                {/* <div>
-                    <h2 className="text-4xl font-bold  font-kanit capitalize text-secondary-black text-left mb-7 tracking-wide dark:text-main-dark">Explore Our Fitness Features</h2>
-                    <p className="max-w-xl text-left text-gray-600 font-poppins mb-3">
-                        From flexible workout options to premium amenities, explore the unique offerings that make our fitness center stand out. Join us and experience fitness at its finest.
-                    </p>
-                </div> */}
+               
                 <div>
                     <AboutSection/>
                 </div>
+            </section>
+
+            {/* Calculate Bmi Section  */}
+            <section className="w-full">
+                <CalculateBMI/>
             </section>
 
             {/* Testimonial section  */}
@@ -147,9 +163,12 @@ const Home = () => {
 
                 {/* Blog card  */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 my-10">
-                    <BlogCard/>
-                    <BlogCard/>
-                    <BlogCard/>
+                    {
+                        blogs?.map(forum => <BlogCard key={forum._id} forumData={forum}/>)
+                    }
+                    
+                    {/* <BlogCard/>
+                    <BlogCard/> */}
                 </div>
                 <Link to={"/all-classes"}>
                     <button className="text-center mx-auto flex group items-center gap-1 bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10" >

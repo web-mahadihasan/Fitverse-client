@@ -17,11 +17,16 @@ import useAxiosSecured from "../../hooks/useAxiosSecured";
 import { useNavigate, useParams } from "react-router";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Step3Content from "./Step3Content";
+import useAdmin from "../../hooks/useAdmin";
+import useTrainer from "../../hooks/useTrainer";
+import { Helmet } from "react-helmet";
 
 const SlotDetailsWithPayment = () => {
     const [packagePrice, setPackagePrice] = useState({})
     const [selectedClass, setSelectedClass] = useState("")
     const navigate = useNavigate()
+    const [isAdmin] = useAdmin()
+    const [isTrainer] = useTrainer()
 
     const [step, setStep] = useState(1)
     const axiosSecured = useAxiosSecured()
@@ -80,11 +85,22 @@ const SlotDetailsWithPayment = () => {
             packageName: packagePrice.name,
             selectedClass
         }
+        if(isAdmin){
+            return toast.error("You're admin! Only user can booked slot")
+        }
+        if(isTrainer){
+            return toast.error("You're already trainer! you can't booked any slot")
+        }
+
         navigate(`/booked-slot/payment/${slotDetails._id}`, {state: {paymentInfo}})
     }
     if(isLoading) return <p>LOading...</p>
     return (
         <div className="w-full font-poppins sm:w-[90%] max-w-7xl px-4 xl:px-0 my-24 mx-auto">
+            <Helmet>
+                <title>Fitverse | Booked Slot </title>
+                <meta name="author" content="https://fitverse-bd.web.app/" />
+            </Helmet>
             <div className="w-full sm:flex-row flex-col flex items-center gap-[20px] sm:gap-[10px]">
                 {
                     steps?.map((stepItem, index) => (

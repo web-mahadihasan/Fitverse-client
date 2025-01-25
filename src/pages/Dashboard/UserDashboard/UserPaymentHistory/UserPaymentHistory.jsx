@@ -14,6 +14,7 @@ import { RxCross1 } from "react-icons/rx";
 import { format } from "date-fns";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
+import { Helmet } from "react-helmet";
 
 const UserPaymentHistory = () => {
     const [tableData, setTableData] = useState([])
@@ -92,6 +93,10 @@ const UserPaymentHistory = () => {
 
   return (
     <div className="mx-auto p-4">
+      <Helmet>
+          <title>Fitverse | Dashboard - Payments History </title>
+          <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
+      </Helmet>
       <div className="text-center mt-5 mb-10 space-y-4">
         <SectionBadge title={"Payment History"}/>
         <SectionHeading

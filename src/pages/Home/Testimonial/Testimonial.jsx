@@ -3,6 +3,7 @@ import Glide from "@glidejs/glide"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { Rating, ThinRoundedStar } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import { format } from "date-fns";
 
 const includedShapesStyles = [ThinRoundedStar].map((itemShapes) => ({
     itemShapes,
@@ -102,7 +103,7 @@ export default function Testimonial({testimonial}) {
                                 </div>
                             </div>
                             <div>
-                                <p className="font-poppins">{item?.date}</p>
+                                <p className="font-poppins">{format(item?.date, "PP")}</p>
                             </div>
                           </div>
                         </figcaption>
