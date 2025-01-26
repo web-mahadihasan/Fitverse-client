@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const UserPaymentHistory = () => {
     const [tableData, setTableData] = useState([])
@@ -89,7 +90,7 @@ const UserPaymentHistory = () => {
     const handleToggle = () => setIsOpen((prev) => !prev);
 
 
-    if(isLoading) return <p>Loading....</p>
+    if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4">

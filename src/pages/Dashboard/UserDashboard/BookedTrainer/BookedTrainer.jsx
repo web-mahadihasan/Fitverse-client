@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import useAxiosSecured from "../../../../hooks/useAxiosSecured";
-import Loading from "../../../Loading/Loading";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -14,6 +13,7 @@ import fitnessLogo from "../../../../assets/icon/Fitness-log.png"
 import useGetUser from "../../../../hooks/useGetUser";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const BookedTrainer = () => {
     const {user} = useAuth()
@@ -65,7 +65,7 @@ const BookedTrainer = () => {
         
     }
 
-    if(isLoading) return <Loading/>
+    if(isLoading) return <AnimatedLoader/>
 
     return (
         <div className="mx-auto p-4">

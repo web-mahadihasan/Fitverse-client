@@ -1,17 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import BlogCard from "../../components/common/BlogCard";
-import Loading from "../Loading/Loading";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import PageCover from "../../components/common/PageCover";
+import SectionBadge from "../../components/common/SectionBadge";
+import SectionHeading from "../../components/common/SectionHeading";
+import AnimatedLoader from "../Loading/Loading";
 
 const Forums = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const axiosPublic = useAxiosPublic()
 
-    const {data: allForums, isLoading} = useQuery({
+    const {data: allForums,refetch, isLoading} = useQuery({
         queryKey: ["allForums", currentPage],
         queryFn: async () => {
             const {data} = await axiosPublic.get(`/forum-api/forums?page=${currentPage}`)
@@ -19,8 +21,8 @@ const Forums = () => {
         }
     })
     const {blogs, totalPage, page} = allForums || {}
-
-    if(isLoading) return <Loading/>
+    
+    if(isLoading) return <AnimatedLoader/>
     return (
         <div className="my-2 mb-4 mx-auto">
           <Helmet>
@@ -28,10 +30,17 @@ const Forums = () => {
               <meta name="Mahadi hasan" content="https://fitverse-bd.web.app/" />
           </Helmet>
           <PageCover title={"Forums"} page={"forums"}/>
-            <div className="max-width mx-auto px-4 xl:px-0">
+          <div className="my-7">
+            <SectionBadge title={"Forums"}/>
+            <SectionHeading 
+              title={"Blog for Knowledge and Growth"}
+              subtitle={" Stay informed, inspired, and entertained with our curated blog covering everything from lifestyle tips"}
+            />
+          </div>
+            <div className="max-width mx-auto px-4 xl:px-0 mb-24">
             <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 justify-between gap-8 my-10">
                 {
-                    blogs?.map(forum => <BlogCard key={forum._id} forumData={forum}/>)
+                    blogs?.map(forum => <BlogCard key={forum._id} forumData={forum} refetch={refetch}/>)
                 }
             </div>
 

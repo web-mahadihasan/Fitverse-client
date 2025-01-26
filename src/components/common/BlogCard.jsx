@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiArrowFatDown, PiArrowFatDownFill, PiArrowFatUp, PiArrowFatUpFill } from "react-icons/pi";
 import { Button } from "@/components/ui/button";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -8,24 +8,72 @@ import {  FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router";
 import { ArrowUpRightFromSquareIcon } from "lucide-react";
 import { format } from "date-fns";
+import toast from "react-hot-toast";
+import useAxiosSecured from "../../hooks/useAxiosSecured";
+import useAuth from "../../hooks/useAuth";
+import useGetUser from "../../hooks/useGetUser";
 
-const BlogCard = ({forumData}) => {
-    // action constrols
-    const [isOpen, setIsOpen] = useState(false);
+const BlogCard = ({forumData, refetch}) => {
+    const axiosSecured = useAxiosSecured()
     const [upVote, setUpVote] = useState(false);
     const [downVote, setDownVote] = useState(false);
-    const {_id, name, coverImage, title, description,comments, postedDate, image, upvote, downvote, role} = forumData || {}
+    const {user} = useAuth()
+    const [getUser] = useGetUser()
 
-    const handleUpVote = () => {
-        setUpVote(!upVote)
-        setDownVote(false)
+    const {_id, name, coverImage, title, description,comments, postedDate, image, upvote, downvote, role, upvoteUser, downvoteUser } = forumData || {}
+    useEffect(()=> {
+      if(upvoteUser){
+        const isUpvoted = upvoteUser.find(item => item === getUser?._id)
+        if(isUpvoted){
+          setUpVote(true)
+          setDownVote(false)
+        }
+      }
+      if(downvoteUser){
+        const isUpvoted = downvoteUser.find(item => item === getUser?._id)
+        if(isUpvoted){
+          setUpVote(false)
+          setDownVote(true)
+        }
+      }
+    }, [downvoteUser, getUser, upvoteUser])
+
+    // Hangle upvote 
+    const handleUpVote = async () => {
+        // setUpVote(!upVote)   
+        if(user){
+          if(!upVote){
+            const {data} = await axiosSecured.post(`/forum-api/upvote/${_id}`, {userId: getUser?._id})
+            if(data.modifiedCount > 0){
+              refetch()
+            }
+          }else{
+            toast.error("You already voted")
+          }
+        } else{
+          toast.error("Your must login for voted")
+        }
     }
-    const handleDownVote = () => {
-        setDownVote(!downVote)
-        setUpVote(false)
+
+    // Handle Down vote 
+      const handleDownVote = async () => {
+        // setUpVote(!upVote)   
+        if(user){
+          if(!downVote){
+            const {data} = await axiosSecured.post(`/forum-api/downvote/${_id}`, {userId: getUser?._id})
+            if(data.modifiedCount > 0){
+              refetch()
+            }
+          }else{
+            toast.error("You already voted")
+          }
+        } else{
+          toast.error("Your must login for voted")
+        }
     }
+
   return (
-    <div className="w-full lg:w-[80%] lg:mx-auto xl:w-full bg-[#fff] font-poppins rounded blog-shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="w-full lg:w-[80%] lg:mx-auto xl:w-full bg-[#fff] font-poppins rounded blog-shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 flex flex-col">
       <div className="flex w-full justify-between items-center p-4">
         <div className="flex items-center gap-4">
           <div className="w-[50px] h-[50px] flex items-center
@@ -43,8 +91,8 @@ const BlogCard = ({forumData}) => {
         
       </div>
 
-       <h3 className="flex-wrap w-full">{title}</h3>
-      <p className="text-[#424242] p-4 dark:text-slate-300 h-[80px] mb-3">
+       <h3 className="flex-wrap flex-1 w-full px-4 text-xl font-semibold">{title}</h3>
+      <p className="text-[#424242] p-4 dark:text-slate-300 h-[84px] line-clamp-3 mb-3">
         {description}
       </p>
       

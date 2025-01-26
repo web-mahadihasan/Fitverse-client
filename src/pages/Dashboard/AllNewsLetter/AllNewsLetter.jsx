@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import SectionBadge from "../../../components/common/SectionBadge";
 import SectionHeading from "../../../components/common/SectionHeading";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../Loading/Loading";
 
 
 const ActivityLog = () => {
@@ -85,7 +86,7 @@ const ActivityLog = () => {
     const handleToggle = () => setIsOpen((prev) => !prev);
     // console.log( new Date(Jan 1, 2025))
  
-  if(isLoading) return <p>Loading....</p>
+  if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4 my-10 md:max-w-6xl">

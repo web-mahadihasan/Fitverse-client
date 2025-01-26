@@ -10,6 +10,7 @@ import { useState } from "react";
 import { PiListStarFill } from "react-icons/pi";
 import useParamsFilter from "../../hooks/useParamsFilter";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../Loading/Loading";
 
 const AllTrainers = () => {
       const axiosPublic = useAxiosPublic()
@@ -40,7 +41,7 @@ const AllTrainers = () => {
          setFilters({search: searchText || undefined})
     }
 
-      if(isLoading) return <p>loading...</p>
+      if(isLoading) return <AnimatedLoader/>
     return (
         <div className="mt-2">
           <Helmet>

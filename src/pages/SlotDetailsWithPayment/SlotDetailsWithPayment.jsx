@@ -20,6 +20,7 @@ import Step3Content from "./Step3Content";
 import useAdmin from "../../hooks/useAdmin";
 import useTrainer from "../../hooks/useTrainer";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../Loading/Loading";
 
 const SlotDetailsWithPayment = () => {
     const [packagePrice, setPackagePrice] = useState({})
@@ -94,7 +95,7 @@ const SlotDetailsWithPayment = () => {
 
         navigate(`/booked-slot/payment/${slotDetails._id}`, {state: {paymentInfo}})
     }
-    if(isLoading) return <p>LOading...</p>
+    if(isLoading) return <AnimatedLoader/>
     return (
         <div className="w-full font-poppins sm:w-[90%] max-w-7xl px-4 xl:px-0 my-24 mx-auto">
             <Helmet>

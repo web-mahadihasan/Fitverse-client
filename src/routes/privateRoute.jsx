@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import AnimatedLoader from '../pages/Loading/Loading';
 
 const PrivateRoute = ({children}) => {
     const location = useLocation();
@@ -7,7 +8,7 @@ const PrivateRoute = ({children}) => {
     const {user, loading} = useAuth()
     
     if(loading) {
-        return <p className='text-3xl font-inter'>Loading...</p>
+        return <AnimatedLoader/>
     }
     if(user) {
         return children;

@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useTrainer from '../hooks/useTrainer';
+import AnimatedLoader from '../pages/Loading/Loading';
 
 const TrainerRoute = ({children}) => {
     const location = useLocation();
@@ -9,7 +10,7 @@ const TrainerRoute = ({children}) => {
     const {user, loading} = useAuth()
     
     if(loading || isTrainerLoading) {
-        return <p className='text-3xl font-inter'>Loading...</p>
+        return <AnimatedLoader/>
     }
     if(user && isTrainer) {
         return children;

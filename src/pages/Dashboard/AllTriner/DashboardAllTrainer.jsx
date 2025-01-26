@@ -11,9 +11,9 @@ import { Modal } from 'antd';
 const { confirm } = Modal;
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
-import Loading from "../../Loading/Loading";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../Loading/Loading";
 
 const DashboardAllTrainer = () => {
     const axiosPublic = useAxiosPublic()
@@ -66,7 +66,7 @@ const DashboardAllTrainer = () => {
         }
 
     }
-    if(isLoading) return <Loading/>
+    if(isLoading) return <AnimatedLoader/>
 
     return (
         <div className="mx-auto p-4">

@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { Link, useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
-import Loading from '../../../Loading/Loading';
 import { RxCross1 } from 'react-icons/rx';
 import { Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { format } from 'date-fns';
 import { Helmet } from 'react-helmet';
+import AnimatedLoader from '../../../Loading/Loading';
 const { confirm } = Modal;
 
 const ApplicantDetails = () => {
@@ -46,6 +46,7 @@ const ApplicantDetails = () => {
     date,
     totalHours
   } = applicantData || {};
+  console.log(availableSlot)
 
   const checkIsConfirmAction = (e) => {
     setDisabledButton(true)
@@ -123,7 +124,7 @@ const ApplicantDetails = () => {
             }
     }
 //   console.log(id)
-    if(isLoading) return <Loading/>
+    if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-6 mt-8 font-poppins">

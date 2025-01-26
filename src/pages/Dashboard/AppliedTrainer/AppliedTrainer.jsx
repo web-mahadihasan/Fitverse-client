@@ -20,6 +20,7 @@ import SectionHeading from "../../../components/common/SectionHeading";
 import { Link, useNavigate } from "react-router";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../Loading/Loading";
 
 const AppliedTrainer = () => {
   const [tableData, setTableData] = useState([])
@@ -95,7 +96,7 @@ const AppliedTrainer = () => {
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
-  if(isLoading) return <p>Loading....</p>
+  if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4 md:max-w-6xl">

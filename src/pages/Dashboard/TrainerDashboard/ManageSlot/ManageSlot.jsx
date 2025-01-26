@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const { confirm } = Modal;
 
@@ -145,7 +146,7 @@ const ManageSlot = () => {
     setViewMember(true)
   }
   
-  if(isLoading) return <p>Loading....</p>
+  if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4 my-10 md:max-w-6xl ">

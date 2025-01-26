@@ -10,6 +10,7 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { Link } from "react-router"
 import { Button } from "@/components/ui/button"
 import { Facebook, Instagram, Linkedin, Moon, Send, Sun, Twitter } from "lucide-react"
+import AnimatedLoader from "../../pages/Loading/Loading"
 
 
 export function AnimatedCard({trainerData}) {
@@ -26,7 +27,7 @@ export function AnimatedCard({trainerData}) {
   })
 
 
-  if(isLoading) return <p>Loading...</p>
+  if(isLoading) return <AnimatedLoader/>
   return (
     
     (<div className="relative flex w-full sm:w-[70%] md:w-full mx-auto flex-col items-center justify-center overflow-hidden rounded-xl border md:shadow-xl">

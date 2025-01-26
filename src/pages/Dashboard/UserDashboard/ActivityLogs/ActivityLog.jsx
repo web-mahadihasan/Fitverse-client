@@ -14,6 +14,7 @@ import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const ActivityLog = () => {
     const [tableData, setTableData] = useState([])
@@ -98,7 +99,7 @@ const ActivityLog = () => {
           setViewFeedbackModal(true)
     }
 
-    if(isLoading) return <p>Loading....</p>
+    if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4">

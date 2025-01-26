@@ -4,7 +4,6 @@ import SectionBadge from "../../components/common/SectionBadge";
 import SectionHeading from "../../components/common/SectionHeading";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useState } from "react";
-import Loading from "../Loading/Loading";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { PiListStarFill, PiToolboxThin } from "react-icons/pi";
 import Select from 'react-select'
@@ -13,6 +12,7 @@ import { useForm } from "react-hook-form";
 import useParamsFilter from "../../hooks/useParamsFilter";
 import { Helmet } from "react-helmet";
 import PageCover from "../../components/common/PageCover";
+import AnimatedLoader from "../Loading/Loading";
 
 const AllClass = () => {
     const axiosPublic = useAxiosPublic()
@@ -63,7 +63,7 @@ const AllClass = () => {
          setFilters({search: searchText || undefined})
     }
     
-    if(isLoading) return <Loading/>
+    if(isLoading) return <AnimatedLoader/>
     
     return (
         <div className=" mb-24">

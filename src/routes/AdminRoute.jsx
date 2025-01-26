@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useAdmin from '../hooks/useAdmin';
+import AnimatedLoader from '../pages/Loading/Loading';
 
 const AdminRoute = ({children}) => {
     const location = useLocation();
@@ -9,7 +10,7 @@ const AdminRoute = ({children}) => {
     const {user, loading} = useAuth()
     
     if(loading || isAdminLoading) {
-        return <p className='text-3xl font-inter'>Loading...</p>
+        return <AnimatedLoader/>
     }
     if(user && isAdmin) {
         return children;

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router";
 import SectionBadge from "../../../../components/common/SectionBadge";
 import SectionHeading from "../../../../components/common/SectionHeading";
 import { Helmet } from "react-helmet";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const animatedComponents = makeAnimated();
 
@@ -148,7 +149,7 @@ const AddNewSlot = () => {
       
     };
 
-    if(isLoading) return <p>Loading...</p>
+    if(isLoading) return <AnimatedLoader/>
 
 
     return (

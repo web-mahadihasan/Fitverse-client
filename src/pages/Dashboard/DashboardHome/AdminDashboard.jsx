@@ -1,10 +1,10 @@
 import { UserIcon, UsersIcon, ClipboardIcon, FlameIcon as FireIcon } from "lucide-react"
 import InfoCard from "../../../components/common/InfoCard";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
-import Loading from "../../Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import ClassComparisonChart from "./ClassComparisonChart";
 import useAdmin from "../../../hooks/useAdmin";
+import AnimatedLoader from "../../Loading/Loading";
 
 const AdminDashboard = () => {
     const axiosSecured = useAxiosSecured()
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
         enabled: isAdmin, 
     });
     
-    if(isLoading) return <Loading/>
+    if(isLoading) return <AnimatedLoader/>
     
     return (
         <section className="my-10">

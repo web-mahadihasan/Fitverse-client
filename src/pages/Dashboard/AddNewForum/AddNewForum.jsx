@@ -60,8 +60,10 @@ const AddNewForum = () => {
             image: getUser?.image,
             role: getUser?.role,
             upvote: 0,
-            downvote: 0
-
+            downvote: 0,
+            downvoteUser: [],
+            upvoteUser: [],
+            comments: 0
         }
         try {            
             const {data} = await axiosSecured.post(`/forum-api/post-forums`, forumData)

@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IoEyeOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import { format } from "date-fns";
+import AnimatedLoader from "../../../Loading/Loading";
 
 const LatestPayment = () => {
     const [tableData, setTableData] = useState([])
@@ -61,7 +62,7 @@ const LatestPayment = () => {
         setTableData(sorted);
     };
 
-    if(isLoading) return <p>Loading....</p>
+    if(isLoading) return <AnimatedLoader/>
 
   return (
     <div className="mx-auto p-4 mb-24">
