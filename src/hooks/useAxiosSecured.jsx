@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 
 
 export const axiosSecured = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://fitverse-bd-server.vercel.app'
 })
 
 const useAxiosSecured = () => {

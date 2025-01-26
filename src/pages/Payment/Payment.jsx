@@ -40,7 +40,7 @@ const PaymentPage = () => {
     const sendPaymentInfo = async () => {
       if(totalAmmount.ammount > 0) {
         try {
-          const {data} = await axiosSecured.post("http://localhost:3000/create-payment-intent", totalAmmount)
+          const {data} = await axiosSecured.post("/create-payment-intent", totalAmmount)
           setClientSecret(data.clientSecret)         
         } catch (error) {
           console.error("Error:", error)
