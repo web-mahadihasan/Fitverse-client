@@ -159,7 +159,7 @@ const AddNewForum = () => {
                             </>
                     </div>
                 <div className="flex flex-col gap-[5px] w-full md:w-[80%] lg:w-[70%] mx-auto my-2">
-                    <label className="relative w-full text-gray-700 dark:text-gray-400">Forum Description</label>
+                    <label className="relative w-full text-gray-700 dark:text-gray-400">Blog Description</label>
                     <textarea   
                         {...register("description", {
                             required: "Description is required",
@@ -169,7 +169,7 @@ const AddNewForum = () => {
                             },
                           })}
                     placeholder="Forum details" name="description" className="peer min-h-[100px] border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-main transition-colors duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></textarea>
-                    <span className=" absolute top-3 left-5 peer-focus:-top-3 peer-focus:bg-white peer-focus:left-2 peer-focus:scale-[0.9] peer-focus:text-main text-[#777777] peer-focus:px-1 transition-all duration-300 "> Class Details</span>
+                    {errors.title && <p className="text-red-500">{errors.description.message}</p>}
                 </div>
 
                 <div>

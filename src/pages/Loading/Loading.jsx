@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-
+import "./loading.css"
 export default function AnimatedLoader() {
   const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsAnimating(true)
-    }, 500)
+    }, 100)
 
     return () => clearTimeout(timer)
   }, [])
