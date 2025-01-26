@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     if(isLoading) return <AnimatedLoader/>
     
     return (
-        <section className="my-10">
+        <section className="my-10 px-4 xl:px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <InfoCard
                 title="Total Users"

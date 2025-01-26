@@ -27,7 +27,7 @@ const DashboardLayout = () => {
             className={`relative dark:bg-background dark:text-white lg:sticky top-0 z-50`}
           >
             <div
-              className={`absolute z-40 bg-white w-[70%] md:w-[40%] ${
+              className={`absolute z-40 bg-white w-[70%] sm:w-[50%] md:w-[40%] ${
                 openSidebar ? "left-0 top-0 min-h-screen" : "-left-3/4"
               } dark:bg-background lg:w-full lg:static lg:min-h-screen lg:block duration-700 transition-all`}
             >
@@ -41,8 +41,8 @@ const DashboardLayout = () => {
           {/* Content section */}
           <main className="w-full lg:col-span-4 overflow-y-auto h-screen">
             {/* Dashboard nav */}
-            <div className="h-14 shadow-md sticky top-0 bg-base-100 z-50 dark:bg-gray-800">
-              <nav className="z-50 flex items-center justify-between h-full max-w-[95%] pl-2">
+            <div className="h-14 shadow-md sticky top-0 bg-white/70 backdrop-blur-xl z-40 dark:bg-gray-800">
+              <nav className="z-40 flex items-center justify-between h-full max-w-[95%] pl-2">
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setOpenSidebar(true)}
