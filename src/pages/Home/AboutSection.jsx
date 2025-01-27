@@ -43,7 +43,7 @@ const AboutSection = () => {
                 <ShortInfo title={"CLASSES"} info={"Every Level"}/>
                 <ShortInfo title={"PRICES"} info={"Affordable"}/>
             </div>
-            <div className="flex flex-row flex-wrap gap-4">
+            <div className="flex flex-col md:flex-row flex-wrap gap-4">
               <Link to={"+8801794943980"} target="blank">
                 <Button size="lg" className="gap-4" variant="outline">
                   Jump on a call <PhoneCall className="w-4 h-4" />
