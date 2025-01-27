@@ -54,7 +54,7 @@ const PricingSection = ({setPackagePrice}) => {
 
             {/*  pricing cards  */}
             <div
-                className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-center  py-[30px] gap-[30px] justify-center rounded-xl mt-10">
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center  py-[30px] gap-[30px] justify-center rounded-xl mt-10">
                     {/* Card one  */}
                 {
                     pricingInfo?.map((packageItem, idx) => (

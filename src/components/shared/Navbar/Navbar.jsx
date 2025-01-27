@@ -53,7 +53,7 @@ const Navbar = () => {
                 <span className="sr-only">Open user menu</span>
                 <img className="w-10 h-10 rounded-full ring-2 ring-main ring-offset-2 ring-offset-white" src={user?.photoURL || userIcon} alt="user photo"/>
                 </button> : <Link to={"/auth/login"}>
-                  <button className="bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10">
+                  <button className="hidden md:block bg-gradient-to-r from-[#5A29E4] to-[#9F72F9] hover:bg-transparent px-6 py-2 rounded-md border border-main-light relative overflow-hidden before:absolute before:inset-0 before:translate-x-full hover:before:translate-x-0 before:transition-transform before:duration-300 before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-pink-500  before:z-[-1] text-white z-10">
                         Log in
                     </button>
                 </Link>
