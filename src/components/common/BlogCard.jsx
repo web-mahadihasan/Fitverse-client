@@ -12,16 +12,29 @@ import toast from "react-hot-toast";
 import useAxiosSecured from "../../hooks/useAxiosSecured";
 import useAuth from "../../hooks/useAuth";
 import useGetUser from "../../hooks/useGetUser";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const BlogCard = ({forumData, refetch}) => {
     const axiosSecured = useAxiosSecured()
+    const axiosPublic = useAxiosPublic()
     const [upVote, setUpVote] = useState(false);
     const [downVote, setDownVote] = useState(false);
     const {user} = useAuth()
     const [getUser] = useGetUser()
 
+  //   const { data: getUser } = useQuery({
+  //     queryKey: [user?.email, "userInBlog"],
+  //     queryFn: async () => {
+  //         const { data } = await axiosSecured.get(`/users/${user?.email}`);
+  //         return data;
+  //     },
+  //     enabled: !!user,
+  // });
+
     const {_id, name, coverImage, title, description,comments, postedDate, image, upvote, downvote, role, upvoteUser, downvoteUser } = forumData || {}
     useEffect(()=> {
+      // For up vote 
       if(upvoteUser){
         const isUpvoted = upvoteUser.find(item => item === getUser?._id)
         if(isUpvoted){
@@ -29,6 +42,7 @@ const BlogCard = ({forumData, refetch}) => {
           setDownVote(false)
         }
       }
+      // For down vote 
       if(downvoteUser){
         const isUpvoted = downvoteUser.find(item => item === getUser?._id)
         if(isUpvoted){
@@ -105,22 +119,19 @@ const BlogCard = ({forumData, refetch}) => {
       <div className="flex items-center gap-4 justify-between w-full py-4 px-2">
         <div className="flex items-center gap-6 md:gap-1">
             <div className="flex items-center gap-4 border p-[2px] px-3 rounded-full divide-x border-gray-200 dark:bg-[#393939] backdrop-blur-lg dark:text-slate-200 dark:border-slate-500">
-            <button onClick={handleUpVote} className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
-                {
-                    upVote ?  <span className="text-main"><PiArrowFatUpFill size={18}/></span> : <PiArrowFatUp size={18} />
-                }
-                
-                {/**/}
-                <span className={`inline-block mt-1 text-base ${upVote? "text-main" : ""}`}>. <span className="text-gray-500">{upvote}</span></span>
-            </button>
-            <button onClick={handleDownVote} className="flex items-center gap-1 text-slate-600 px-1 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
-                {
-                    downVote ? <span className="text-main"><PiArrowFatDownFill size={18}/></span> : <span><PiArrowFatDown size={18}/></span>
-                }
-                {/*  */}
-                {/* <Icon icon="bxs:downvote" width="24" height="24" /> */}
-                <span>{downvote}</span>
-            </button>
+              <button onClick={handleUpVote} className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
+                  {
+                      upVote ?  <span className="text-main"><PiArrowFatUpFill size={18}/></span> : <PiArrowFatUp size={18} />
+                  }
+                  
+                  <span className={`inline-block mt-1 text-base ${upVote? "text-main" : ""}`}>. <span className="text-gray-500">{upvote}</span></span>
+              </button>
+              <button onClick={handleDownVote} className="flex items-center gap-1 text-slate-600 px-1 dark:text-slate-400 hover:text-main dark:hover:text-main-light">
+                  {
+                      downVote ? <span className="text-main"><PiArrowFatDownFill size={18}/></span> : <span><PiArrowFatDown size={18}/></span>
+                  }
+                  <span>{downvote}</span>
+              </button>
             </div>
             <div className="">
                 <button className="flex items-center gap-2 text-slate-600 px-1 dark:text-slate-400 hover:text-main dark:hover:text-main-light">

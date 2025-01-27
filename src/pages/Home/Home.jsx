@@ -97,7 +97,7 @@ const Home = () => {
             </section>
 
             {/* About us section  */}
-            <section className="max-width mx-auto px-4 xl:px-0 my-24">
+            <section className="overflow-x-hidden max-width mx-auto px-4 xl:px-0 my-24">
             <div className="text-center w-full mx-auto">
                 <HeroPill className={"border w-fit rounded-full text-center mx-auto"}
                     icon={

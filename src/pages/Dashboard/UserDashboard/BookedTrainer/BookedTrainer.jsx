@@ -87,7 +87,7 @@ const BookedTrainer = () => {
                     myPayment.length > 0 ? myPayment?.map((item, idx) => (
                         <div key={idx}
                             className="bg-[#F2F4F5] dark:bg-gray-800 p-5 md:p-8 gap-[30px] md:gap-[15px] w-full rounded-md flex flex-col md:flex-row md:items-center md:justify-between">
-                            <div className="flex-1">
+                            <div className="flex-1 sm:flex flex-row sm:justify-between lg:flex-col gap-4 flex-wrap">
                                 <div className="my-2">
                                     <h3 className="text-2xl font-kanit font-medium text-secondary-black dark:text-main-dark">Trainer Info</h3>
                                     <p className="font-poppins flex items-center gap-2 text-gray-700 dark:text-gray-400 mt-2">

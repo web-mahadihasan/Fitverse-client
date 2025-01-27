@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import ClassComparisonChart from "./ClassComparisonChart";
 import useAdmin from "../../../hooks/useAdmin";
 import AnimatedLoader from "../../Loading/Loading";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 const AdminDashboard = () => {
     const axiosSecured = useAxiosSecured()
@@ -17,7 +18,17 @@ const AdminDashboard = () => {
         },
         enabled: isAdmin, 
     });
-    
+    const {data: adminHomeData} = useQuery({
+        queryKey: ["adminHomeData"],
+        queryFn: async () => {
+            const {data: allUsers} = await axiosSecured.get('/users')
+            const {data: adminHomeTrainer} = await axiosSecured.get(`/trainer-api/all-trainer`)
+            const {data: adminHomeClass} = await axiosSecured.get(`/class-api/class`)
+            const {data: adminHomePayments} = await axiosSecured.get(`/payment-api/all-payments`)
+            return {allUsers, adminHomeTrainer, adminHomeClass, adminHomePayments}
+        }
+    })
+    const {allUsers, adminHomeTrainer, adminHomeClass, adminHomePayments} = adminHomeData || {}
     if(isLoading) return <AnimatedLoader/>
     
     return (
@@ -25,26 +36,26 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <InfoCard
                 title="Total Users"
-                value="1,234"
+                value={allUsers?.length || 0}
                 icon={<UserIcon size={40} />}
                 gradient="from-blue-500 to-blue-300"
             />
             <InfoCard
                 title="Active Trainers"
-                value="42"
+                value={adminHomeTrainer?.length || 0}
                 icon={<UsersIcon size={40} />}
                 gradient="from-green-500 to-green-300"
             />
             <InfoCard
                 title="Available Classes"
-                value="78"
+                value={adminHomeClass?.length || 0}
                 icon={<ClipboardIcon size={40} />}
                 gradient="from-yellow-500 to-yellow-300"
             />
             <InfoCard
-                title="Calories Burned Today"
-                value="128,500"
-                icon={<FireIcon size={40} />}
+                title="Total Compelete Payments"
+                value={adminHomePayments?.length || 0}
+                icon={<FaMoneyBillTransfer size={40} />}
                 gradient="from-red-500 to-red-300"
             />
         </div>
