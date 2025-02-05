@@ -1,4 +1,5 @@
 # Fitverse: A Comprehensive Fitness Tracker
+# ![Fitverse Banner](./src/assets/images/fitverse.png)
 
 Welcome to **Fitverse**, the ultimate fitness tracker website designed to empower users to achieve their fitness goals with ease while providing trainers and admins with efficient management tools. This dynamic platform is packed with features tailored for users, trainers, and admins, ensuring a seamless and user-friendly experience.
 
@@ -90,6 +91,60 @@ Fitverse is designed to offer a smooth experience on all devices, including:
 With its intuitive and dynamic design, Fitverse ensures every user, trainer, and admin can easily navigate and utilize the platform's features.
 
 ---
+## 🛠️ Key Dependencies  
+Fitverse is built using modern technologies to ensure performance and scalability:  
+
+- **React & React Router** – For building a dynamic and responsive UI.  
+- **Firebase** – Used for authentication and real-time database management.  
+- **MongoDB** – For storing and managing user, trainer, and admin data.  
+- **JWT (JSON Web Token)** – Secure user authentication and authorization.  
+- **Stripe API** – Secure payment processing for class and trainer bookings.  
+- **Ant Design & Shadcn/UI** – Beautiful and consistent UI components.  
+- **TanStack Query & Axios** – For efficient API calls and state management.  
+
+---
+## 🏗️ How to Run the Project Locally  
+
+Follow these steps to set up and run Fitverse on your local machine:  
+
+### **1️⃣ Clone the Repository**  
+```sh
+git clone https://github.com/yourusername/fitverse.git
+cd fitverse
+
+
+### **2️⃣ Install Dependencies**   
+Make sure you have **Node.js** installed, then run:  
+```sh
+npm install
+```
+
+### **3️⃣ Configure Environment Variables**  
+Replace `your_firebase_api_key` and other values with your actual Firebase and Stripe API keys.
+
+### **4️⃣ Start the Development Server**  
+Run the following command to start the project:  
+```sh
+npm start
+```
+
+### **5️⃣ Open in Browser**  
+Once the server is running, open:  
+👉 **http://localhost:3000**  
+
+---
+
+## 🔗 Additional Resources  
+- **Live Project:** [https://fitverse-bd.web.app/](https://fitverse-bd.web.app/)  
+- **GitHub Repository:** [https://github.com/yourusername/fitverse](https://github.com/yourusername/fitverse)  
+- **API Documentation:** [Coming Soon]  
+
+---
+
+🚀 **Start your fitness journey today with Fitverse!** 💪  
+```
+
+Let me know if you need further refinements! 🚀
 
 ## 🔗 Experience Fitverse
 Visit the live site: [**https://fitverse-bd.web.app/**](https://fitverse-bd.web.app/)
