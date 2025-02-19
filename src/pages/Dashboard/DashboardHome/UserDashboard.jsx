@@ -21,17 +21,7 @@ const UserDashboard = () => {
         },
         enabled: !!user, 
     });
-    // console.log(userPayment)
-    // const {data: adminHomeData} = useQuery({
-    //     queryKey: ["adminHomeData"],
-    //     queryFn: async () => {
-    //         const {data: allUsers} = await axiosSecured.get('/users')
-    //         const {data: adminHomeTrainer} = await axiosSecured.get(`/trainer-api/all-trainer`)
-    //         const {data: adminHomeClass} = await axiosSecured.get(`/class-api/class`)
-    //         const {data: adminHomePayments} = await axiosSecured.get(`/payment-api/all-payments`)
-    //         return {allUsers, adminHomeTrainer, adminHomeClass, adminHomePayments}
-    //     }
-    // })
+   
     const {userPayment, bookedTrainer} = userDashboardData || {}
     if(isLoading) return <AnimatedLoader/>
     
