@@ -1,4 +1,4 @@
-import { UserIcon, UsersIcon, ClipboardIcon, FlameIcon as FireIcon } from "lucide-react"
+import { BadgeDollarSign , UsersIcon, Shapes, FlameIcon as FireIcon } from "lucide-react"
 import InfoCard from "../../../components/common/InfoCard";
 import useAxiosSecured from "../../../hooks/useAxiosSecured";
 import { useQuery } from "@tanstack/react-query";
@@ -25,50 +25,7 @@ const UserDashboard = () => {
    
     const {userPayment, bookedTrainer} = userDashboardData || {}
     // console.log(userPayment)
-    const data = [
-        {
-          name: 'Page A',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Page B',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Page C',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Page D',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'Page E',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Page F',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Page G',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-      ];
+   
     const getPath = (x, y, width, height) => {
         return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
         ${x + width / 2}, ${y}
@@ -90,7 +47,7 @@ const UserDashboard = () => {
             <InfoCard
                 title="Spent Ammount"
                 value={`$ ${userPayment?.reduce((a, b) => a + b.packagePrice, 0)}`}
-                icon={<UserIcon size={40} />}
+                icon={<BadgeDollarSign  size={40} />}
                 gradient="from-blue-500 to-blue-300"
             />
             <InfoCard
@@ -102,7 +59,7 @@ const UserDashboard = () => {
             <InfoCard
                 title="Total Active Class"
                 value={userPayment?.length || 0}
-                icon={<ClipboardIcon size={40} />}
+                icon={<Shapes size={40} />}
                 gradient="from-yellow-500 to-yellow-300"
             />
             <InfoCard
