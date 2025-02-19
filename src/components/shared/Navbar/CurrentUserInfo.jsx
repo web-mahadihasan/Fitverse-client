@@ -6,10 +6,12 @@ import { HiLifebuoy } from "react-icons/hi2";
 import { RiUserSharedLine } from "react-icons/ri";
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useApp from "../../../hooks/useApp";
 
 const CurrentUserInfo = ({setProfileMenu}) => {
     const {user, logOutUser} = useAuth()
-    
+    const {setIsInvitedModalOpen} = useApp()
+
 
     const handleSignOut = async () => {
         const toastId = toast.loading('Logging in...');
@@ -44,13 +46,13 @@ const CurrentUserInfo = ({setProfileMenu}) => {
                         Dashboard
                      </span>
                  </Link>
-                 <Link to={'/'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
+                 <Link onClick={() => setIsInvitedModalOpen(true)} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                      <FiUserPlus size={20}/>
                      <span className="mx-1">
                          Invited People
                      </span>
                  </Link>
-                 <Link to={'/'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
+                 <Link to={'/helps'} className="flex items-center px-6 py-2 font-medium text-base text-gray-700 gap-2 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                      <HiLifebuoy />
                      <span className="mx-1">
                          Help

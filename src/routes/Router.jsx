@@ -34,6 +34,7 @@ import TrainerRoute from './TrainerRoute';
 import Forums from '../pages/Forums/Forums';
 import BlogDetails from '../pages/BlogDetails/BlogDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import HelpPage from '../pages/HelpPage/HelpPage';
 
 
 const Router = createBrowserRouter([
@@ -94,6 +95,10 @@ const Router = createBrowserRouter([
             {
                 path: "/forums/details/:id",
                 element: <BlogDetails/>
+            },
+            {
+                path: "/helps",
+                element: <HelpPage />
             }
         ]
     },

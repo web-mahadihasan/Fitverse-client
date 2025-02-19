@@ -9,11 +9,19 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import fitnessLogo from "../../../assets/icon/Fitness-log.png"
 import useAuth from "../../../hooks/useAuth";
 import userIcon  from "../../../assets/icon/user.png"
+import { Copy, X } from 'lucide-react';
+import toast from "react-hot-toast";
 
 const Navbar = () => {
     const [profileMenu, setProfileMenu] = useState(false)
-    const {openMenu, setOpenMenu} = useApp()
+    const {openMenu, setOpenMenu, isInvitedModalOpen, setIsInvitedModalOpen} = useApp()
     const {user} = useAuth()
+    const inviteLink = 'https://fitverse-bd.web.app/auth/register';
+
+    const handleCopy = () => {
+      navigator.clipboard.writeText(inviteLink);
+      toast.success("Successfully copy link")
+    }
 
   return (
     <nav className=" fixed top-0 w-full z-50 transition-all duration-300 font-poppins bg-white/80">
@@ -72,6 +80,62 @@ const Navbar = () => {
         {
             openMenu && <MobileMenu/>
         }
+
+        {/* invited modal  */}
+        <div>
+        <div
+            className={`${
+              isInvitedModalOpen
+                    ? " scale-[1] opacity-100"
+                    : " scale-[0] opacity-0"
+            } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] flex items-center justify-center transition-all duration-300`}
+        >
+            <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg relative">
+        {/* Close Button */}
+        <button onClick={() => setIsInvitedModalOpen(false)} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors">
+          <X size={24} />
+        </button>
+        
+        {/* Modal Content */}
+        <div className="p-8">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Invite Friends & Earn Rewards
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              Share your unique link with friends and get a <span className="text-indigo-600 font-semibold">20% discount</span> on your next purchase when they join!
+            </p>
+          </div>
+
+          {/* Invite Link Section */}
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Your Personal Invite Link
+            </label>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-gray-600 font-mono text-sm">
+                {inviteLink}
+              </div>
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-3 transition-colors"
+              >
+                <Copy size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* Additional Info */}
+          <div className="mt-8 bg-indigo-50 rounded-lg p-4">
+            <p className="text-sm text-indigo-800 text-center">
+              Your friends will get a 15% welcome discount on their first purchase too!
+            </p>
+          </div>
+        </div>
+      </div>
+        </div>
+        </div>
         
       </div>
     </nav>

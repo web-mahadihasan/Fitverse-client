@@ -4,10 +4,12 @@ export const AppProviderContext = createContext(null)
 
 const AppProvider = ({children}) => {
     const [openMenu, setOpenMenu] = useState(false);
-
+    const [isInvitedModalOpen, setIsInvitedModalOpen] = useState(false);
     const appInfo = {
         openMenu,
-        setOpenMenu
+        setOpenMenu,
+        isInvitedModalOpen, 
+        setIsInvitedModalOpen
     }
     return (
         <AppProviderContext.Provider value={appInfo}>

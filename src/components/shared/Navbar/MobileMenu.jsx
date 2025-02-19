@@ -8,9 +8,9 @@ import useAuth from "../../../hooks/useAuth";
 import {motion} from "framer-motion"
 
 const MobileMenu = () => {
-    const {openMenu, setOpenMenu} = useApp()
+    const {openMenu, setOpenMenu, setIsInvitedModalOpen} = useApp()
     const {user} = useAuth()
-    
+
   
     return (
         <motion.div className={`absolute lg:hidden z-40 duration-1000 shadow-xl transition-all min-h-[90vh] bg-white ${ openMenu? "top-0 right-0 block" : "right-800px"}`}
