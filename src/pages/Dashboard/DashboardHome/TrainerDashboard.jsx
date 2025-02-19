@@ -60,7 +60,7 @@ const TrainerDashboard = () => {
             />
             <InfoCard
                 title="Lasted Added"
-                value={trainerSlot[0].slotName || "No Slot"}
+                value={trainerSlot[0]?.slotName || "No Slot"}
                 icon={<FaMoneyBillTransfer size={40} />}
                 gradient="from-green-500 to-green-300"
             />
