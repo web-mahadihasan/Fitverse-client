@@ -30,19 +30,19 @@ const UserDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <InfoCard
                 title="Spent Ammount"
-                value={`$ ${userPayment.reduce((a, b) => a + b.packagePrice, 0)}`}
+                value={`$ ${userPayment?.reduce((a, b) => a + b.packagePrice, 0)}`}
                 icon={<UserIcon size={40} />}
                 gradient="from-blue-500 to-blue-300"
             />
             <InfoCard
                 title="Lasted Payment"
-                value={`$ ${userPayment[0].packagePrice || 0}`}
+                value={`$ ${userPayment[0]?.packagePrice || 0}`}
                 icon={<FaMoneyBillTransfer size={40} />}
                 gradient="from-green-500 to-green-300"
             />
             <InfoCard
                 title="Total Active Class"
-                value={userPayment.length || 0}
+                value={userPayment?.length || 0}
                 icon={<ClipboardIcon size={40} />}
                 gradient="from-yellow-500 to-yellow-300"
             />
@@ -54,7 +54,10 @@ const UserDashboard = () => {
             />
         </div>
 
-
+        <div className="min-h-[calc(100vh-300px)] w-full flex items-center justify-center text-center flex-col">
+            <h3 className="text-2xl md:text-5xl font-bold font-kanit">Welcome Back, <span className="text-main">{user?.displayName}</span></h3>
+            <h3 className="text-2xl md:text-4xl capitalize my-6 font-semibold font-kanit">Explorer your amazing dashboard</h3>    
+        </div>
         {/* <div className="my-16">
             <ClassComparisonChart paymentData={allPaymentData}/>
         </div> */}
