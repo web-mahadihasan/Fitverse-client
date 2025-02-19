@@ -40,7 +40,7 @@ const MobileMenu = () => {
                             <NavLink to="/all-classes" className={"font-normal text-[15px] text-[#100C08] dark:text-white uppercase flex justify-between"}>All Classes <GoArrowRight size={22} className="text-gray-500"/></NavLink>                            
                         </li> 
                         <li>
-                            <NavLink to="/all-trainers" className={"font-normal text-[15px] text-[#100C08] dark:text-white uppercase flex justify-between"}>All Trainers <GoArrowRight size={22} className="text-gray-500"/></NavLink>
+                            <NavLink to="/all-trainers" className={"font-normal text-[15px] text-[#100C08] dark:text-white uppercase flex justify-between"}>Trainers <GoArrowRight size={22} className="text-gray-500"/></NavLink>
                         </li> 
                         {
                             user && <li>
