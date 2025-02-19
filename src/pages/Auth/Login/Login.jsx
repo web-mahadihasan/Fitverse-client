@@ -12,6 +12,7 @@ import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import SocialLogin from "../../../components/shared/SocialLogin/SocialLogin";
 import { Helmet } from "react-helmet";
+import { Button } from "@/components/ui/button"
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -23,9 +24,14 @@ const Login = () => {
 
     const {
         register,
-        handleSubmit,
+        handleSubmit, setValue,
         formState: { errors },
-      } = useForm()
+      } = useForm({
+        defaultValues: {
+            email: "",
+            password: ""
+          },
+      })
     
       const onSubmit = async (data) => {
         const {email, password} = data || {}
@@ -43,7 +49,7 @@ const Login = () => {
                 id: toastId, 
               });
             
-            if ((err = "auth/invalid-credential")) {
+            if ((err === "auth/invalid-credential")) {
                 setError({
                   ...error,
                   invalid: "Invalid email or password! try again",
@@ -84,8 +90,34 @@ const Login = () => {
                                     color: '#fff'
                                 }}
                        >OR Login With Email</Divider>
-                    </div>  
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" action="#">
+                </div>
+
+                {/* Credentials  */}
+                <div>
+                    <h2 className="font-kanit text-white text-lg">Credentials</h2>
+                    <div className="flex items-center justify-between my-3">
+                        <Button onClick={() => {
+                            setValue("email", "admin@fitverse.com");
+                            setValue("password", "Admin123456");
+                            }} 
+                        className={"bg-[#9F72F9] font-normal tracking-wide px-6 font-poppins"}>Admin</Button>
+                        <Button className={"bg-[#9F72F9] font-normal tracking-wide px-6 font-poppins"}
+                            onClick={() => {
+                                setValue("email", "mahadii@gmail.com");
+                                setValue("password", "Mm123456");
+                                }} >
+                        Trainer
+                        </Button>
+                        <Button className={"bg-[#9F72F9] font-normal tracking-wide px-6 font-poppins"}
+                        onClick={() => {
+                            setValue("email", "georgebanks@gmail.com");
+                            setValue("password", "Mm123456");
+                            }} >
+                        User
+                        </Button>
+                    </div>
+                </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" action="#">
                 <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-white text-left dark:text-white">Your Email</label>
                     <input type="email" {...register("email", { required: true })} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm tracking-wide font-poppins rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
