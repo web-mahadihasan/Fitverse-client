@@ -103,7 +103,7 @@ const Login = () => {
                         className={"bg-[#9F72F9] font-normal tracking-wide px-6 font-poppins"}>Admin</Button>
                         <Button className={"bg-[#9F72F9] font-normal tracking-wide px-6 font-poppins"}
                             onClick={() => {
-                                setValue("email", "mahadii@gmail.com");
+                                setValue("email", "mehedi@gmail.com");
                                 setValue("password", "Mm123456");
                                 }} >
                         Trainer
