@@ -21,12 +21,12 @@ const TrainerDashboard = () => {
         },
         enabled: !!user, 
     });
-
+    console.log(trainerData)
     const { data: trainerDashboardData, isLoading } = useQuery({
         queryKey: ["trainerDashboardData"],
         queryFn: async () => {
             const { data: trainerSlot } = await axiosSecured.get(`/slot-api/slots/${user?.email}`);
-            const { data: myClassUser } = await axiosSecured.get(`/payment-api/trainer-payment-user/${trainerData}`);
+            const { data: myClassUser } = await axiosSecured.get(`/payment-api/trainer-payment-user/${trainerData?._id}`);
             return {trainerSlot, myClassUser};
         },
         enabled: !!trainerData, 
@@ -78,7 +78,7 @@ const TrainerDashboard = () => {
             />
         </div>
 
-        <div className="min-h-[calc(100vh-300px)] w-full flex items-center justify-center text-center flex-col">
+        {/* <div className="min-h-[calc(100vh-300px)] w-full flex items-center justify-center text-center flex-col">
             <h2 className="font-poppins text-gray-700 dark:text-gray-400">Your chart with purchasing Class price</h2>
         <ResponsiveContainer width="100%" height={500}>
             <BarChart
@@ -103,7 +103,7 @@ const TrainerDashboard = () => {
                 </Bar>
             </BarChart>  
         </ResponsiveContainer>
-        </div>
+        </div> */}
         
     </section>
     );
